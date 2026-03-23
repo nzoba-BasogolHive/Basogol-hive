@@ -1,68 +1,36 @@
-
-import './App.css'
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Accueil from "./pages/Accueil";
+import Apropos from "./pages/Apropos";
+import Contact from "./pages/Contact";
+import MarketingBrand from "./pages/MarketingBrand";
+import ScrollToTopButton from "./components/ScrollToTopButton";
+import Technologie from "./pages/Technologie";
+import MarketingBrandServiceDetail from "./pages/MarketingBrandServiceDetail";
+import ScrollToTop from "./components/ScrollToTop";
+import TechnologieServiceDetail from "./pages/TechnologieServiceDetail";
 
 function App() {
   return (
-    <main style={styles.page}>
-      <section style={styles.card}>
-        <div style={styles.badge}>Basogol-Hive</div>
-        <h1 style={styles.title}>Coming soon</h1>
-        <p style={styles.text}>
-          Nous préparons actuellement une plateforme moderne, propre et
-          professionnelle. Le site sera disponible très bientôt.
-        </p>
-      </section>
-    </main>
-  )
+    <BrowserRouter>
+      <ScrollToTop />
+
+      <Routes>
+        <Route path="/" element={<Accueil />} />
+        <Route path="/about" element={<Apropos />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/marketing-brand" element={<MarketingBrand />} />
+        <Route path="/technology" element={<Technologie />} />
+        <Route path="/technology/:slug" element={<TechnologieServiceDetail />} />
+        <Route
+          path="/marketing-brand/:slug"
+          element={<MarketingBrandServiceDetail />}
+        />
+      </Routes>
+
+      <ScrollToTopButton />
+    </BrowserRouter>
+  );
 }
 
-const styles = {
-  page: {
-    minHeight: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '24px',
-    background: 'linear-gradient(135deg, #0b1220, #111827, #19607e)',
-    fontFamily: 'Arial, sans-serif',
-  },
-  card: {
-    width: '100%',
-    maxWidth: '680px',
-    padding: '48px 32px',
-    borderRadius: '24px',
-    textAlign: 'center',
-    color: '#ffffff',
-    background: 'rgba(255,255,255,0.08)',
-    border: '1px solid rgba(255,255,255,0.12)',
-    boxShadow: '0 20px 60px rgba(0,0,0,0.35)',
-    backdropFilter: 'blur(10px)',
-  },
-  badge: {
-    display: 'inline-block',
-    marginBottom: '14px',
-    padding: '8px 14px',
-    borderRadius: '999px',
-    background: 'rgba(56, 189, 248, 0.15)',
-    color: '#38bdf8',
-    fontSize: '14px',
-    fontWeight: 'bold',
-    letterSpacing: '0.08em',
-    textTransform: 'uppercase',
-  },
-  title: {
-    margin: 0,
-    marginBottom: '18px',
-    fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-    lineHeight: 1.1,
-  },
-  text: {
-    margin: '0 auto 30px',
-    maxWidth: '540px',
-    fontSize: '1.05rem',
-    lineHeight: 1.8,
-    color: '#dbeafe',
-  },
-}
-
-export default App
+export default App;
