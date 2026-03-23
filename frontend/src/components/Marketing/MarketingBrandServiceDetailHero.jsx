@@ -1,6 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useLanguage } from "../LanguageContext";
+
+const translations = {
+  fr: {
+    discoverService: "Découvrir le service",
+  },
+  en: {
+    discoverService: "Discover the service",
+  },
+};
 
 const MarketingBrandServiceDetailHero = ({ service }) => {
+  const { lang } = useLanguage();
+  const t = translations[lang] || translations.fr;
+
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -14,7 +27,7 @@ const MarketingBrandServiceDetailHero = ({ service }) => {
     <section
       className="relative min-h-[88vh] overflow-hidden"
       id="marketing-brand-service-detail-hero"
-       data-page-hero
+      data-page-hero
     >
       <style>{`
         /* ── Image fond ── */
@@ -137,12 +150,14 @@ const MarketingBrandServiceDetailHero = ({ service }) => {
       {/* Ligne déco gauche */}
       <div
         className="sdh-line pointer-events-none absolute left-8 top-36 hidden h-[160px] w-[1px] lg:block"
-        style={{ background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.24), transparent)" }}
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent, rgba(255,255,255,0.24), transparent)",
+        }}
       />
 
       <div className="page-container relative z-10 flex min-h-[88vh] items-center px-4 pb-20 pt-28 sm:px-6 sm:pt-32 lg:px-8 lg:pt-36">
         <div className={`sdh-entry max-w-[600px] ${visible ? "show" : ""}`}>
-
           {/* Badge service */}
           {service.category && (
             <span
@@ -194,22 +209,23 @@ const MarketingBrandServiceDetailHero = ({ service }) => {
               className="sdh-btn inline-flex items-center gap-2 rounded-[10px] px-7 py-3.5 text-sm"
               style={{ fontFamily: "Literata, serif" }}
             >
-              Découvrir le service
+              {t.discoverService}
               <span style={{ fontSize: "15px" }}>↓</span>
             </a>
           </div>
-
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-40">
+      <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1.5 opacity-40">
         <div
           className="sdh-scroll h-[28px] w-[1px] rounded-full"
-          style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.85), transparent)" }}
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(255,255,255,0.85), transparent)",
+          }}
         />
       </div>
-
     </section>
   );
 };

@@ -35,11 +35,19 @@ const translations = {
   },
 };
 
+const getLocalizedValue = (value, lang) => {
+  if (typeof value === "string") return value;
+  if (value && typeof value === "object") return value[lang] || value.fr || "";
+  return "";
+};
+
 const ServiceCard = ({ service, index, visible, t, lang }) => {
   const reverse = index % 2 === 1;
 
-  const title = service.title?.[lang] || service.title || "";
-  const text = service.text?.[lang] || service.text || "";
+  const title = getLocalizedValue(service.title, lang);
+  const text =
+    getLocalizedValue(service.text, lang) ||
+    getLocalizedValue(service.heroDescription, lang);
 
   return (
     <Link

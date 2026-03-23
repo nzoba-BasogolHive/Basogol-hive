@@ -6,6 +6,7 @@ import {
   Zap,
   Compass,
 } from "lucide-react";
+import { useLanguage } from "../LanguageContext";
 import groupShape from "../../assets/Group14.png";
 
 const translations = {
@@ -24,13 +25,14 @@ const translations = {
 const defaultIcons = [Lightbulb, AlertCircle, Zap, Compass];
 
 const MarketingBrandServiceOverview = ({
-  lang = "fr",
   onBack,
   cards = [],
   category,
   serviceTitle,
 }) => {
+  const { lang } = useLanguage();
   const t = translations[lang] || translations.fr;
+
   const sectionRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -222,22 +224,22 @@ const MarketingBrandServiceOverview = ({
           }`}
         >
           <div className="flex items-center gap-3">
-  <button
-    type="button"
-    onClick={onBack}
-    className="ov-back-btn flex h-9 w-9 items-center justify-center rounded-full text-slate-600"
-    aria-label={t.back}
-  >
-    <ChevronLeft className="h-4 w-4" />
-  </button>
+            <button
+              type="button"
+              onClick={onBack}
+              className="ov-back-btn flex h-9 w-9 items-center justify-center rounded-full text-slate-600"
+              aria-label={t.back}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
 
-  <span
-    className="ov-cat-badge inline-flex items-center rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.20em] text-white"
-    style={{ fontFamily: "Literata, serif" }}
-  >
-    {serviceTitle || category || t.category}
-  </span>
-</div>
+            <span
+              className="ov-cat-badge inline-flex items-center rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.20em] text-white"
+              style={{ fontFamily: "Literata, serif" }}
+            >
+              {serviceTitle || category || t.category}
+            </span>
+          </div>
 
           <div className="flex items-center gap-2">
             <div

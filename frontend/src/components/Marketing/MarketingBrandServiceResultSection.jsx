@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useLanguage } from "../LanguageContext";
 
 const translations = {
   fr: {
@@ -6,17 +7,18 @@ const translations = {
     mainMediaAlt: "Visuel principal du résultat",
     playing: "En lecture",
     clickToPlay: "Appuyez pour lire",
+    defaultTitle: "Résultat",
   },
   en: {
     badge: "Deliverables",
     mainMediaAlt: "Main result visual",
     playing: "Playing",
     clickToPlay: "Click to play",
+    defaultTitle: "Result",
   },
 };
 
 const MarketingBrandServiceResultSection = ({
-  lang = "fr",
   title,
   description,
   mainMedia = "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80",
@@ -24,7 +26,9 @@ const MarketingBrandServiceResultSection = ({
   isVideo = false,
   videoSrc = "https://www.w3schools.com/html/mov_bbb.mp4",
 }) => {
+  const { lang } = useLanguage();
   const t = translations[lang] || translations.fr;
+
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -54,7 +58,7 @@ const MarketingBrandServiceResultSection = ({
     }
   };
 
-  const displayTitle = title || "Résultat";
+  const displayTitle = title || t.defaultTitle;
   const displayDescription = description || "";
   const displayGallery = Array.isArray(gallery) ? gallery : [];
 

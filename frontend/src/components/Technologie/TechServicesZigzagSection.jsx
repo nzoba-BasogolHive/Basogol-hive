@@ -1,12 +1,65 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "../LanguageContext";
 import group7 from "../../assets/Group7.png";
 import group9 from "../../assets/Group9.png";
 import polygon1 from "../../assets/Polygon8.png";
 import { technologyServices } from "../../data/technologyServices";
 
-const TechServiceCard = ({ service, index, visible }) => {
+const translations = {
+  fr: {
+    badge: "Technologie",
+    title: "Nos services tech",
+    description:
+      "Nous concevons, développons et maintenons des solutions digitales fiables et performantes adaptées à vos objectifs et à votre croissance.",
+    learnMore: "En savoir plus",
+    discover: "Découvrir",
+    service: "Service",
+    tech: "Tech",
+    stats: [
+      { num: "6", label: "Services" },
+      { num: "100%", label: "Sur mesure" },
+      { num: "24/7", label: "Support" },
+    ],
+    approachBadge: "Notre approche tech",
+    approachTitle: "Des solutions techniques pensées pour durer et performer",
+    approachDescription:
+      "Chaque solution que nous livrons est conçue avec rigueur, testée avec soin et maintenue dans le temps pour accompagner durablement votre activité.",
+  },
+  en: {
+    badge: "Technology",
+    title: "Our tech services",
+    description:
+      "We design, develop and maintain reliable and high-performing digital solutions tailored to your goals and growth.",
+    learnMore: "Learn more",
+    discover: "Discover",
+    service: "Service",
+    tech: "Tech",
+    stats: [
+      { num: "6", label: "Services" },
+      { num: "100%", label: "Custom" },
+      { num: "24/7", label: "Support" },
+    ],
+    approachBadge: "Our tech approach",
+    approachTitle: "Technical solutions designed to last and perform",
+    approachDescription:
+      "Every solution we deliver is built with rigor, carefully tested, and maintained over time to support your business sustainably.",
+  },
+};
+
+const getLocalizedValue = (value, lang) => {
+  if (typeof value === "string") return value;
+  if (value && typeof value === "object") return value[lang] || value.fr || "";
+  return "";
+};
+
+const TechServiceCard = ({ service, index, visible, t, lang }) => {
   const reverse = index % 2 === 1;
+
+  const title = getLocalizedValue(service.title, lang);
+  const description =
+    getLocalizedValue(service.text, lang) ||
+    getLocalizedValue(service.heroDescription, lang);
 
   return (
     <Link
@@ -68,7 +121,7 @@ const TechServiceCard = ({ service, index, visible }) => {
                 border: "3px solid rgba(255,255,255,0.88)",
               }}
             >
-              <img src={service.image} alt={service.title} className="tz-img h-full w-full object-cover" />
+              <img src={service.image} alt={title} className="tz-img h-full w-full object-cover" />
               <div
                 className="absolute inset-0"
                 style={{ background: `linear-gradient(145deg, ${service.accent}0d 0%, transparent 50%)` }}
@@ -118,7 +171,7 @@ const TechServiceCard = ({ service, index, visible }) => {
                   fontFamily: "Literata, serif",
                 }}
               >
-                Tech
+                {t.tech}
               </span>
             </div>
           </div>
@@ -163,7 +216,7 @@ const TechServiceCard = ({ service, index, visible }) => {
               className="text-[10px] font-bold uppercase tracking-[0.22em]"
               style={{ color: `${service.accent}90`, fontFamily: "Literata, serif" }}
             >
-              Service {service.tag}
+              {t.service} {service.tag}
             </span>
           </div>
 
@@ -171,7 +224,7 @@ const TechServiceCard = ({ service, index, visible }) => {
             className="mt-2.5 text-[26px] font-bold leading-tight text-slate-900 sm:text-[34px]"
             style={{ fontFamily: "Literata, serif" }}
           >
-            {service.title}
+            {title}
           </h3>
 
           <div
@@ -188,7 +241,7 @@ const TechServiceCard = ({ service, index, visible }) => {
             className="mt-4 text-sm leading-[1.90] text-slate-500 sm:text-[14.5px]"
             style={{ fontFamily: "Literata, serif" }}
           >
-            {service.heroDescription}
+            {description}
           </p>
 
           <div className="mt-7 flex items-center gap-4">
@@ -196,7 +249,7 @@ const TechServiceCard = ({ service, index, visible }) => {
               className="text-[10px] uppercase tracking-widest text-slate-400"
               style={{ fontFamily: "Literata, serif" }}
             >
-              En savoir plus
+              {t.learnMore}
             </span>
             <div
               style={{
@@ -214,7 +267,7 @@ const TechServiceCard = ({ service, index, visible }) => {
                 fontFamily: "Literata, serif",
               }}
             >
-              Découvrir <span style={{ fontSize: "13px" }}>→</span>
+              {t.discover} <span style={{ fontSize: "13px" }}>→</span>
             </span>
           </div>
         </div>
@@ -226,6 +279,8 @@ const TechServiceCard = ({ service, index, visible }) => {
 const TechServicesZigzagSection = () => {
   const sectionRef = useRef(null);
   const [visible, setVisible] = useState(false);
+  const { lang } = useLanguage();
+  const t = translations[lang] || translations.fr;
   const services = technologyServices;
 
   useEffect(() => {
@@ -334,14 +389,14 @@ const TechServicesZigzagSection = () => {
                 fontFamily: "Literata, serif",
               }}
             >
-              Technologie
+              {t.badge}
             </span>
 
             <h2
               className="mt-4 text-4xl font-bold text-slate-900 sm:text-5xl"
               style={{ fontFamily: "Literata, serif" }}
             >
-              Nos services tech
+              {t.title}
             </h2>
 
             <div
@@ -358,15 +413,11 @@ const TechServicesZigzagSection = () => {
               className="mx-auto mt-5 max-w-xl text-sm leading-7 text-slate-500 sm:text-[15px]"
               style={{ fontFamily: "Literata, serif" }}
             >
-              Nous concevons, développons et maintenons des solutions digitales fiables et performantes adaptées à vos objectifs et à votre croissance.
+              {t.description}
             </p>
 
             <div className="mt-8 flex items-center justify-center gap-8">
-              {[
-                { num: "6", label: "Services" },
-                { num: "100%", label: "Sur mesure" },
-                { num: "24/7", label: "Support" },
-              ].map((s, i) => (
+              {t.stats.map((s, i) => (
                 <div key={i} className="text-center">
                   <div
                     className="text-[22px] font-bold text-[#1f6c8c]"
@@ -404,6 +455,8 @@ const TechServicesZigzagSection = () => {
                     service={service}
                     index={index}
                     visible={visible}
+                    t={t}
+                    lang={lang}
                   />
                   {index < services.length - 1 && (
                     <div className="tz-sep my-16 lg:my-20" />
@@ -511,7 +564,7 @@ const TechServicesZigzagSection = () => {
                 color: "rgba(168,212,232,0.90)",
               }}
             >
-              Notre approche tech
+              {t.approachBadge}
             </span>
           </div>
 
@@ -526,7 +579,7 @@ const TechServicesZigzagSection = () => {
               marginBottom: "18px",
             }}
           >
-            Des solutions techniques pensées pour durer et performer
+            {t.approachTitle}
           </h2>
 
           <div
@@ -548,7 +601,7 @@ const TechServicesZigzagSection = () => {
               lineHeight: 1.88,
             }}
           >
-            Chaque solution que nous livrons est conçue avec rigueur, testée avec soin et maintenue dans le temps pour accompagner durablement votre activité.
+            {t.approachDescription}
           </p>
         </div>
       </div>
