@@ -1,5 +1,6 @@
 import React from "react";
 import { useLanguage } from "./LanguageContext";
+import heroVideo from "../assets/Hirositewebdemo.mp4"; // adapte le chemin
 
 const translations = {
   fr: {
@@ -10,16 +11,12 @@ const translations = {
       "De l’idée à l’exécution, nous imaginons des solutions élégantes, utiles et mémorables pour aider votre entreprise à se démarquer, inspirer confiance et attirer les bonnes opportunités.",
     primaryCta: "Demander un devis",
     secondaryCta: "Voir nos réalisations",
-
     stat1Title: "Tech",
     stat1Text: "Applications, logiciels et hébergement",
-
     stat2Title: "Studio",
     stat2Text: "Branding, design, vidéo et contenus visuels",
-
     stat3Title: "Sur mesure",
     stat3Text: "Des solutions adaptées à votre activité",
-
     videoAriaLabel: "Vidéo de présentation Basogol-Hive",
   },
 
@@ -31,16 +28,12 @@ const translations = {
       "From idea to execution, we imagine elegant, useful and memorable solutions to help your business stand out, inspire trust and attract the right opportunities.",
     primaryCta: "Request a quote",
     secondaryCta: "See our work",
-
     stat1Title: "Tech",
     stat1Text: "Applications, software and hosting",
-
     stat2Title: "Studio",
     stat2Text: "Branding, design, video and visual content",
-
     stat3Title: "Custom",
     stat3Text: "Solutions tailored to your business",
-
     videoAriaLabel: "Basogol-Hive presentation video",
   },
 };
@@ -51,11 +44,10 @@ const HeroCarousel = () => {
 
   return (
     <section
-  id="home"
-  data-page-hero
-  className="relative min-h-screen overflow-hidden bg-slate-950"
->
-      {/* Video background */}
+      id="home"
+      data-page-hero
+      className="relative min-h-screen overflow-hidden bg-slate-950"
+    >
       <video
         className="absolute inset-0 h-full w-full object-cover"
         autoPlay
@@ -64,18 +56,12 @@ const HeroCarousel = () => {
         playsInline
         preload="auto"
         aria-label={t.videoAriaLabel}
-        poster="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop"
       >
-        <source
-          src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4"
-          type="video/mp4"
-        />
+        <source src={heroVideo} type="video/mp4" />
       </video>
 
-      {/* Overlay principal */}
       <div className="absolute inset-0 bg-black/55" />
 
-      {/* Lumières décoratives */}
       <div className="absolute inset-0">
         <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
         <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-sky-500/20 blur-3xl" />
@@ -102,7 +88,7 @@ const HeroCarousel = () => {
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
               <a
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-xl bg-[#206687]  px-6 py-3 text-base font-semibold text-white shadow-xl transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
+                className="inline-flex items-center justify-center rounded-xl bg-[#206687] px-6 py-3 text-base font-semibold text-white shadow-xl transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
               >
                 {t.primaryCta}
               </a>
@@ -135,7 +121,6 @@ const HeroCarousel = () => {
         </div>
       </div>
 
-      {/* Dégradé bas */}
       <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950 to-transparent" />
     </section>
   );
