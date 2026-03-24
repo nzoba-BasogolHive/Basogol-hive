@@ -8,7 +8,7 @@ const translations = {
     title: "Des réalisations pensées pour créer de l’impact, de la clarté et de la valeur",
     description:
       "Nous réunissons stratégie, design et exécution pour créer des projets qui traduisent une vision forte. Explorez nos réalisations marketing et technologiques à travers une sélection construite avec exigence.",
-    primaryCta: "Voir les projets",
+    primaryCta: "Qui somme nous",
     secondaryCta: "Nous contacter",
     floatingLabel: "Sélection",
     cardTitle: "Des projets conçus avec exigence",
@@ -28,7 +28,7 @@ const translations = {
     title: "Projects designed to create impact, clarity and long-term value",
     description:
       "We bring strategy, design and execution together to craft projects that express a strong vision. Explore our marketing and technology work through a curated selection built with high standards.",
-    primaryCta: "View projects",
+    primaryCta: "Who we are",
     secondaryCta: "Contact us",
     floatingLabel: "Selection",
     cardTitle: "Projects crafted with high standards",
@@ -282,7 +282,7 @@ const PortfolioHeroCarousel = () => {
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <a
-                href="#portfolio-showcase"
+                href="/about"
                 className="pfh-btn-primary inline-flex items-center justify-center gap-2 rounded-[10px] px-7 py-3.5 text-sm font-semibold"
                 style={{ fontFamily: "Literata, serif" }}
               >

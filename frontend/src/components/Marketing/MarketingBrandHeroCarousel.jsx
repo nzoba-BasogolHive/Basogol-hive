@@ -230,7 +230,7 @@ const MarketingBrandHeroCarousel = () => {
             {/* Boutons */}
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
-                href="#marketing-brand-content"
+                href="/portfolio"
                 className="mb-btn-primary inline-flex items-center justify-center rounded-[10px] px-7 py-3.5 text-sm"
                 style={{ fontFamily: "Literata, serif" }}
               >

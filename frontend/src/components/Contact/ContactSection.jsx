@@ -22,8 +22,8 @@ const translations = {
     locationLabel: "Adresse",
     phoneLabel: "Téléphone",
     emailValue: "contact@basogolhive.com",
-    locationValue: "Kinshasa, RDC",
-    phoneValue: "+243 000 000 000",
+    locationValue: "Douala, Cameroun",
+    phoneValue: "+237 000 000 000",
     bottomTitle: "Construisons quelque chose de fort ensemble",
     bottomDescription:
       "Chaque collaboration commence par une conversation simple. Faites-nous part de votre besoin et donnons forme à une solution utile, élégante et durable.",

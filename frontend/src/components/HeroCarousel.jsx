@@ -101,14 +101,14 @@ const HeroCarousel = () => {
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
               <a
-                href="#contact"
+                href="/contact"
                 className="inline-flex items-center justify-center rounded-xl bg-[#206687]  px-6 py-3 text-base font-semibold text-white shadow-xl transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
               >
                 {t.primaryCta}
               </a>
 
               <a
-                href="#portfolio"
+                href="/portfolio"
                 className="inline-flex items-center justify-center rounded-xl border border-white/25 bg-white/10 px-6 py-3 text-base font-semibold text-white backdrop-blur-sm transition duration-300 hover:bg-white/20"
               >
                 {t.secondaryCta}

@@ -286,7 +286,7 @@ const TechnologyHeroCarousel = () => {
             {/* Boutons */}
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <a
-                href="technology-content"
+                href="/portfolio"
                 className="th-btn-primary inline-flex items-center justify-center rounded-[10px] px-7 py-3.5 text-sm font-semibold"
                 style={{ fontFamily: "Literata, serif" }}
               >

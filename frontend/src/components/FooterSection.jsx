@@ -17,11 +17,11 @@ const translations = {
   fr: {
     brandSubtitle: "Studio Tech & Créatif",
     navLinks: [
-      { label: "Accueil", href: "#home" },
-      { label: "Marketing & Marque", href: "#marketing-brand" },
-      { label: "Technologie", href: "#technology" },
-      { label: "Processus", href: "#process" },
-      { label: "À propos", href: "#about" },
+      { label: "Accueil", href: "/" },
+      { label: "Marketing & Marque", href: "/marketing-brand" },
+      { label: "Technologie", href: "/technology" },
+      { label: "Processus", href: "/process" },
+      { label: "À propos", href: "/about" },
     ],
     marketingTitle: "Marketing & Brand",
     marketingItems: [

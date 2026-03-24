@@ -13,7 +13,7 @@ const translations = {
       "Nous accompagnons les marques avec des solutions créatives, stratégiques et visuelles pensées pour renforcer leur présence et leur impact.",
     serviceLabel: "Service",
     learnMore: "En savoir plus",
-    discover: "Découvrir",
+    discover: "Nous contacter",
     approachLabel: "Notre approche",
     approachTitle:
       "Créativité, stratégie et performance au service de votre marque",
@@ -26,7 +26,7 @@ const translations = {
       "We support brands with creative, strategic and visual solutions designed to strengthen their presence and impact.",
     serviceLabel: "Service",
     learnMore: "Learn more",
-    discover: "Discover",
+    discover: "Contact us",
     approachLabel: "Our approach",
     approachTitle:
       "Creativity, strategy and performance at the service of your brand",
@@ -50,8 +50,8 @@ const ServiceCard = ({ service, index, visible, t, lang }) => {
     getLocalizedValue(service.heroDescription, lang);
 
   return (
-    <Link
-      to={`/marketing-brand/${service.slug}`}
+    <a
+       href="/contact"
       className="block"
       style={{ textDecoration: "none" }}
     >
@@ -233,7 +233,7 @@ const ServiceCard = ({ service, index, visible, t, lang }) => {
           </div>
         </div>
       </div>
-    </Link>
+    </a>
   );
 };
 

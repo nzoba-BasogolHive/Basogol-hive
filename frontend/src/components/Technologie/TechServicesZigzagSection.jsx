@@ -13,7 +13,7 @@ const translations = {
     description:
       "Nous concevons, développons et maintenons des solutions digitales fiables et performantes adaptées à vos objectifs et à votre croissance.",
     learnMore: "En savoir plus",
-    discover: "Découvrir",
+    discover: "Nous contacter",
     service: "Service",
     tech: "Tech",
     stats: [
@@ -32,7 +32,7 @@ const translations = {
     description:
       "We design, develop and maintain reliable and high-performing digital solutions tailored to your goals and growth.",
     learnMore: "Learn more",
-    discover: "Discover",
+    discover: "Contact us",
     service: "Service",
     tech: "Tech",
     stats: [
@@ -62,8 +62,8 @@ const TechServiceCard = ({ service, index, visible, t, lang }) => {
     getLocalizedValue(service.heroDescription, lang);
 
   return (
-    <Link
-      to={`/technology/${service.slug}`}
+    <a
+      href="/contact"
       className="block"
       style={{ textDecoration: "none" }}
     >
@@ -272,7 +272,7 @@ const TechServiceCard = ({ service, index, visible, t, lang }) => {
           </div>
         </div>
       </div>
-    </Link>
+    </a>
   );
 };
 

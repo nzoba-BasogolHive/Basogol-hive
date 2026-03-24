@@ -3,6 +3,8 @@ import { useLanguage } from "../LanguageContext";
 import unionVisual from "../../assets/Union1.png";
 import polygonShape from "../../assets/Polygon7.png";
 import introVideo from "../../assets/mixkit.mp4";
+import { useNavigate } from "react-router-dom";
+
 
 const translations = {
   fr: {
@@ -28,7 +30,7 @@ const translations = {
 const AboutIntroSection = () => {
   const { lang } = useLanguage();
   const t = translations[lang] || translations.fr;
-
+const navigate = useNavigate();
   const sectionRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -207,7 +209,9 @@ const AboutIntroSection = () => {
 
             {/* Boutons glassmorphisme */}
             <div className="mt-8 flex flex-wrap gap-3">
+              
               <button
+               onClick={() => navigate("/")}
                 type="button"
                 className="glass-btn-primary rounded-[9px] px-6 py-[10px] text-[13px] font-semibold"
                 style={{ fontFamily: "Literata, serif" }}
@@ -215,6 +219,7 @@ const AboutIntroSection = () => {
                 {t.cta1}
               </button>
               <button
+              onClick={() => navigate("/contact")}
                 type="button"
                 className="glass-btn-secondary rounded-[9px] px-6 py-[10px] text-[13px] font-semibold"
                 style={{ fontFamily: "Literata, serif" }}

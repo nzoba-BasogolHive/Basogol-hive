@@ -169,14 +169,14 @@ const AboutHeroSection = () => {
           {/* Boutons */}
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
-              href="#about-story"
+              href="/portfolio"
               className="hero-btn-primary inline-flex min-w-[220px] items-center justify-center rounded-[10px] px-7 py-3.5 text-sm font-semibold"
               style={{ fontFamily: "Literata, serif" }}
             >
               {t.primaryCta}
             </a>
             <a
-              href="#contact"
+              href="/contact"
               className="hero-btn-secondary inline-flex min-w-[170px] items-center justify-center rounded-[10px] px-7 py-3.5 text-sm font-semibold"
               style={{ fontFamily: "Literata, serif" }}
             >

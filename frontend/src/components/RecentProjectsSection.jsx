@@ -412,7 +412,7 @@ const RecentProjectsSection = () => {
           {/* ── CTA ── */}
           <div className="mt-8 flex justify-end pr-2 sm:pr-6">
             <a
-              href="#portfolio"
+              href="/portfolio"
               className="rp-cta inline-flex items-center gap-2 rounded-[10px] px-6 py-3 text-sm font-semibold text-white"
               style={{ fontFamily: "Literata, serif" }}
             >

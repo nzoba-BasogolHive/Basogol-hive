@@ -6,6 +6,7 @@ import {
   Sparkles,
   LayoutGrid,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useLanguage } from "../LanguageContext";
 import leftOutlineShape from "../../assets/Union0.png";
 import rightSoftShape from "../../assets/Group14.png";
@@ -23,10 +24,13 @@ const translations = {
     featuredLabel: "Projet en avant",
     metricLabel: "Impact",
     marketing: {
-      introTitle: "Des projets marketing pensés pour renforcer la présence et la perception d’une marque",
+      introTitle:
+        "Des projets marketing pensés pour renforcer la présence et la perception d’une marque",
       introDescription:
         "Nous construisons des univers, des récits et des dispositifs visuels capables de traduire une vision claire. Chaque projet cherche l’équilibre entre cohérence stratégique, force esthétique et lisibilité.",
       featured: {
+        slug: "strategie-marketing",
+        type: "marketing-brand",
         category: "Brand Strategy",
         title: "Repositionnement global d’une marque lifestyle",
         description:
@@ -37,24 +41,32 @@ const translations = {
       },
       projects: [
         {
+          slug: "strategie-marketing",
+          type: "marketing-brand",
           category: "Campaign",
           title: "Lancement éditorial et identité de campagne",
           image:
             "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80",
         },
         {
+          slug: "marketing-contenu",
+          type: "marketing-brand",
           category: "Brand Content",
           title: "Système visuel pour contenu de marque",
           image:
             "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80",
         },
         {
+          slug: "reseaux-sociaux",
+          type: "marketing-brand",
           category: "Social Direction",
           title: "Direction créative pour présence sociale",
           image:
             "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80",
         },
         {
+          slug: "identite-de-marque",
+          type: "marketing-brand",
           category: "Visual Identity",
           title: "Refonte d’identité pour marque premium",
           image:
@@ -63,10 +75,13 @@ const translations = {
       ],
     },
     technology: {
-      introTitle: "Des solutions technologiques conçues pour la fluidité, la performance et la durabilité",
+      introTitle:
+        "Des solutions technologiques conçues pour la fluidité, la performance et la durabilité",
       introDescription:
         "Nous développons des expériences et des produits qui allient structure technique, précision fonctionnelle et qualité visuelle. Chaque projet vise une exécution fiable, claire et évolutive.",
       featured: {
+        slug: "developpement-web",
+        type: "technology",
         category: "Platform Design",
         title: "Conception d’une plateforme digitale orientée performance",
         description:
@@ -77,24 +92,32 @@ const translations = {
       },
       projects: [
         {
+          slug: "developpement-web",
+          type: "technology",
           category: "Web Platform",
           title: "Interface produit pensée pour l’usage",
           image:
             "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80",
         },
         {
+          slug: "dashboard-analytique",
+          type: "technology",
           category: "Dashboard",
           title: "Système de pilotage et visualisation",
           image:
             "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1400&q=80",
         },
         {
+          slug: "ux-architecture",
+          type: "technology",
           category: "UX Architecture",
           title: "Parcours structurés pour service digital",
           image:
             "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1400&q=80",
         },
         {
+          slug: "product-build",
+          type: "technology",
           category: "Product Build",
           title: "Développement d’un environnement sur mesure",
           image:
@@ -114,10 +137,13 @@ const translations = {
     featuredLabel: "Featured project",
     metricLabel: "Impact",
     marketing: {
-      introTitle: "Marketing projects designed to strengthen a brand’s presence and perception",
+      introTitle:
+        "Marketing projects designed to strengthen a brand’s presence and perception",
       introDescription:
         "We build worlds, narratives and visual systems capable of expressing a clear vision. Each project seeks the balance between strategic consistency, aesthetic strength and readability.",
       featured: {
+        slug: "strategie-marketing",
+        type: "marketing-brand",
         category: "Brand Strategy",
         title: "Global repositioning for a lifestyle brand",
         description:
@@ -128,24 +154,32 @@ const translations = {
       },
       projects: [
         {
+          slug: "strategie-marketing",
+          type: "marketing-brand",
           category: "Campaign",
           title: "Editorial launch and campaign identity",
           image:
             "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80",
         },
         {
+          slug: "marketing-contenu",
+          type: "marketing-brand",
           category: "Brand Content",
           title: "Visual system for brand content",
           image:
             "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80",
         },
         {
+          slug: "reseaux-sociaux",
+          type: "marketing-brand",
           category: "Social Direction",
           title: "Creative direction for social presence",
           image:
             "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80",
         },
         {
+          slug: "identite-de-marque",
+          type: "marketing-brand",
           category: "Visual Identity",
           title: "Premium brand identity redesign",
           image:
@@ -154,10 +188,13 @@ const translations = {
       ],
     },
     technology: {
-      introTitle: "Technology solutions designed for fluidity, performance and durability",
+      introTitle:
+        "Technology solutions designed for fluidity, performance and durability",
       introDescription:
         "We build experiences and products that combine technical structure, functional precision and visual quality. Each project aims for reliable, clear and scalable execution.",
       featured: {
+        slug: "developpement-web",
+        type: "technology",
         category: "Platform Design",
         title: "Design of a performance-oriented digital platform",
         description:
@@ -168,24 +205,32 @@ const translations = {
       },
       projects: [
         {
+          slug: "developpement-web",
+          type: "technology",
           category: "Web Platform",
           title: "Product interface designed for usage",
           image:
             "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80",
         },
         {
+          slug: "dashboard-analytique",
+          type: "technology",
           category: "Dashboard",
           title: "Monitoring and visualization system",
           image:
             "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1400&q=80",
         },
         {
+          slug: "ux-architecture",
+          type: "technology",
           category: "UX Architecture",
           title: "Structured journeys for a digital service",
           image:
             "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1400&q=80",
         },
         {
+          slug: "product-build",
+          type: "technology",
           category: "Product Build",
           title: "Custom digital environment development",
           image:
@@ -198,7 +243,10 @@ const translations = {
 
 const ProjectCard = ({ project, t }) => {
   return (
-    <article className="group relative overflow-hidden rounded-[24px] bg-white/55 backdrop-blur-[12px] border border-white/60 shadow-[0_18px_40px_rgba(15,23,42,0.08)]">
+    <Link
+      to={`/${project.type}/${project.slug}`}
+      className="group relative block overflow-hidden rounded-[24px] border border-white/60 bg-white/55 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur-[12px]"
+    >
       <div className="relative h-[290px] overflow-hidden">
         <img
           src={project.image}
@@ -236,7 +284,7 @@ const ProjectCard = ({ project, t }) => {
           </div>
         </div>
       </div>
-    </article>
+    </Link>
   );
 };
 
@@ -455,7 +503,7 @@ const PortfolioShowcaseSection = () => {
 
               <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
                 {activeData.projects.map((project) => (
-                  <ProjectCard key={project.title} project={project} t={t} />
+                  <ProjectCard key={project.slug} project={project} t={t} />
                 ))}
               </div>
             </div>
@@ -522,14 +570,14 @@ const PortfolioShowcaseSection = () => {
                   </div>
 
                   <div className="mt-7">
-                    <button
-                      type="button"
+                    <Link
+                      to={`/${activeData.featured.type}/${activeData.featured.slug}`}
                       className="inline-flex items-center gap-2 rounded-[12px] bg-[#1f6c8c] px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(31,108,140,0.24)] transition-transform duration-300 hover:translate-y-[-2px]"
                       style={{ fontFamily: "Literata, serif" }}
                     >
                       {t.viewProject}
                       <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
