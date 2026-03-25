@@ -10,7 +10,7 @@ const navContent = {
     languageLabel: "Langue",
     navItems: [
       { key: "home", label: "Accueil", href: "/", type: "route" },
-      { key: "marketing", label: "Marketing & Marque", href: "/marketing-brand", type: "route" },
+      { key: "marketing", label: "Marketing & Brand", href: "/marketing-brand", type: "route" },
       { key: "technology", label: "Technologie", href: "/technology", type: "route" },
       { key: "portfolio", label: "Portfolio", href: "/portfolio", type: "route" },
       { key: "process", label: "Processus", href: "/process",  type: "route"},

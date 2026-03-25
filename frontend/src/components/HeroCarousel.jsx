@@ -4,7 +4,7 @@ import heroVideo from "../assets/Hirositewebdemo.mp4";
 
 const translations = {
   fr: {
-    badge: "Technologie & Marketing",
+    badge: "Tech & studio Creatif",
     title:
       "Nous créons des expériences digitales et visuelles qui donnent une nouvelle dimension à votre marque.",
     description:
@@ -21,7 +21,7 @@ const translations = {
   },
 
   en: {
-    badge: "Technology & Marketing",
+    badge: "Tech & Creative studio",
     title:
       "We create digital and visual experiences that give a new dimension to your brand.",
     description:

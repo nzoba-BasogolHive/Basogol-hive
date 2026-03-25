@@ -15,15 +15,15 @@ import { useLanguage } from "./LanguageContext";
 
 const translations = {
   fr: {
-    brandSubtitle: "Technologie & Marketing",
+    brandSubtitle: "Tech & studio Creatif",
     navLinks: [
       { label: "Accueil", href: "/" },
-      { label: "Marketing & Marque", href: "/marketing-brand" },
+      { label: "Marketing & Brand", href: "/marketing-brand" },
       { label: "Technologie", href: "/technology" },
       { label: "Processus", href: "/process" },
       { label: "À propos", href: "/about" },
     ],
-    marketingTitle: "Marketing & Marque",
+    marketingTitle: "Marketing & Brand",
     marketingItems: [
       "Stratégie de marque & positionnement",
       "Recherche & insights",
@@ -53,12 +53,12 @@ const translations = {
       { label: "WhatsApp", href: "#" },
       { label: "YouTube", href: "#" },
     ],
-    copyright: "© 2026 Basogol-Hive. Tous droits réservés.",
+    copyright: "© 20100 Basogol-Hive. Tous droits réservés.",
   },
   en: {
-    brandSubtitle: "Technology & Marketing",
+    brandSubtitle: "Tech & Creative studio",
     navLinks: [
-      { label: "Home", href: "#home" },
+      { label: "Home", href: "/" },
       { label: "Marketing & Brand", href: "/marketing-brand" },
       { label: "Technology", href: "/technology" },
       { label: "Process", href: "/process" },
@@ -94,7 +94,7 @@ const translations = {
       { label: "WhatsApp", href: "#" },
       { label: "YouTube", href: "#" },
     ],
-    copyright: "© 2025 Basogol-Hive. All rights reserved.",
+    copyright: "© 20100 Basogol-Hive. All rights reserved.",
   },
 };
 
