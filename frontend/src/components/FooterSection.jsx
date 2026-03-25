@@ -94,7 +94,7 @@ const translations = {
       { label: "WhatsApp", href: "#" },
       { label: "YouTube", href: "#" },
     ],
-    copyright: "© 2025 Basogol Hive. All rights reserved.",
+    copyright: "© 2025 Basogol-Hive. All rights reserved.",
   },
 };
 
