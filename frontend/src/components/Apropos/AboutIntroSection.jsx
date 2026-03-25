@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLanguage } from "../LanguageContext";
 import unionVisual from "../../assets/Union1.png";
 import polygonShape from "../../assets/Polygon7.png";
-import introVideo from "../../assets/mixkit.mp4";
+import introVideoFr from "../../assets/IntroBASOGOL-HIVEfrançais.mp4";
+import introVideoEn from "../../assets/IntroBASOGOL-HIVEPréviewanglaise.mp4";
 import { useNavigate } from "react-router-dom";
-
 
 const translations = {
   fr: {
@@ -30,18 +30,46 @@ const translations = {
 const AboutIntroSection = () => {
   const { lang } = useLanguage();
   const t = translations[lang] || translations.fr;
-const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const sectionRef = useRef(null);
+  const videoRef = useRef(null);
+
   const [visible, setVisible] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const currentVideo = lang === "fr" ? introVideoFr : introVideoEn;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
       { threshold: 0.15 }
     );
+
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.load();
+      setIsPlaying(false);
+    }
+  }, [lang]);
+
+  const handlePlayVideo = async () => {
+    if (!videoRef.current) return;
+
+    try {
+      await videoRef.current.play();
+      setIsPlaying(true);
+    } catch (error) {
+      console.error("Impossible de lancer la vidéo :", error);
+    }
+  };
 
   return (
     <section
@@ -49,7 +77,6 @@ const navigate = useNavigate();
       className="section-shell relative overflow-hidden bg-[#f7f7f5]"
     >
       <style>{`
-        /* ── halo de fond ── */
         .about-halo {
           background: radial-gradient(
             ellipse 70% 55% at 55% 40%,
@@ -58,7 +85,6 @@ const navigate = useNavigate();
           );
         }
 
-        /* ── bouton glassmorphisme primaire ── */
         .glass-btn-primary {
           background: linear-gradient(135deg, rgba(31,108,140,0.82) 0%, rgba(42,144,184,0.78) 100%);
           backdrop-filter: blur(12px) saturate(150%);
@@ -78,7 +104,6 @@ const navigate = useNavigate();
             0 1px 0 rgba(255,255,255,0.35) inset;
         }
 
-        /* ── bouton glassmorphisme secondaire (contour) ── */
         .glass-btn-secondary {
           background: rgba(255,255,255,0.18);
           backdrop-filter: blur(12px) saturate(140%);
@@ -99,16 +124,14 @@ const navigate = useNavigate();
             0 1px 0 rgba(255,255,255,0.55) inset;
         }
 
-        /* ── image décorative ── */
         .union-float {
           animation: unionFloat 5s ease-in-out infinite;
         }
         @keyframes unionFloat {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50%       { transform: translateY(-10px) rotate(1.5deg); }
+          50% { transform: translateY(-10px) rotate(1.5deg); }
         }
 
-        /* ── cadre vidéo glassmorphisme ── */
         .video-glass-frame {
           background: rgba(255,255,255,0.22);
           backdrop-filter: blur(14px) saturate(150%);
@@ -119,7 +142,6 @@ const navigate = useNavigate();
             0 1px 0 rgba(255,255,255,0.60) inset;
         }
 
-        /* ── badge lecture ── */
         .play-badge {
           width: 52px;
           height: 52px;
@@ -139,7 +161,6 @@ const navigate = useNavigate();
           box-shadow: 0 8px 28px rgba(0,0,0,0.24);
         }
 
-        /* ── entrée texte ── */
         .text-entry {
           opacity: 0;
           transform: translateY(24px);
@@ -150,7 +171,6 @@ const navigate = useNavigate();
           transform: translateY(0);
         }
 
-        /* ── entrée image ── */
         .img-entry {
           opacity: 0;
           transform: translateX(30px) scale(0.96);
@@ -161,7 +181,6 @@ const navigate = useNavigate();
           transform: translateX(0) scale(1);
         }
 
-        /* ── entrée vidéo ── */
         .video-entry {
           opacity: 0;
           transform: translateY(36px);
@@ -173,15 +192,10 @@ const navigate = useNavigate();
         }
       `}</style>
 
-      {/* Halo de fond */}
       <div className="about-halo pointer-events-none absolute inset-0 z-0" />
 
       <div className="page-container relative z-10">
-
-        {/* ── Bloc haut ── */}
         <div className="relative grid grid-cols-1 items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-
-          {/* Guillemet décoratif */}
           <div className="pointer-events-none absolute right-[1060px] top-[-110px] hidden opacity-[0.06] lg:block">
             <div
               className="text-[490px] font-black leading-none text-slate-400 xl:text-[950px]"
@@ -191,7 +205,6 @@ const navigate = useNavigate();
             </div>
           </div>
 
-          {/* Texte + boutons */}
           <div className={`text-entry relative z-10 max-w-xl pt-8 lg:pl-10 lg:pt-12 xl:pl-16 ${visible ? "show" : ""}`}>
             <h2
               className="text-4xl font-bold leading-tight text-black sm:text-5xl"
@@ -207,19 +220,18 @@ const navigate = useNavigate();
               {t.description}
             </p>
 
-            {/* Boutons glassmorphisme */}
             <div className="mt-8 flex flex-wrap gap-3">
-              
               <button
-               onClick={() => navigate("/")}
+                onClick={() => navigate("/")}
                 type="button"
                 className="glass-btn-primary rounded-[9px] px-6 py-[10px] text-[13px] font-semibold"
                 style={{ fontFamily: "Literata, serif" }}
               >
                 {t.cta1}
               </button>
+
               <button
-              onClick={() => navigate("/contact")}
+                onClick={() => navigate("/contact")}
                 type="button"
                 className="glass-btn-secondary rounded-[9px] px-6 py-[10px] text-[13px] font-semibold"
                 style={{ fontFamily: "Literata, serif" }}
@@ -229,7 +241,6 @@ const navigate = useNavigate();
             </div>
           </div>
 
-          {/* Image décorative */}
           <div className={`img-entry relative flex items-center justify-center lg:justify-end ${visible ? "show" : ""}`}>
             <img
               src={unionVisual}
@@ -239,10 +250,7 @@ const navigate = useNavigate();
           </div>
         </div>
 
-        {/* ── Bloc bas — vidéo ── */}
-        <div className={`video-entry relative mt-14 lg:mt-16 min-h-[320px] sm:min-h-[430px] lg:min-h-[560px] ${visible ? "show" : ""}`}>
-
-          {/* Forme polygone derrière */}
+        <div className={`video-entry relative mt-14 min-h-[320px] sm:min-h-[430px] lg:mt-16 lg:min-h-[560px] ${visible ? "show" : ""}`}>
           <img
             src={polygonShape}
             alt=""
@@ -255,32 +263,35 @@ const navigate = useNavigate();
             "
           />
 
-          {/* Cadre vidéo glassmorphisme */}
           <div className="video-glass-frame relative z-10 w-full rounded-[12px] p-[5px]">
-            <div className="overflow-hidden rounded-[8px]">
+            <div className="relative overflow-hidden rounded-[8px]">
               <video
+                ref={videoRef}
                 className="block h-[280px] w-full object-cover sm:h-[380px] lg:h-[580px] xl:h-[720px]"
-                autoPlay
-                muted
-                loop
+                controls={isPlaying}
                 playsInline
-                preload="auto"
+                preload="metadata"
                 aria-label={t.videoLabel}
               >
-                <source src={introVideo} type="video/mp4" />
+                <source src={currentVideo} type="video/mp4" />
                 Votre navigateur ne supporte pas la lecture vidéo.
               </video>
-            </div>
 
-            {/* Badge play glassmorphisme */}
-            <div className="pointer-events-none absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 lg:block">
-              <div className="play-badge pointer-events-auto">
-                <div className="ml-1 h-0 w-0 border-b-[11px] border-l-[18px] border-t-[11px] border-b-transparent border-l-white border-t-transparent opacity-90" />
-              </div>
+              {!isPlaying && (
+                <button
+                  type="button"
+                  onClick={handlePlayVideo}
+                  className="absolute left-1/2 top-1/2 z-20 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+                  aria-label={t.videoLabel}
+                >
+                  <div className="play-badge">
+                    <div className="ml-1 h-0 w-0 border-b-[11px] border-l-[18px] border-t-[11px] border-b-transparent border-l-white border-t-transparent opacity-90" />
+                  </div>
+                </button>
+              )}
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );

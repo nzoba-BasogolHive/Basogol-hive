@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLanguage } from "./LanguageContext";
-import heroVideo from "../assets/Hirositewebdemo.mp4";
+import heroVideo from "../assets/HeroBASOGOL.mp4";
 
 const translations = {
   fr: {
