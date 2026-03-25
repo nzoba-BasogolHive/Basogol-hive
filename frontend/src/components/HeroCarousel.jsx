@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLanguage } from "./LanguageContext";
-import heroVideo from "../assets/Hirositewebdemo.mp4"; // adapte le chemin
+import heroVideo from "../assets/Hirositewebdemo.mp4";
 
 const translations = {
   fr: {
@@ -42,13 +42,96 @@ const HeroCarousel = () => {
   const { lang } = useLanguage();
   const t = translations[lang] || translations.fr;
 
+  const sectionRef = useRef(null);
+  const videoRef = useRef(null);
+
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    video.playsInline = true;
+    video.volume = 1;
+
+    video.play().catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const enableSoundOnFirstInteraction = async () => {
+      try {
+        video.muted = false;
+        video.volume = 1;
+        await video.play();
+        setHasUserInteracted(true);
+      } catch (error) {
+        console.error("Impossible d’activer le son :", error);
+      }
+
+      window.removeEventListener("click", enableSoundOnFirstInteraction);
+      window.removeEventListener("touchstart", enableSoundOnFirstInteraction);
+      window.removeEventListener("keydown", enableSoundOnFirstInteraction);
+    };
+
+    window.addEventListener("click", enableSoundOnFirstInteraction, {
+      once: true,
+    });
+    window.addEventListener("touchstart", enableSoundOnFirstInteraction, {
+      once: true,
+    });
+    window.addEventListener("keydown", enableSoundOnFirstInteraction, {
+      once: true,
+    });
+
+    return () => {
+      window.removeEventListener("click", enableSoundOnFirstInteraction);
+      window.removeEventListener("touchstart", enableSoundOnFirstInteraction);
+      window.removeEventListener("keydown", enableSoundOnFirstInteraction);
+    };
+  }, []);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const video = videoRef.current;
+
+    if (!section || !video) return;
+
+    const observer = new IntersectionObserver(
+      async ([entry]) => {
+        try {
+          if (entry.isIntersecting) {
+            video.muted = !hasUserInteracted;
+            await video.play();
+          } else {
+            video.pause();
+          }
+        } catch (error) {
+          console.error("Erreur vidéo :", error);
+        }
+      },
+      {
+        threshold: 0.35,
+      }
+    );
+
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  }, [hasUserInteracted]);
+
   return (
     <section
+      ref={sectionRef}
       id="home"
       data-page-hero
       className="relative min-h-screen overflow-hidden bg-slate-950"
     >
       <video
+        ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
         autoPlay
         muted
