@@ -162,11 +162,11 @@ const Navbar = () => {
                 />
               </div>
 
-              <div className="min-w-0">
-                <p className="truncate text-sm font-semibold text-white sm:text-base">
-                  Basogol-Hive
-                </p>
-              </div>
+              <div className="min-w-0" translate="no">
+              <p className="notranslate truncate text-sm font-semibold text-white sm:text-base">
+                Basogol-Hive
+              </p>
+            </div>
             </Link>
 
             <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 rounded-xl border border-white/15 bg-white/5 px-2 py-2 xl:mx-6 xl:flex">
