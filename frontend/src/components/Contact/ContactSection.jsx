@@ -21,7 +21,10 @@ const translations = {
     emailLabel: "Email",
     locationLabel: "Adresse",
     phoneLabel: "Téléphone",
-    emailValue: "projects-tech@basogolhive.com",
+    emailValue: [
+    "projects-tech@basogolhive.com",
+    "projects-studio@basogolhive.com",
+  ],
     locationValue: "Douala, Cameroun",
     phoneValue: "+237 000 000 000",
     bottomTitle: "Construisons quelque chose de fort ensemble",
@@ -44,7 +47,10 @@ const translations = {
     emailLabel: "Email",
     locationLabel: "Location",
     phoneLabel: "Phone",
-    emailValue: "contact@basogolhive.com",
+    emailValue: [
+    "projects-tech@basogolhive.com",
+    "projects-studio@basogolhive.com",
+  ],
     locationValue: "Kinshasa, DRC",
     phoneValue: "+243 000 000 000",
     bottomTitle: "Let's build something meaningful together",
@@ -335,12 +341,20 @@ const ContactSection = () => {
                     >
                       {label}
                     </div>
-                    <div
-                      className="mt-0.5 text-sm font-medium text-white/90"
-                      style={{ fontFamily: "Literata, serif" }}
-                    >
-                      {value}
-                    </div>
+                   <div
+  className="mt-0.5 text-sm font-medium text-white/90"
+  style={{ fontFamily: "Literata, serif" }}
+>
+  {Array.isArray(value) ? (
+    <div className="space-y-1">
+      {value.map((line, index) => (
+        <div key={index}>{line}</div>
+      ))}
+    </div>
+  ) : (
+    value
+  )}
+</div>
                   </div>
                 </div>
               ))}
