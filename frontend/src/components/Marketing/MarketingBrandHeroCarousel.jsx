@@ -5,14 +5,14 @@ import brandIcon from "../../assets/ColorSwatchOutline.png";
 
 const translations = {
   fr: {
-    title: "Marketing & Brand",
+    title: "Marketing & Marque",
     description:
       "Nous aidons les marques à construire une identité forte, une présence cohérente et une communication capable de créer de l'impact. De la stratégie au contenu, nous concevons des expériences qui renforcent votre image et votre visibilité.",
     primaryCta: "Découvrir",
     secondaryCta: "Nous contacter",
     imageAlt: "Hero de la page Marketing & Brand",
     brandIconAlt: "Icône marketing et marque",
-    badge: "Marketing & Brand",
+    badge: "Marketing & Marque",
   },
   en: {
     title: "Marketing & Brand",

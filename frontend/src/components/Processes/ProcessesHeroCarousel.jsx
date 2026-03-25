@@ -4,7 +4,7 @@ import { useLanguage } from "../LanguageContext";
 
 const translations = {
   fr: {
-    badge: "Notre process",
+    badge: "Notre Processus",
     title: "Une méthode claire pour concevoir, structurer et faire avancer chaque projet",
     description:
       "Nous accompagnons chaque mission avec une approche rigoureuse et fluide. De l’analyse initiale à la livraison finale, notre process garantit une vision claire, des choix cohérents et une exécution pensée pour durer.",

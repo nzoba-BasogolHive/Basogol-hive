@@ -6,7 +6,7 @@ import sideCardBottom from "../../assets/Group9.png";
 
 const translations = {
   fr: {
-    title: "Technology",
+    title: "Technologie",
     description:
       "Nous développons des solutions digitales modernes, fiables et évolutives pour transformer les idées en expériences concrètes. De la conception technique au déploiement, nous créons des outils performants adaptés à vos objectifs.",
     primaryCta: "Découvrir",
@@ -15,7 +15,7 @@ const translations = {
     techIconAlt: "Icône technologique",
     topCardAlt: "Visuel technologique secondaire",
     bottomCardAlt: "Visuel technologique complémentaire",
-    badge: "Technology",
+    badge: "Technologie",
   },
   en: {
     title: "Technology",
