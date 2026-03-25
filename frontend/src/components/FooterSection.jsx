@@ -53,7 +53,7 @@ const translations = {
       { label: "WhatsApp", href: "#" },
       { label: "YouTube", href: "#" },
     ],
-    copyright: "© 2026 Basogol Hive. Tous droits réservés.",
+    copyright: "© 2026 Basogol-Hive. Tous droits réservés.",
   },
   en: {
     brandSubtitle: "Technology & Marketing",
