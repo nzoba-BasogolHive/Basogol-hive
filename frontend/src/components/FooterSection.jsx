@@ -23,7 +23,7 @@ const translations = {
       { label: "Processus", href: "/process" },
       { label: "À propos", href: "/about" },
     ],
-    marketingTitle: "Marketing & Brand",
+    marketingTitle: "Marketing & Marque",
     marketingItems: [
       "Stratégie de marque & positionnement",
       "Recherche & insights",
@@ -53,16 +53,16 @@ const translations = {
       { label: "WhatsApp", href: "#" },
       { label: "YouTube", href: "#" },
     ],
-    copyright: "© 2025 Basogol Hive. Tous droits réservés.",
+    copyright: "© 2026 Basogol Hive. Tous droits réservés.",
   },
   en: {
     brandSubtitle: "Tech & Creative Studio",
     navLinks: [
       { label: "Home", href: "#home" },
-      { label: "Marketing & Brand", href: "#marketing-brand" },
-      { label: "Technology", href: "#technology" },
-      { label: "Process", href: "#process" },
-      { label: "About", href: "#about" },
+      { label: "Marketing & Brand", href: "/marketing-brand" },
+      { label: "Technology", href: "/technology" },
+      { label: "Process", href: "/process" },
+      { label: "About", href: "/about" },
     ],
     marketingTitle: "Marketing & Brand",
     marketingItems: [

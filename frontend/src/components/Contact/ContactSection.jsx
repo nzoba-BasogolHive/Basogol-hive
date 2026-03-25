@@ -21,7 +21,7 @@ const translations = {
     emailLabel: "Email",
     locationLabel: "Adresse",
     phoneLabel: "Téléphone",
-    emailValue: "contact@basogolhive.com",
+    emailValue: "projects-tech@basogolhive.com",
     locationValue: "Douala, Cameroun",
     phoneValue: "+237 000 000 000",
     bottomTitle: "Construisons quelque chose de fort ensemble",

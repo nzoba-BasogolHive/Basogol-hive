@@ -5,7 +5,7 @@ import { useLanguage } from "./LanguageContext";
 
 const navContent = {
   fr: {
-    brand: "Studio Tech & Créatif",
+    brand: "Technologie & Marketing",
     contact: "Contact",
     languageLabel: "Langue",
     navItems: [
@@ -18,7 +18,7 @@ const navContent = {
     ],
   },
   en: {
-    brand: "Tech & Creative Studio",
+    brand: "Technology & Marketing",
     contact: "Contact",
     languageLabel: "Language",
     navItems: [

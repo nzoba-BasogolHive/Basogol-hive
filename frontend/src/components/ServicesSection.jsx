@@ -355,9 +355,25 @@ const ServicesSection = () => {
 
         /* Masquer sur mobile / tablette — le logo
            prend de la place, on garde la lisibilité */
-        @media (max-width: 1023px) {
-          .sv-logo-wrap { display: none; }
-        }
+      @media (max-width: 1023px) {
+  .sv-logo-stage {
+    align-items: center;
+    gap: 16px;
+  }
+
+  .sv-logo-wrap {
+    display: block;
+    width: min(52vw, 180px);
+    height: min(52vw, 180px);
+    margin: 0 auto;
+  }
+
+  .sv-logo-video {
+    filter:
+      drop-shadow(0 14px 28px rgba(31,108,140,0.18))
+      drop-shadow(0 4px 10px rgba(31,108,140,0.10));
+  }
+}
       `}</style>
 
       <BlueShape />
