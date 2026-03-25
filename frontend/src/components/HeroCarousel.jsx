@@ -125,23 +125,23 @@ const HeroCarousel = () => {
 
   return (
     <section
-      ref={sectionRef}
-      id="home"
-      data-page-hero
-      className="relative min-h-screen overflow-hidden bg-slate-950"
-    >
-      <video
-        ref={videoRef}
-        className="absolute inset-0 h-full w-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        aria-label={t.videoAriaLabel}
-      >
-        <source src={heroVideo} type="video/mp4" />
-      </video>
+  ref={sectionRef}
+  id="home"
+  data-page-hero
+  className="relative min-h-screen overflow-hidden"
+>
+  <video
+    ref={videoRef}
+    className="absolute inset-0 h-full w-full object-cover"
+    autoPlay
+    muted
+    loop
+    playsInline
+    preload="auto"
+    aria-label={t.videoAriaLabel}
+  >
+    <source src={heroVideo} type="video/mp4" />
+  </video>
 
       <div className="absolute inset-0 bg-black/55" />
 
