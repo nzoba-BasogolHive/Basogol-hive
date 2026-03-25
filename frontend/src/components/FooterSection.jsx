@@ -15,7 +15,7 @@ import { useLanguage } from "./LanguageContext";
 
 const translations = {
   fr: {
-    brandSubtitle: "Studio Tech & Créatif",
+    brandSubtitle: "Technologie & Marketing",
     navLinks: [
       { label: "Accueil", href: "/" },
       { label: "Marketing & Marque", href: "/marketing-brand" },
@@ -56,7 +56,7 @@ const translations = {
     copyright: "© 2026 Basogol Hive. Tous droits réservés.",
   },
   en: {
-    brandSubtitle: "Tech & Creative Studio",
+    brandSubtitle: "Technology & Marketing",
     navLinks: [
       { label: "Home", href: "#home" },
       { label: "Marketing & Brand", href: "/marketing-brand" },
