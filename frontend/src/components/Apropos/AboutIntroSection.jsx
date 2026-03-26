@@ -8,18 +8,40 @@ import { useNavigate } from "react-router-dom";
 
 const translations = {
   fr: {
-    title: "Une approche fondée sur la stratégie, la création et l'impact",
-    description:
-      "Chez Basogol Hive, nous accompagnons les entreprises dans la construction de marques fortes, d'expériences utiles et de solutions durables. Notre approche relie réflexion stratégique, identité visuelle, communication et innovation digitale pour donner vie à des projets cohérents, performants et mémorables.",
+    title: "Là où la technologie, le marketing & le Brandind se relient avec cohérence",
+   description: `
+Basogol-Hive est un studio créatif & tech. 
+Nés des racines, tournés vers le futur, nous avançons avec une organisation en cellules : agiles, spécialisées, parfaitement alignées.
+
+Parce qu’une idée ne vaut que si elle tient, nous construisons la Technology : produits web & mobile, plateformes, expériences digitales.
+
+Et parce qu’un produit ne marque que s’il est compris et désiré, nous façonnons le Marketing & Brand : stratégie, identité, UI/UX, contenus, motion & vidéo.
+
+Ainsi, tout se relie. 
+De l’idée au produit, du produit à l’image. 
+
+One Hive. Many skills.
+`,
     topVisualAlt: "Composition visuelle décorative",
     videoLabel: "Vidéo de présentation de Basogol Hive",
     cta1: "Découvrir",
     cta2: "Nous contacter",
   },
   en: {
-    title: "An approach built on strategy, creativity and impact",
-    description:
-      "At Basogol Hive, we help businesses build strong brands, meaningful experiences and lasting solutions. Our approach connects strategic thinking, visual identity, communication and digital innovation to bring projects to life with clarity, performance and long-term value.",
+    title: "Where technology, marketing and brand come together with clarity",
+   description: `
+Basogol-Hive is a creative & tech studio. 
+Rooted in our origins and driven by the future, we operate through a cell-based organization: agile, specialized, and perfectly aligned.
+
+Because an idea only matters if it stands strong, we build Technology: web & mobile products, platforms, and digital experiences.
+
+And because a product only makes an impact if it is understood and desired, we shape Marketing & Brand: strategy, identity, UI/UX, content, motion & video.
+
+Everything is connected. 
+From idea to product, from product to image.
+
+One Hive. Many skills.
+`,
     topVisualAlt: "Decorative visual composition",
     videoLabel: "Basogol Hive presentation video",
     cta1: "Discover",

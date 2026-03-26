@@ -13,7 +13,7 @@ const navContent = {
       { key: "marketing", label: "Marketing & Brand", href: "/marketing-brand", type: "route" },
       { key: "technology", label: "Technologie", href: "/technology", type: "route" },
       { key: "portfolio", label: "Portfolio", href: "/portfolio", type: "route" },
-      { key: "process", label: "Processus", href: "/process",  type: "route"},
+      { key: "process", label: "Processus", href: "/process", type: "route" },
       { key: "about", label: "À propos", href: "/about", type: "route" },
     ],
   },
@@ -22,11 +22,11 @@ const navContent = {
     contact: "Contact",
     languageLabel: "Language",
     navItems: [
-      { key: "home", label: "Home", href: "/", type: "route"},
+      { key: "home", label: "Home", href: "/", type: "route" },
       { key: "marketing", label: "Marketing & Brand", href: "/marketing-brand", type: "route" },
       { key: "technology", label: "Technology", href: "/technology", type: "route" },
-      { key: "portfolio", label: "Portfolio", href: "/portfolio",  type: "route" },
-      { key: "process", label: "Process", href: "/process", type: "route"},
+      { key: "portfolio", label: "Portfolio", href: "/portfolio", type: "route" },
+      { key: "process", label: "Process", href: "/process", type: "route" },
       { key: "about", label: "About", href: "/about", type: "route" },
     ],
   },
@@ -55,12 +55,31 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    const matchedRouteItem = c.navItems.find(
+    const navContext = location.state?.navContext;
+
+    if (navContext === "portfolio") {
+      setActiveItem("portfolio");
+      return;
+    }
+
+    const matchedExactRouteItem = c.navItems.find(
       (item) => item.type === "route" && item.href === location.pathname
     );
 
-    if (matchedRouteItem) {
-      setActiveItem(matchedRouteItem.key);
+    if (matchedExactRouteItem) {
+      setActiveItem(matchedExactRouteItem.key);
+      return;
+    }
+
+    const matchedPrefixRouteItem = c.navItems.find(
+      (item) =>
+        item.type === "route" &&
+        item.href !== "/" &&
+        location.pathname.startsWith(`${item.href}/`)
+    );
+
+    if (matchedPrefixRouteItem) {
+      setActiveItem(matchedPrefixRouteItem.key);
       return;
     }
 
@@ -75,7 +94,7 @@ const Navbar = () => {
     }
 
     setActiveItem("");
-  }, [location.pathname, location.hash, c.navItems]);
+  }, [location.pathname, location.hash, location.state, c.navItems]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -162,11 +181,11 @@ const Navbar = () => {
                 />
               </div>
 
-              <div className="min-w-0" translate="no">
-              <p className="notranslate truncate text-sm font-semibold text-white sm:text-base">
-                Basogol-Hive
-              </p>
-            </div>
+              <div className="min-w-0 notranslate" translate="no">
+                <p className="truncate text-sm font-semibold text-white sm:text-base">
+                  Basogol-Hive
+                </p>
+              </div>
             </Link>
 
             <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 rounded-xl border border-white/15 bg-white/5 px-2 py-2 xl:mx-6 xl:flex">

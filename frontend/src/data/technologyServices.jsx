@@ -1,99 +1,14 @@
 export const technologyServices = [
   {
-    slug: "developpement-web-mobile",
-    tag: "01",
-    accent: "#1f6c8c",
-    title: {
-      fr: "Développement web & mobile",
-      en: "Web & Mobile Development",
-    },
-    heroTitle: {
-      fr: "Développement web & mobile",
-      en: "Web & Mobile Development",
-    },
-    heroDescription: {
-      fr: "Nous concevons des sites web, applications mobiles et plateformes digitales modernes, rapides et évolutifs, pensés pour offrir une expérience utilisateur irréprochable.",
-      en: "We design modern, fast and scalable websites, mobile applications and digital platforms built to deliver an outstanding user experience.",
-    },
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1800&q=80",
-    category: {
-      fr: "Technologie",
-      en: "Technology",
-    },
-    tags: {
-      fr: ["Web", "Mobile", "Plateforme"],
-      en: ["Web", "Mobile", "Platform"],
-    },
-  },
-
-  {
-    slug: "logiciels-sur-mesure",
-    tag: "02",
-    accent: "#0e5f82",
-    title: {
-      fr: "Logiciels sur mesure",
-      en: "Custom Software",
-    },
-    heroTitle: {
-      fr: "Logiciels sur mesure",
-      en: "Custom Software",
-    },
-    heroDescription: {
-      fr: "Nous développons des logiciels personnalisés pour automatiser vos processus, améliorer votre organisation interne et vous faire gagner du temps au quotidien.",
-      en: "We develop custom software to automate your processes, improve your internal organization and save you time every day.",
-    },
-    image:
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1800&q=80",
-    category: {
-      fr: "Technologie",
-      en: "Technology",
-    },
-    tags: {
-      fr: ["Automatisation", "Logiciel", "Productivité"],
-      en: ["Automation", "Software", "Productivity"],
-    },
-  },
-
-  {
-    slug: "hebergement-infrastructure",
-    tag: "03",
-    accent: "#1a7a9c",
-    title: {
-      fr: "Hébergement & infrastructure",
-      en: "Hosting & Infrastructure",
-    },
-    heroTitle: {
-      fr: "Hébergement & infrastructure",
-      en: "Hosting & Infrastructure",
-    },
-    heroDescription: {
-      fr: "Nous prenons en charge l'hébergement, la maintenance, les sauvegardes et la sécurité de vos outils digitaux pour garantir stabilité, performance et continuité.",
-      en: "We handle hosting, maintenance, backups and security for your digital tools to ensure stability, performance and continuity.",
-    },
-    image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=80",
-    category: {
-      fr: "Technologie",
-      en: "Technology",
-    },
-    tags: {
-      fr: ["Infrastructure", "Sécurité", "Maintenance"],
-      en: ["Infrastructure", "Security", "Maintenance"],
-    },
-  },
-
-  {
-    slug: "ui-ux-design-systems",
-    tag: "04",
+    slug: "ux-ui-design-systems",
     accent: "#2a90b8",
     title: {
-      fr: "UI/UX & design systems",
-      en: "UI/UX & Design Systems",
+      fr: "UX/UI & Design Systems",
+      en: "UX/UI & Design Systems",
     },
     heroTitle: {
-      fr: "UI/UX & design systems",
-      en: "UI/UX & Design Systems",
+      fr: "UX/UI & Design Systems",
+      en: "UX/UI & Design Systems",
     },
     heroDescription: {
       fr: "Nous concevons des interfaces intuitives, des expériences utilisateurs fluides et des systèmes de design cohérents qui allient esthétique et performance.",
@@ -112,44 +27,123 @@ export const technologyServices = [
   },
 
   {
-    slug: "integration-api-automatisation",
-    tag: "05",
-    accent: "#145e7a",
+    slug: "websites-platforms",
+    accent: "#1f6c8c",
     title: {
-      fr: "Intégration API & automatisation",
-      en: "API Integration & Automation",
+      fr: "Sites Web & Plateformes ",
+      en: "Websites & Platforms",
     },
     heroTitle: {
-      fr: "Intégration API & automatisation",
-      en: "API Integration & Automation",
+      fr: "Sites Web & Plateformes ",
+      en: "Websites & Platforms",
     },
     heroDescription: {
-      fr: "Nous connectons vos outils, automatisons vos flux de données et intégrons des solutions tierces pour créer un écosystème digital cohérent et performant.",
-      en: "We connect your tools, automate your data flows and integrate third-party solutions to create a coherent and high-performing digital ecosystem.",
+      fr: "Nous concevons et développons des sites web et plateformes digitales modernes, rapides et évolutifs, pensés pour offrir une expérience utilisateur irréprochable.",
+      en: "We design and develop modern, fast and scalable websites and digital platforms built to deliver an outstanding user experience.",
     },
     image:
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=80",
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1800&q=80",
     category: {
       fr: "Technologie",
       en: "Technology",
     },
     tags: {
-      fr: ["API", "Automatisation", "Intégration"],
-      en: ["API", "Automation", "Integration"],
+      fr: ["Web", "Plateforme", "CMS"],
+      en: ["Web", "Platform", "CMS"],
     },
   },
 
   {
-    slug: "audit-optimisation-technique",
-    tag: "06",
-    accent: "#1f6c8c",
+    slug: "e-commerce",
+    accent: "#0e5f82",
     title: {
-      fr: "Audit & optimisation technique",
-      en: "Technical Audit & Optimization",
+      fr: "E-commerce",
+      en: "E-commerce",
     },
     heroTitle: {
-      fr: "Audit & optimisation technique",
-      en: "Technical Audit & Optimization",
+      fr: "E-commerce",
+      en: "E-commerce",
+    },
+    heroDescription: {
+      fr: "Nous créons des boutiques en ligne performantes et optimisées pour la conversion, conçues pour offrir une expérience d'achat fluide et maximiser vos ventes.",
+      en: "We build high-performing, conversion-optimized online stores designed to deliver a seamless shopping experience and maximize your sales.",
+    },
+    image:
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1800&q=80",
+    category: {
+      fr: "Technologie",
+      en: "Technology",
+    },
+    tags: {
+      fr: ["E-commerce", "Boutique", "Conversion"],
+      en: ["E-commerce", "Shop", "Conversion"],
+    },
+  },
+
+  {
+    slug: "fullstack-business-applications",
+    accent: "#1a7a9c",
+    title: {
+      fr: "Développement Full-Stack & Applications Métier ",
+      en: "Full-Stack & Business Applications",
+    },
+    heroTitle: {
+      fr: "Développement Full-Stack & Applications Métier ",
+      en: "Full-Stack Development & Business Applications",
+    },
+    heroDescription: {
+      fr: "Nous développons des applications métier sur mesure et des logiciels full-stack pour automatiser vos processus, améliorer votre organisation et vous faire gagner en efficacité.",
+      en: "We develop custom business applications and full-stack software to automate your processes, improve your organization and increase your operational efficiency.",
+    },
+    image:
+      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1800&q=80",
+    category: {
+      fr: "Technologie",
+      en: "Technology",
+    },
+    tags: {
+      fr: ["Full-Stack", "Logiciel", "Automatisation"],
+      en: ["Full-Stack", "Software", "Automation"],
+    },
+  },
+
+  {
+    slug: "transport-logistics-b2b",
+    accent: "#145e7a",
+    title: {
+      fr: "Transport, Logistique & B2B Solutions",
+      en: "Transport, Logistics & B2B",
+    },
+    heroTitle: {
+      fr: "Transport, Logistique & B2B Solutions",
+      en: "Transport, Logistics & B2B Solutions",
+    },
+    heroDescription: {
+      fr: "Nous concevons des solutions digitales spécialisées pour les acteurs du transport, de la logistique et du B2B — gestion de flotte, suivi de commandes, interfaces partenaires et portails métier.",
+      en: "We build specialized digital solutions for transport, logistics and B2B players — fleet management, order tracking, partner interfaces and business portals.",
+    },
+    image:
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1800&q=80",
+    category: {
+      fr: "Technologie",
+      en: "Technology",
+    },
+    tags: {
+      fr: ["Logistique", "Transport", "B2B"],
+      en: ["Logistics", "Transport", "B2B"],
+    },
+  },
+
+  {
+    slug: "audit-optimisation-quality",
+    accent: "#1f6c8c",
+    title: {
+      fr: "Audit, Optimisation & Qualité ",
+      en: "Audit, Optimisation & Quality",
+    },
+    heroTitle: {
+      fr: "Audit, Optimisation & Qualité ",
+      en: "Audit, Optimisation & Quality",
     },
     heroDescription: {
       fr: "Nous analysons la performance, la sécurité et la qualité de vos solutions digitales existantes pour identifier les points d'amélioration et les corriger efficacement.",
@@ -162,8 +156,35 @@ export const technologyServices = [
       en: "Technology",
     },
     tags: {
-      fr: ["Audit", "Performance", "Optimisation"],
-      en: ["Audit", "Performance", "Optimization"],
+      fr: ["Audit", "Performance", "Qualité"],
+      en: ["Audit", "Performance", "Quality"],
+    },
+  },
+
+  {
+    slug: "maintenance-support-hosting",
+    accent: "#0e5f82",
+    title: {
+      fr: "Maintenance, Support & Hébergement ",
+      en: "Maintenance, Support & Hosting",
+    },
+    heroTitle: {
+      fr: "Maintenance, Support & Hébergement ",
+      en: "Maintenance, Support & Hosting",
+    },
+    heroDescription: {
+      fr: "Nous prenons en charge l'hébergement, la maintenance, les sauvegardes et le support de vos outils digitaux pour garantir stabilité, performance et continuité dans le temps.",
+      en: "We handle hosting, maintenance, backups and support for your digital tools to ensure stability, performance and continuity over time.",
+    },
+    image:
+      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=80",
+    category: {
+      fr: "Technologie",
+      en: "Technology",
+    },
+    tags: {
+      fr: ["Hébergement", "Maintenance", "Support"],
+      en: ["Hosting", "Maintenance", "Support"],
     },
   },
 ];

@@ -149,15 +149,14 @@ const HeroCarousel = () => {
         <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
         <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-sky-500/20 blur-3xl" />
       </div>
-
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-screen-2xl items-center px-4 pb-16 pt-32 sm:px-6 md:pt-36 lg:px-8 lg:pt-40">
+       <div className="relative z-10 mx-auto flex min-h-screen max-w-screen-2xl items-center px-4 pb-10 pt-24 sm:px-6 md:pt-28 lg:px-8 lg:pt-32 xl:pt-40">
         <div className="w-full">
           <div className="max-w-4xl">
             <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white backdrop-blur-sm sm:text-sm">
               {t.badge}
             </span>
 
-            <h1 className="mt-6 max-w-5xl text-2xl font-bold leading-[1.15] tracking-tight text-white sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
+            <h1 className="mt-6 max-w-5xl text-2xl font-bold leading-[1.15] tracking-tight text-white sm:text-md md:text-3xl lg:text-3xl xl:text-4xl">
               {t.title}
             </h1>
 

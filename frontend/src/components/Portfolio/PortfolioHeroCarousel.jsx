@@ -264,10 +264,10 @@ const PortfolioHeroCarousel = () => {
               {t.badge}
             </span>
 
-            <h1
-              className="mt-5 text-5xl font-bold leading-[0.96] tracking-tight text-slate-950 sm:text-6xl lg:text-[74px]"
-              style={{ fontFamily: "Literata, serif" }}
-            >
+          <h1
+  className="mt-5 text-[44px] font-bold leading-[0.92] tracking-tight text-slate-950 text-base sm:text-[52px] md:text-5xl xl:text-6xl"
+  style={{ fontFamily: "Literata, serif" }}
+>
               {t.title}
             </h1>
 

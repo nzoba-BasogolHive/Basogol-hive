@@ -245,6 +245,7 @@ const ProjectCard = ({ project, t }) => {
   return (
     <Link
       to={`/${project.type}/${project.slug}`}
+      state={{ navContext: "portfolio" }}
       className="group relative block overflow-hidden rounded-[24px] border border-white/60 bg-white/55 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur-[12px]"
     >
       <div className="relative h-[290px] overflow-hidden">
