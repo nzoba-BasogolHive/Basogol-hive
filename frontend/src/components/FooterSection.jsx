@@ -7,6 +7,7 @@ import {
   Mail,
   Send,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import logo from "../assets/basogollogo.png";
 import leftTopMain from "../assets/Untitled.png";
 import leftBottomShape from "../assets/Untitlevcwevabd.png";
@@ -25,20 +26,69 @@ const translations = {
     ],
     marketingTitle: "Marketing & Brand",
     marketingItems: [
-      "Stratégie de marque & positionnement",
-      "Recherche & insights",
-      "Identité visuelle & branding",
-      "Design produit & expérience (UI/UX)",
-      "Web design & développement",
-      "Stratégie de contenu & direction créative",
+      {
+        label: "Stratégie de marque & positionnement",
+        href: "/marketing-brand#service-brand-strategy-positioning",
+      },
+      {
+        label: "Recherche & insights",
+        href: "/marketing-brand#service-research-insights",
+      },
+      {
+        label: "Identité visuelle & branding",
+        href: "/marketing-brand#service-visual-identity-branding",
+      },
+      {
+        label: "Design produit & expérience (UI/UX)",
+        href: "/marketing-brand#service-product-experience-design-ui-ux",
+      },
+      {
+        label: "Web design & développement",
+        href: "/marketing-brand#service-web-design-development",
+      },
+      {
+        label: "Stratégie de contenu & direction créative",
+        href: "/marketing-brand#service-content-strategy-creative-direction",
+      },
+      {
+        label: "Production de contenu",
+        href: "/marketing-brand#service-content-production",
+      },
+      {
+        label: "Croissance, social & publicité",
+        href: "/marketing-brand#service-growth-social-paid-media",
+      },
     ],
     technologyTitle: "Technologie",
     technologyItems: [
-      "UX/UI & design systems",
-      "Sites web & plateformes",
-      "Développement full-stack & applications métier",
-      "Solutions transport, logistique & B2B",
-      "Audit, optimisation & qualité",
+      {
+        label: "UX/UI & design systems",
+        href: "/technology#service-ux-ui-design-systems",
+      },
+      {
+        label: "Sites web & plateformes",
+        href: "/technology#service-websites-platforms",
+      },
+      {
+        label: "e-commerce",
+        href: "/technology#service-e-commerce",
+      },
+      {
+        label: "Développement full-stack & applications métier",
+        href: "/technology#service-full-stack-development-business-applications",
+      },
+      {
+        label: "Solutions transport, logistique & B2B",
+        href: "/technology#service-transport-logistics-b2b-solutions",
+      },
+      {
+        label: "Audit, optimisation & qualité",
+        href: "/technology#service-audit-optimisation-quality",
+      },
+      {
+        label: "Maintenance, Support & Hébergement",
+        href: "/technology#service-maintenance-support-hosting",
+      },
     ],
     inputPlaceholder: "entrez votre email",
     newsletterText: "Abonnez-vous à notre newsletter",
@@ -53,7 +103,7 @@ const translations = {
       { label: "WhatsApp", href: "#" },
       { label: "YouTube", href: "#" },
     ],
-    copyright: "© 20100 Basogol-Hive. Tous droits réservés.",
+    copyright: "© 2025 Basogol-Hive. Tous droits réservés.",
   },
   en: {
     brandSubtitle: "Tech & Creative studio",
@@ -66,20 +116,69 @@ const translations = {
     ],
     marketingTitle: "Marketing & Brand",
     marketingItems: [
-      "Brand strategy & positioning",
-      "Research & insights",
-      "Visual identity & branding",
-      "Product & experience design (UI/UX)",
-      "Web design & development",
-      "Content strategy & creative direction",
+      {
+        label: "Brand strategy & positioning",
+        href: "/marketing-brand#service-brand-strategy-positioning",
+      },
+      {
+        label: "Research & insights",
+        href: "/marketing-brand#service-research-insights",
+      },
+      {
+        label: "Visual identity & branding",
+        href: "/marketing-brand#service-visual-identity-branding",
+      },
+      {
+        label: "Product & experience design (UI/UX)",
+        href: "/marketing-brand#service-product-experience-design-ui-ux",
+      },
+      {
+        label: "Web design & development",
+        href: "/marketing-brand#service-web-design-development",
+      },
+      {
+        label: "Content strategy & creative direction",
+        href: "/marketing-brand#service-content-strategy-creative-direction",
+      },
+      {
+        label: "Content production",
+        href: "/marketing-brand#service-content-production",
+      },
+      {
+        label: "Growth, social & paid media",
+        href: "/marketing-brand#service-growth-social-paid-media",
+      },
     ],
     technologyTitle: "Technology",
     technologyItems: [
-      "UX/UI & design systems",
-      "Websites & platforms",
-      "Full-stack development & business applications",
-      "Transport, logistics & B2B solutions",
-      "Audit, optimisation & quality",
+      {
+        label: "UX/UI & design systems",
+        href: "/technology#service-ux-ui-design-systems",
+      },
+      {
+        label: "Websites & platforms",
+        href: "/technology#service-websites-platforms",
+      },
+      {
+        label: "e-commerce",
+        href: "/technology#service-e-commerce",
+      },
+      {
+        label: "Full-stack development & business applications",
+        href: "/technology#service-full-stack-development-business-applications",
+      },
+      {
+        label: "Transport, logistics & B2B solutions",
+        href: "/technology#service-transport-logistics-b2b-solutions",
+      },
+      {
+        label: "Audit, optimisation & quality",
+        href: "/technology#service-audit-optimisation-quality",
+      },
+      {
+        label: "Maintenance, Support & Hosting",
+        href: "/technology#service-maintenance-support-hosting",
+      },
     ],
     inputPlaceholder: "enter your email",
     newsletterText: "Subscribe to our newsletter",
@@ -94,7 +193,7 @@ const translations = {
       { label: "WhatsApp", href: "#" },
       { label: "YouTube", href: "#" },
     ],
-    copyright: "© 20100 Basogol-Hive. All rights reserved.",
+    copyright: "© 2025 Basogol-Hive. All rights reserved.",
   },
 };
 
@@ -115,7 +214,9 @@ const FooterSection = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
       { threshold: 0.08 }
     );
     if (footerRef.current) observer.observe(footerRef.current);
@@ -131,20 +232,19 @@ const FooterSection = () => {
       }}
     >
       <style>{`
-        /* ── Animations formes ── */
         @keyframes shapeFloatLeft {
           0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-          33%       { transform: translateY(-12px) rotate(1.2deg) scale(1.015); }
-          66%       { transform: translateY(6px) rotate(-0.8deg) scale(0.988); }
+          33% { transform: translateY(-12px) rotate(1.2deg) scale(1.015); }
+          66% { transform: translateY(6px) rotate(-0.8deg) scale(0.988); }
         }
         @keyframes shapeFloatRight {
           0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-          33%       { transform: translateY(10px) rotate(-1deg) scale(1.012); }
-          66%       { transform: translateY(-8px) rotate(0.6deg) scale(0.992); }
+          33% { transform: translateY(10px) rotate(-1deg) scale(1.012); }
+          66% { transform: translateY(-8px) rotate(0.6deg) scale(0.992); }
         }
         @keyframes shapeFloatBottom {
           0%, 100% { transform: translateX(0px) translateY(0px); }
-          50%       { transform: translateX(-8px) translateY(-6px); }
+          50% { transform: translateX(-8px) translateY(-6px); }
         }
 
         .shape-left-top {
@@ -160,7 +260,6 @@ const FooterSection = () => {
           transform-origin: bottom right;
         }
 
-        /* Entrée au scroll */
         .footer-entry {
           opacity: 0;
           transform: translateY(28px);
@@ -171,19 +270,16 @@ const FooterSection = () => {
           transform: translateY(0);
         }
 
-        /* Colonnes avec délai cascade */
         .footer-col-1 { transition-delay: 0.05s; }
         .footer-col-2 { transition-delay: 0.15s; }
         .footer-col-3 { transition-delay: 0.25s; }
         .footer-col-4 { transition-delay: 0.35s; }
 
-        /* Divider dégradé */
         .footer-divider {
           height: 1px;
           background: linear-gradient(90deg, transparent, rgba(255,255,255,0.20), transparent);
         }
 
-        /* Titre colonne — ligne décorative */
         .footer-col-title {
           position: relative;
           padding-bottom: 10px;
@@ -191,18 +287,19 @@ const FooterSection = () => {
         .footer-col-title::after {
           content: "";
           position: absolute;
-          bottom: 0; left: 0;
-          width: 28px; height: 2px;
+          bottom: 0;
+          left: 0;
+          width: 28px;
+          height: 2px;
           border-radius: 999px;
           background: rgba(255,255,255,0.45);
         }
 
-        /* Items de liste avec hover */
         .footer-list-item {
           position: relative;
           padding-left: 0;
           transition: padding-left 0.25s ease, color 0.25s ease;
-          cursor: default;
+          cursor: pointer;
         }
         .footer-list-item:hover {
           padding-left: 8px;
@@ -211,9 +308,11 @@ const FooterSection = () => {
         .footer-list-item::before {
           content: "";
           position: absolute;
-          left: 0; top: 50%;
+          left: 0;
+          top: 50%;
           transform: translateY(-50%) scaleX(0);
-          width: 4px; height: 4px;
+          width: 4px;
+          height: 4px;
           border-radius: 50%;
           background: rgba(255,255,255,0.7);
           transition: transform 0.25s ease, opacity 0.25s ease;
@@ -224,7 +323,6 @@ const FooterSection = () => {
           opacity: 1;
         }
 
-        /* Input glassmorphisme */
         .footer-input {
           background: rgba(255,255,255,0.12);
           backdrop-filter: blur(12px);
@@ -242,7 +340,6 @@ const FooterSection = () => {
           box-shadow: 0 0 0 3px rgba(255,255,255,0.10), 0 2px 12px rgba(0,0,0,0.12);
         }
 
-        /* Bouton newsletter glassmorphisme */
         .footer-subscribe-btn {
           background: rgba(255,255,255,0.18);
           backdrop-filter: blur(12px);
@@ -257,7 +354,6 @@ const FooterSection = () => {
           box-shadow: 0 8px 22px rgba(0,0,0,0.20), 0 1px 0 rgba(255,255,255,0.28) inset;
         }
 
-        /* Logo glassmorphisme */
         .footer-logo-wrap {
           background: rgba(255,255,255,0.12);
           backdrop-filter: blur(14px);
@@ -271,7 +367,6 @@ const FooterSection = () => {
           box-shadow: 0 8px 26px rgba(0,0,0,0.20), 0 1px 0 rgba(255,255,255,0.25) inset;
         }
 
-        /* Icônes sociales */
         .footer-social-icon {
           background: rgba(255,255,255,0.10);
           backdrop-filter: blur(10px);
@@ -287,7 +382,6 @@ const FooterSection = () => {
           box-shadow: 0 8px 20px rgba(0,0,0,0.20);
         }
 
-        /* Liens bas de page */
         .footer-bottom-link {
           transition: all 0.25s ease;
           padding: 6px 12px;
@@ -298,7 +392,6 @@ const FooterSection = () => {
           color: #fff;
         }
 
-        /* Halo de fond */
         .footer-halo {
           background: radial-gradient(
             ellipse 70% 60% at 70% 50%,
@@ -308,10 +401,8 @@ const FooterSection = () => {
         }
       `}</style>
 
-      {/* Halo de fond */}
       <div className="footer-halo pointer-events-none absolute inset-0 z-0" />
 
-      {/* Forme haut gauche */}
       <img
         src={leftTopMain}
         alt=""
@@ -319,7 +410,6 @@ const FooterSection = () => {
         className="shape-left-top pointer-events-none absolute -left-2 top-0 z-0 hidden w-[250px] opacity-80 md:block lg:w-[300px] xl:w-[360px]"
       />
 
-      {/* Forme bas gauche */}
       <img
         src={leftBottomShape}
         alt=""
@@ -327,7 +417,6 @@ const FooterSection = () => {
         className="shape-left-bottom pointer-events-none absolute bottom-0 left-0 z-0 hidden w-[220px] opacity-80 md:block lg:w-[270px] xl:w-[320px]"
       />
 
-      {/* Forme droite */}
       <img
         src={rightShape}
         alt=""
@@ -337,8 +426,6 @@ const FooterSection = () => {
 
       <div className="page-container relative z-10 py-14 sm:py-16 lg:py-20">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[0.9fr_1.15fr_1.15fr_1fr] xl:gap-14">
-
-          {/* Colonne 1 — Logo + nav */}
           <div className={`footer-entry footer-col-1 ${visible ? "show" : ""}`}>
             <div className="flex items-center gap-4">
               <div className="footer-logo-wrap flex h-16 w-16 items-center justify-center rounded-xl">
@@ -350,7 +437,7 @@ const FooterSection = () => {
               </div>
               <div>
                 <h3
-                  className="text-xl font-semibold"
+                  className="text-xl font-semibold notranslate" translate="no"
                   style={{ fontFamily: "Literata, serif" }}
                 >
                   Basogol Hive
@@ -365,18 +452,17 @@ const FooterSection = () => {
             >
               {t.navLinks.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="footer-list-item inline-block transition hover:text-white"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Colonne 2 — Marketing */}
           <div className={`footer-entry footer-col-2 ${visible ? "show" : ""}`}>
             <h4
               className="footer-col-title text-[18px] font-semibold"
@@ -389,14 +475,18 @@ const FooterSection = () => {
               style={{ fontFamily: "Literata, serif" }}
             >
               {t.marketingItems.map((item) => (
-                <li key={item} className="footer-list-item">
-                  {item}
+                <li key={item.href}>
+                  <Link
+                    to={item.href}
+                    className="footer-list-item inline-block text-white/80 transition hover:text-white"
+                  >
+                    {item.label}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Colonne 3 — Technologie */}
           <div className={`footer-entry footer-col-3 ${visible ? "show" : ""}`}>
             <h4
               className="footer-col-title text-[18px] font-semibold"
@@ -409,17 +499,19 @@ const FooterSection = () => {
               style={{ fontFamily: "Literata, serif" }}
             >
               {t.technologyItems.map((item) => (
-                <li key={item} className="footer-list-item">
-                  {item}
+                <li key={item.href}>
+                  <Link
+                    to={item.href}
+                    className="footer-list-item inline-block text-white/80 transition hover:text-white"
+                  >
+                    {item.label}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Colonne 4 — Newsletter + réseaux */}
           <div className={`footer-entry footer-col-4 ${visible ? "show" : ""}`}>
-
-            {/* Titre newsletter */}
             <h4
               className="footer-col-title text-[18px] font-semibold"
               style={{ fontFamily: "Literata, serif" }}
@@ -427,7 +519,6 @@ const FooterSection = () => {
               {t.newsletterText}
             </h4>
 
-            {/* Input + bouton */}
             <div className="mt-5 flex flex-col gap-3">
               <input
                 type="email"
@@ -444,10 +535,8 @@ const FooterSection = () => {
               </button>
             </div>
 
-            {/* Séparateur */}
             <div className="footer-divider my-7" />
 
-            {/* Icônes sociales */}
             <div className="flex items-center gap-3">
               {t.socialLinks.map((item) => {
                 const Icon = socialIcons[item.label];
@@ -466,12 +555,9 @@ const FooterSection = () => {
           </div>
         </div>
 
-        {/* Bas de page */}
         <div className="mt-14">
           <div className="footer-divider" />
           <div className="mt-5 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-
-            {/* Copyright */}
             <p
               className="text-xs text-white/55"
               style={{ fontFamily: "Literata, serif" }}
@@ -479,7 +565,6 @@ const FooterSection = () => {
               {t.copyright}
             </p>
 
-            {/* Liens bas */}
             <div className="flex items-center gap-1">
               {t.bottomLinks.map((item) => {
                 const Icon = socialIcons[item.label];

@@ -92,6 +92,8 @@ const ContactSection = () => {
     { icon: Phone,   label: t.phoneLabel,    value: t.phoneValue    },
   ];
 
+  const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+  
   return (
     <section
       ref={sectionRef}

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useLanguage } from "../LanguageContext";
 import group7 from "../../assets/Group7.png";
 import group9 from "../../assets/Group9.png";
@@ -62,176 +62,230 @@ const TechServiceCard = ({ service, index, visible, t, lang }) => {
   const tag = String(index + 1).padStart(2, "0");
 
   return (
-    <a href="/contact" className="block" style={{ textDecoration: "none" }}>
-      <div
-        className={`tz-row relative flex flex-col items-center gap-10 lg:flex-row lg:items-center lg:gap-0 ${
-          reverse ? "lg:flex-row-reverse" : ""
-        } ${visible ? "show" : ""}`}
-        style={{ transitionDelay: `${index * 0.08}s`, cursor: "pointer" }}
-      >
-        {/* ── Cercle image tech ── */}
-        <div className="relative z-10 flex flex-shrink-0 justify-center lg:w-1/2">
-          <div className="tz-circle-wrap relative flex h-[280px] w-[280px] items-center justify-center sm:h-[310px] sm:w-[310px]">
-            <svg
-              className="tz-orbit absolute"
-              style={{ width: "330px", height: "330px", top: "-10px", left: "-10px" }}
-              viewBox="0 0 330 330"
-              fill="none"
-            >
-              <defs>
-                <linearGradient id={`ring-grad-${index}`} x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor={service.accent} stopOpacity="0.6" />
-                  <stop offset="100%" stopColor="#58b4da" stopOpacity="0.15" />
-                </linearGradient>
-              </defs>
-              <circle
-                cx="165" cy="165" r="155"
-                stroke={`url(#ring-grad-${index})`}
-                strokeWidth="1.2" strokeLinecap="round"
-                strokeDasharray="800" strokeDashoffset="210"
-              />
-              <circle cx="298" cy="96" r="5" fill={service.accent} opacity="0.65" />
-              <circle cx="50" cy="235" r="3" fill="#58b4da" opacity="0.40" />
-            </svg>
-
-            <div
-              className="absolute rounded-full"
-              style={{ width: "308px", height: "308px", border: "1px solid rgba(31,108,140,0.09)" }}
+    <div
+      className={`tz-row relative flex flex-col items-center gap-10 lg:flex-row lg:items-center lg:gap-0 ${
+        reverse ? "lg:flex-row-reverse" : ""
+      } ${visible ? "show" : ""}`}
+      style={{ transitionDelay: `${index * 0.08}s` }}
+    >
+      <div className="relative z-10 flex flex-shrink-0 justify-center lg:w-1/2">
+        <div className="tz-circle-wrap relative flex h-[280px] w-[280px] items-center justify-center sm:h-[310px] sm:w-[310px]">
+          <svg
+            className="tz-orbit absolute"
+            style={{ width: "330px", height: "330px", top: "-10px", left: "-10px" }}
+            viewBox="0 0 330 330"
+            fill="none"
+          >
+            <defs>
+              <linearGradient id={`ring-grad-${index}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor={service.accent} stopOpacity="0.6" />
+                <stop offset="100%" stopColor="#58b4da" stopOpacity="0.15" />
+              </linearGradient>
+            </defs>
+            <circle
+              cx="165"
+              cy="165"
+              r="155"
+              stroke={`url(#ring-grad-${index})`}
+              strokeWidth="1.2"
+              strokeLinecap="round"
+              strokeDasharray="800"
+              strokeDashoffset="210"
             />
-            <div
-              className="absolute rounded-full"
-              style={{ width: "278px", height: "278px", border: "1px dashed rgba(31,108,140,0.07)" }}
-            />
+            <circle cx="298" cy="96" r="5" fill={service.accent} opacity="0.65" />
+            <circle cx="50" cy="235" r="3" fill="#58b4da" opacity="0.40" />
+          </svg>
 
-            <div
-              className="tz-img-wrap relative overflow-hidden rounded-full"
-              style={{
-                width: "258px", height: "258px",
-                boxShadow: `0 20px 55px rgba(31,108,140,0.18), 0 4px 20px rgba(0,0,0,0.10)`,
-                border: "3px solid rgba(255,255,255,0.88)",
-              }}
-            >
-              <img src={service.image} alt={title} className="tz-img h-full w-full object-cover" />
-              <div
-                className="absolute inset-0"
-                style={{ background: `linear-gradient(145deg, ${service.accent}0d 0%, transparent 50%)` }}
-              />
-              <div
-                className="absolute inset-0"
-                style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 40%)" }}
-              />
-            </div>
-
-            <div
-              className="absolute -right-1 -top-1 z-20 flex h-9 w-9 items-center justify-center rounded-full text-[10px] font-bold text-white"
-              style={{
-                background: `linear-gradient(135deg, ${service.accent}, #2a90b8)`,
-                boxShadow: `0 4px 14px ${service.accent}60`,
-                border: "2px solid rgba(255,255,255,0.80)",
-              }}
-            >
-              {tag}
-            </div>
-
-            <div
-              className="tz-tech-tag absolute -bottom-4 left-1/2 z-20 hidden -translate-x-1/2 items-center gap-1.5 rounded-full px-3 py-1 lg:flex"
-              style={{
-                background: "rgba(31,108,140,0.08)",
-                border: "1px solid rgba(31,108,140,0.16)",
-                backdropFilter: "blur(8px)",
-              }}
-            >
-              <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: service.accent, opacity: 0.7 }} />
-              <span
-                style={{
-                  fontSize: "9px", fontWeight: 700, letterSpacing: "0.14em",
-                  textTransform: "uppercase", color: service.accent, opacity: 0.8,
-                  fontFamily: "Literata, serif",
-                }}
-              >
-                {t.tech}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* ── Connecteur ── */}
-        <div
-          className={`tz-connector hidden flex-shrink-0 items-center lg:flex ${reverse ? "flex-row-reverse" : ""}`}
-          style={{ width: "70px" }}
-        >
           <div
+            className="absolute rounded-full"
             style={{
-              flex: 1, height: "1px",
-              background: `linear-gradient(${reverse ? "270deg" : "90deg"}, transparent, ${service.accent}45)`,
+              width: "308px",
+              height: "308px",
+              border: "1px solid rgba(31,108,140,0.09)",
             }}
           />
           <div
-            className="tz-connector-dot"
-            style={{ width: "7px", height: "7px", borderRadius: "50%", background: service.accent, opacity: 0.45, flexShrink: 0 }}
-          />
-        </div>
-
-        {/* ── Texte ── */}
-        <div
-          className={`relative z-10 max-w-[440px] lg:w-1/2 ${
-            reverse ? "lg:pr-8 xl:pr-14" : "lg:pl-8 xl:pl-14"
-          }`}
-        >
-          <div className="flex items-center gap-2.5">
-            <div style={{ width: "18px", height: "1px", background: service.accent, opacity: 0.45 }} />
-            <span
-              className="text-[10px] font-bold uppercase tracking-[0.22em]"
-              style={{ color: `${service.accent}90`, fontFamily: "Literata, serif" }}
-            >
-              {t.service} {tag}
-            </span>
-          </div>
-
-          <h3
-            className="mt-2.5 text-[26px] font-bold leading-tight text-slate-900 sm:text-[34px]"
-            style={{ fontFamily: "Literata, serif" }}
-          >
-            {title}
-          </h3>
-
-          <div
-            className="mt-4"
+            className="absolute rounded-full"
             style={{
-              width: "32px", height: "2px", borderRadius: "999px",
-              background: `linear-gradient(90deg, ${service.accent}, #a8d4e8)`,
+              width: "278px",
+              height: "278px",
+              border: "1px dashed rgba(31,108,140,0.07)",
             }}
           />
 
-          <p
-            className="mt-4 text-sm leading-[1.90] text-slate-500 sm:text-[14.5px]"
-            style={{ fontFamily: "Literata, serif" }}
+          <div
+            className="tz-img-wrap relative overflow-hidden rounded-full"
+            style={{
+              width: "258px",
+              height: "258px",
+              boxShadow:
+                "0 20px 55px rgba(31,108,140,0.18), 0 4px 20px rgba(0,0,0,0.10)",
+              border: "3px solid rgba(255,255,255,0.88)",
+            }}
           >
-            {description}
-          </p>
-
-          <div className="mt-7 flex items-center gap-4">
-            <span
-              className="text-[10px] uppercase tracking-widest text-slate-400"
-              style={{ fontFamily: "Literata, serif" }}
-            >
-              {t.learnMore}
-            </span>
-            <div style={{ flex: 1, maxWidth: "90px", height: "1px", background: `${service.accent}30` }} />
-            <span
-              className="tz-btn inline-flex items-center gap-2 rounded-[8px] px-5 py-2.5 text-xs font-semibold text-white"
+            <img src={service.image} alt={title} className="tz-img h-full w-full object-cover" />
+            <div
+              className="absolute inset-0"
               style={{
-                background: `linear-gradient(135deg, ${service.accent}, #2a90b8)`,
-                boxShadow: `0 4px 14px ${service.accent}40`,
+                background: `linear-gradient(145deg, ${service.accent}0d 0%, transparent 50%)`,
+              }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 40%)",
+              }}
+            />
+          </div>
+
+          <div
+            className="absolute -right-1 -top-1 z-20 flex h-9 w-9 items-center justify-center rounded-full text-[10px] font-bold text-white"
+            style={{
+              background: `linear-gradient(135deg, ${service.accent}, #2a90b8)`,
+              boxShadow: `0 4px 14px ${service.accent}60`,
+              border: "2px solid rgba(255,255,255,0.80)",
+            }}
+          >
+            {tag}
+          </div>
+
+          <div
+            className="tz-tech-tag absolute -bottom-4 left-1/2 z-20 hidden -translate-x-1/2 items-center gap-1.5 rounded-full px-3 py-1 lg:flex"
+            style={{
+              background: "rgba(31,108,140,0.08)",
+              border: "1px solid rgba(31,108,140,0.16)",
+              backdropFilter: "blur(8px)",
+            }}
+          >
+            <div
+              style={{
+                width: "5px",
+                height: "5px",
+                borderRadius: "50%",
+                background: service.accent,
+                opacity: 0.7,
+              }}
+            />
+            <span
+              style={{
+                fontSize: "9px",
+                fontWeight: 700,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: service.accent,
+                opacity: 0.8,
                 fontFamily: "Literata, serif",
               }}
             >
-              {t.discover} <span style={{ fontSize: "13px" }}>→</span>
+              {t.tech}
             </span>
           </div>
         </div>
       </div>
-    </a>
+
+      <div
+        className={`tz-connector hidden flex-shrink-0 items-center lg:flex ${reverse ? "flex-row-reverse" : ""}`}
+        style={{ width: "70px" }}
+      >
+        <div
+          style={{
+            flex: 1,
+            height: "1px",
+            background: `linear-gradient(${reverse ? "270deg" : "90deg"}, transparent, ${service.accent}45)`,
+          }}
+        />
+        <div
+          className="tz-connector-dot"
+          style={{
+            width: "7px",
+            height: "7px",
+            borderRadius: "50%",
+            background: service.accent,
+            opacity: 0.45,
+            flexShrink: 0,
+          }}
+        />
+      </div>
+
+      <div
+        className={`relative z-10 max-w-[440px] lg:w-1/2 ${
+          reverse ? "lg:pr-8 xl:pr-14" : "lg:pl-8 xl:pl-14"
+        }`}
+      >
+        <div className="flex items-center gap-2.5">
+          <div
+            style={{
+              width: "18px",
+              height: "1px",
+              background: service.accent,
+              opacity: 0.45,
+            }}
+          />
+          <span
+            className="text-[10px] font-bold uppercase tracking-[0.22em]"
+            style={{
+              color: `${service.accent}90`,
+              fontFamily: "Literata, serif",
+            }}
+          >
+            {t.service} {tag}
+          </span>
+        </div>
+
+        <h3
+          className="mt-2.5 text-[26px] font-bold leading-tight text-slate-900 sm:text-[34px]"
+          style={{ fontFamily: "Literata, serif" }}
+        >
+          {title}
+        </h3>
+
+        <div
+          className="mt-4"
+          style={{
+            width: "32px",
+            height: "2px",
+            borderRadius: "999px",
+            background: `linear-gradient(90deg, ${service.accent}, #a8d4e8)`,
+          }}
+        />
+
+        <p
+          className="mt-4 text-sm leading-[1.90] text-slate-500 sm:text-[14.5px]"
+          style={{ fontFamily: "Literata, serif" }}
+        >
+          {description}
+        </p>
+
+        <div className="mt-7 flex items-center gap-4">
+          <span
+            className="text-[10px] uppercase tracking-widest text-slate-400"
+            style={{ fontFamily: "Literata, serif" }}
+          >
+            {t.learnMore}
+          </span>
+          <div
+            style={{
+              flex: 1,
+              maxWidth: "90px",
+              height: "1px",
+              background: `${service.accent}30`,
+            }}
+          />
+          <Link
+            to="/contact"
+            className="tz-btn inline-flex items-center gap-2 rounded-[8px] px-5 py-2.5 text-xs font-semibold text-white"
+            style={{
+              background: `linear-gradient(135deg, ${service.accent}, #2a90b8)`,
+              boxShadow: `0 4px 14px ${service.accent}40`,
+              fontFamily: "Literata, serif",
+            }}
+          >
+            {t.discover} <span style={{ fontSize: "13px" }}>→</span>
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -241,15 +295,33 @@ const TechServicesZigzagSection = () => {
   const { lang } = useLanguage();
   const t = translations[lang] || translations.fr;
   const services = technologyServices;
+  const location = useLocation();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
       { threshold: 0.04 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const hash = location.hash;
+    if (!hash) return;
+
+    const scrollToTarget = () => {
+      const el = document.querySelector(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    };
+
+    const timeout = setTimeout(scrollToTarget, 120);
+    return () => clearTimeout(timeout);
+  }, [location.hash]);
 
   return (
     <>
@@ -322,9 +394,24 @@ const TechServicesZigzagSection = () => {
 
         <div className="tz-bg-grid pointer-events-none absolute inset-0 z-0" />
 
-        <img src={group9} alt="" aria-hidden="true" className="pointer-events-none absolute left-[-8px] top-[320px] z-0 hidden w-[190px] opacity-55 lg:block" />
-        <img src={group7} alt="" aria-hidden="true" className="pointer-events-none absolute right-[-8px] top-[520px] z-0 hidden w-[460px] opacity-45 lg:block" />
-        <img src={polygon1} alt="" aria-hidden="true" className="pointer-events-none absolute left-[60px] top-[980px] z-0 hidden w-[460px] opacity-40 lg:block" />
+        <img
+          src={group9}
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute left-[-8px] top-[320px] z-0 hidden w-[190px] opacity-55 lg:block"
+        />
+        <img
+          src={group7}
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute right-[-8px] top-[520px] z-0 hidden w-[460px] opacity-45 lg:block"
+        />
+        <img
+          src={polygon1}
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute left-[60px] top-[980px] z-0 hidden w-[460px] opacity-40 lg:block"
+        />
 
         <div className="page-container relative z-10">
           <div className={`tz-title-entry mb-20 text-center ${visible ? "show" : ""}`}>
@@ -349,7 +436,12 @@ const TechServicesZigzagSection = () => {
 
             <div
               className="mx-auto mt-4"
-              style={{ width: "32px", height: "2px", borderRadius: "999px", background: "linear-gradient(90deg, #1f6c8c, #a8d4e8)" }}
+              style={{
+                width: "32px",
+                height: "2px",
+                borderRadius: "999px",
+                background: "linear-gradient(90deg, #1f6c8c, #a8d4e8)",
+              }}
             />
 
             <p
@@ -362,10 +454,16 @@ const TechServicesZigzagSection = () => {
             <div className="mt-8 flex items-center justify-center gap-8">
               {t.stats.map((s, i) => (
                 <div key={i} className="text-center">
-                  <div className="text-[22px] font-bold text-[#1f6c8c]" style={{ fontFamily: "Literata, serif" }}>
+                  <div
+                    className="text-[22px] font-bold text-[#1f6c8c]"
+                    style={{ fontFamily: "Literata, serif" }}
+                  >
                     {s.num}
                   </div>
-                  <div className="text-[10px] uppercase tracking-widest text-slate-400" style={{ fontFamily: "Literata, serif" }}>
+                  <div
+                    className="text-[10px] uppercase tracking-widest text-slate-400"
+                    style={{ fontFamily: "Literata, serif" }}
+                  >
                     {s.label}
                   </div>
                 </div>
@@ -378,7 +476,8 @@ const TechServicesZigzagSection = () => {
           <div className="tz-parallax-bg">
             <img
               src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=80"
-              alt="" aria-hidden="true"
+              alt=""
+              aria-hidden="true"
             />
             <div className="tz-parallax-overlay" />
           </div>
@@ -387,16 +486,17 @@ const TechServicesZigzagSection = () => {
             <div className="flex flex-col gap-0">
               {services.map((service, index) => (
                 <React.Fragment key={service.slug}>
-                  <TechServiceCard
-                    service={service}
-                    index={index}
-                    visible={visible}
-                    t={t}
-                    lang={lang}
-                  />
-                  {index < services.length - 1 && (
-                    <div className="tz-sep my-16 lg:my-20" />
-                  )}
+                  <div id={`service-${service.slug}`}>
+                    <TechServiceCard
+                      service={service}
+                      index={index}
+                      visible={visible}
+                      t={t}
+                      lang={lang}
+                    />
+                  </div>
+
+                  {index < services.length - 1 && <div className="tz-sep my-16 lg:my-20" />}
                 </React.Fragment>
               ))}
             </div>
@@ -406,42 +506,98 @@ const TechServicesZigzagSection = () => {
 
       <div
         style={{
-          position: "relative", height: "500px",
-          backgroundImage: "url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=80')",
-          backgroundAttachment: "fixed", backgroundSize: "cover",
-          backgroundPosition: "center", overflow: "hidden",
+          position: "relative",
+          height: "500px",
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=80')",
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          overflow: "hidden",
         }}
       >
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(4,15,28,0.82) 0%, rgba(31,108,140,0.55) 100%)" }} />
         <div
           style={{
-            position: "absolute", inset: 0,
-            backgroundImage: "linear-gradient(rgba(88,180,218,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(88,180,218,0.05) 1px, transparent 1px)",
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(135deg, rgba(4,15,28,0.82) 0%, rgba(31,108,140,0.55) 100%)",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage:
+              "linear-gradient(rgba(88,180,218,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(88,180,218,0.05) 1px, transparent 1px)",
             backgroundSize: "50px 50px",
           }}
         />
-        <div style={{ position: "absolute", left: "40px", top: "50%", transform: "translateY(-50%)", width: "1px", height: "130px", background: "linear-gradient(to bottom, transparent, rgba(88,180,218,0.35), transparent)" }} />
-        <div style={{ position: "absolute", right: "40px", top: "50%", transform: "translateY(-50%)", width: "1px", height: "130px", background: "linear-gradient(to bottom, transparent, rgba(88,180,218,0.35), transparent)" }} />
+        <div
+          style={{
+            position: "absolute",
+            left: "40px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            width: "1px",
+            height: "130px",
+            background:
+              "linear-gradient(to bottom, transparent, rgba(88,180,218,0.35), transparent)",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            right: "40px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            width: "1px",
+            height: "130px",
+            background:
+              "linear-gradient(to bottom, transparent, rgba(88,180,218,0.35), transparent)",
+          }}
+        />
 
         <div
           style={{
-            position: "relative", zIndex: 10, height: "100%",
-            display: "flex", flexDirection: "column", alignItems: "center",
-            justifyContent: "center", textAlign: "center", padding: "0 24px",
+            position: "relative",
+            zIndex: 10,
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+            padding: "0 24px",
           }}
         >
           <div
             style={{
-              display: "inline-flex", alignItems: "center", gap: "8px",
-              background: "rgba(31,108,140,0.22)", border: "1px solid rgba(88,180,218,0.35)",
-              borderRadius: "999px", padding: "5px 14px", marginBottom: "18px",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              background: "rgba(31,108,140,0.22)",
+              border: "1px solid rgba(88,180,218,0.35)",
+              borderRadius: "999px",
+              padding: "5px 14px",
+              marginBottom: "18px",
             }}
           >
-            <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#58b4da" }} />
+            <div
+              style={{
+                width: "6px",
+                height: "6px",
+                borderRadius: "50%",
+                background: "#58b4da",
+              }}
+            />
             <span
               style={{
-                fontFamily: "Literata, serif", fontSize: "10px", fontWeight: 700,
-                letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(168,212,232,0.90)",
+                fontFamily: "Literata, serif",
+                fontSize: "10px",
+                fontWeight: 700,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                color: "rgba(168,212,232,0.90)",
               }}
             >
               {t.approachBadge}
@@ -450,9 +606,13 @@ const TechServicesZigzagSection = () => {
 
           <h2
             style={{
-              fontFamily: "Literata, serif", fontSize: "clamp(26px, 3.8vw, 50px)",
-              fontWeight: 700, color: "#ffffff", lineHeight: 1.12,
-              maxWidth: "680px", marginBottom: "18px",
+              fontFamily: "Literata, serif",
+              fontSize: "clamp(26px, 3.8vw, 50px)",
+              fontWeight: 700,
+              color: "#ffffff",
+              lineHeight: 1.12,
+              maxWidth: "680px",
+              marginBottom: "18px",
             }}
           >
             {t.approachTitle}
@@ -460,7 +620,9 @@ const TechServicesZigzagSection = () => {
 
           <div
             style={{
-              width: "40px", height: "2px", borderRadius: "999px",
+              width: "40px",
+              height: "2px",
+              borderRadius: "999px",
               background: "linear-gradient(90deg, #58b4da, rgba(31,108,140,0.40))",
               marginBottom: "18px",
             }}
@@ -468,8 +630,11 @@ const TechServicesZigzagSection = () => {
 
           <p
             style={{
-              fontFamily: "Literata, serif", fontSize: "14px",
-              color: "rgba(255,255,255,0.58)", maxWidth: "500px", lineHeight: 1.88,
+              fontFamily: "Literata, serif",
+              fontSize: "14px",
+              color: "rgba(255,255,255,0.58)",
+              maxWidth: "500px",
+              lineHeight: 1.88,
             }}
           >
             {t.approachDescription}
