@@ -117,15 +117,13 @@ class NewsletterSubscribeView(APIView):
         html_content = f"""
         <div style="margin:0; padding:0; background-color:#f4f7fb;">
           <div style="max-width:640px; margin:0 auto; padding:40px 20px;">
-           <div style="
-            background-image: url('background-image: url('https://basogol-hive-git-project-basogolhive-tech.vercel.app/bas.jpg');');
-            background-size: cover;
-            background-position: center;
-            border-radius:20px 20px 0 0;
-            padding:32px 28px;
-            text-align:center;
-            color:#ffffff;
-          ">
+            <div style="
+              background:linear-gradient(135deg,#1a5f7a 0%,#1f739b 45%,#1a6688 100%);
+              border-radius:20px 20px 0 0;
+              padding:32px 28px;
+              text-align:center;
+              color:#ffffff;
+            ">
               <h1 style="margin:0; font-size:28px; line-height:1.3; font-weight:700;">
                 {"Bienvenue chez Basogol-Hive" if language == "fr" else "Welcome to Basogol-Hive"}
               </h1>
@@ -165,23 +163,31 @@ class NewsletterSubscribeView(APIView):
                 </p>
               </div>
 
-              <p style="margin:0 0 6px; font-size:15px; color:#334155; line-height:1.8;">
-                {"À très bientôt," if language == "fr" else "See you soon,"}
-              </p>
-              <p style="margin:0; font-size:15px; color:#0f172a; font-weight:700;">
-                {"L'équipe Basogol-Hive" if language == "fr" else "The Basogol-Hive team"}
-              </p>
+             <p style="margin:0 0 6px; font-size:15px; color:#334155; line-height:1.8;">
+  {"À très bientôt," if language == "fr" else "See you soon,"}
+</p>
+<p style="margin:0; font-size:15px; color:#0f172a; font-weight:700;">
+  {"L'équipe Basogol-Hive" if language == "fr" else "The Basogol-Hive team"}
+</p>
 
-              <div style="
-                margin-top:28px;
-                padding-top:18px;
-                border-top:1px solid #e2e8f0;
-                font-size:13px;
-                color:#64748b;
-                line-height:1.7;
-              ">
-                projets-tech@basogolhive.com
-              </div>
+<div style="margin-top:16px;">
+  <img
+    src="https://basogol-hive-git-project-basogolhive-tech.vercel.app/bas.png"
+    alt="Basogol-Hive"
+    style="display:block; width:100%; height:auto; border-radius:12px;"
+  >
+</div>
+
+<div style="
+  margin-top:28px;
+  padding-top:18px;
+  border-top:1px solid #e2e8f0;
+  font-size:13px;
+  color:#64748b;
+  line-height:1.7;
+">
+  projets-tech@basogolhive.com
+</div>
             </div>
           </div>
         </div>

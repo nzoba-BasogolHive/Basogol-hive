@@ -443,7 +443,111 @@ const Navbar = () => {
       {/* ══════════════════════════════════
           TABLETTE + DESKTOP — 100% original
       ══════════════════════════════════ */}
-  
+<header
+  className={`hidden md:block fixed inset-x-0 top-0 z-50 px-3 pt-4 transition-all duration-500 sm:px-4 sm:pt-5 md:px-6 md:pt-8 lg:px-8 lg:pt-10 ${
+    showBottomNavbar
+      ? "xl:pointer-events-none xl:-translate-y-10 xl:opacity-0"
+      : "translate-y-0 opacity-100"
+  }`}
+>
+        <div className="mx-auto max-w-screen-2xl">
+          <div className="flex min-w-0 items-center justify-between rounded-2xl border border-white/20 bg-white/10 px-3 py-3 shadow-xl backdrop-blur-xl sm:px-4 sm:py-3.5 lg:px-6">
+
+            <Link to="/" className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-3"
+              onClick={() => handleNavClick("home")}>
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#f9f9f9] shadow-md sm:h-14 sm:w-14 lg:h-16 lg:w-16">
+                <img src={logo} alt="Basogol Hive" className="h-8 w-auto object-contain sm:h-10 lg:h-12" />
+              </div>
+              <div className="min-w-0 notranslate" translate="no">
+                <p className="truncate text-sm font-semibold text-white sm:text-base">Basogol-Hive</p>
+              </div>
+            </Link>
+
+            <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 rounded-xl border border-white/15 bg-white/5 px-2 py-2 xl:mx-6 xl:flex notranslate" translate="no">
+              {c.navItems.map((item) =>
+                renderNavItem(item, (isActive) =>
+                  `rounded-lg px-3 py-2 text-sm font-semibold whitespace-nowrap transition-all duration-300 ${
+                    isActive ? "bg-white/15 text-white shadow-md" : "text-white/90 hover:bg-white/10 hover:text-white"
+                  }`
+                )
+              )}
+            </nav>
+
+            <div className="hidden shrink-0 items-center gap-3 xl:flex">
+              <div className="flex items-center rounded-xl border border-white/20 bg-white/10 p-1">
+                <button type="button" onClick={() => setLang("fr")}
+                  className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${lang === "fr" ? "bg-white text-slate-900" : "text-white/80 hover:text-white"}`}>FR</button>
+                <button type="button" onClick={() => setLang("en")}
+                  className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${lang === "en" ? "bg-white text-slate-900" : "text-white/80 hover:text-white"}`}>EN</button>
+              </div>
+              <Link to={contactHref}
+                className="rounded-xl border border-white/20 bg-[#206687]/90 px-5 py-3 text-sm font-semibold text-white shadow-lg backdrop-blur-sm transition duration-300 hover:-translate-y-0.5 hover:bg-white/15 hover:shadow-xl">
+                {c.contact}
+              </Link>
+            </div>
+
+            <div className="hidden shrink-0 items-center gap-2 md:flex xl:hidden">
+              <div className="flex items-center rounded-xl border border-white/20 bg-white/10 p-1">
+                <button type="button" onClick={() => setLang("fr")}
+                  className={`rounded-lg px-2.5 py-2 text-xs font-semibold transition sm:px-3 sm:text-sm ${lang === "fr" ? "bg-white text-slate-900" : "text-white/80 hover:text-white"}`}>FR</button>
+                <button type="button" onClick={() => setLang("en")}
+                  className={`rounded-lg px-2.5 py-2 text-xs font-semibold transition sm:px-3 sm:text-sm ${lang === "en" ? "bg-white text-slate-900" : "text-white/80 hover:text-white"}`}>EN</button>
+              </div>
+              <Link to={contactHref}
+                className="rounded-xl border border-white/20 bg-[#206687]/90 px-3 py-2 text-xs font-semibold text-white shadow-lg backdrop-blur-sm transition duration-300 hover:-translate-y-0.5 hover:bg-white/15 hover:shadow-xl lg:px-4 lg:py-2.5 lg:text-sm">
+                {c.contact}
+              </Link>
+              <button type="button" onClick={() => setIsMenuOpen((prev) => !prev)}
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white transition hover:bg-white/20 lg:h-11 lg:w-11"
+                aria-label="Open menu">
+                <div className="space-y-1.5">
+                  <span className="block h-0.5 w-5 bg-white" />
+                  <span className="block h-0.5 w-5 bg-white" />
+                  <span className="block h-0.5 w-5 bg-white" />
+                </div>
+              </button>
+            </div>
+
+            {/* Sur mobile, ce bouton est masqué — le drawer prend le relais */}
+            <button type="button" onClick={() => setIsMenuOpen((prev) => !prev)}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white transition hover:bg-white/20 md:hidden invisible"
+              aria-hidden="true" tabIndex={-1}>
+              <div className="space-y-1.5">
+                <span className="block h-0.5 w-5 bg-white" />
+                <span className="block h-0.5 w-5 bg-white" />
+                <span className="block h-0.5 w-5 bg-white" />
+              </div>
+            </button>
+          </div>
+
+          <div className={`overflow-hidden transition-all duration-300 ${isMenuOpen ? "mt-3 max-h-[650px] opacity-100" : "max-h-0 opacity-0"}`}>
+            <div className="w-full rounded-2xl border border-white/20 bg-slate-950/80 p-4 shadow-2xl backdrop-blur-xl xl:hidden">
+              <nav className="flex flex-col gap-2 notranslate" translate="no">
+                {c.navItems.map((item) =>
+                  renderNavItem(item, (isActive) =>
+                    `rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                      isActive ? "border border-white/15 bg-white/10 text-white" : "text-white/90 hover:bg-white/10 hover:text-white"
+                    }`
+                  )
+                )}
+              </nav>
+              <div className="mt-4 border-t border-white/10 pt-4">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/60">{c.languageLabel}</p>
+                <div className="flex items-center gap-2">
+                  <button type="button" onClick={() => setLang("fr")}
+                    className={`rounded-xl px-4 py-2 text-sm font-semibold transition ${lang === "fr" ? "bg-white text-slate-900" : "border border-white/20 text-white"}`}>FR</button>
+                  <button type="button" onClick={() => setLang("en")}
+                    className={`rounded-xl px-4 py-2 text-sm font-semibold transition ${lang === "en" ? "bg-white text-slate-900" : "border border-white/20 text-white"}`}>EN</button>
+                </div>
+                <Link to={contactHref} onClick={() => setIsMenuOpen(false)}
+                  className="mt-4 block rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-center text-sm font-semibold text-white shadow-lg backdrop-blur-sm transition duration-300 hover:-translate-y-0.5 hover:bg-white/15 hover:shadow-xl">
+                  {c.contact}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
 
       {/* ══════════════════════════════════
           DESKTOP bottom navbar
