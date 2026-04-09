@@ -6,6 +6,7 @@ import {
   Zap,
   Compass,
 } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../LanguageContext";
 import groupShape from "../../assets/Group14.png";
 
@@ -32,7 +33,8 @@ const MarketingBrandProjectOverview = ({
 }) => {
   const { lang } = useLanguage();
   const t = translations[lang] || translations.fr;
-
+const navigate = useNavigate();
+const location = useLocation();
   const sectionRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -227,12 +229,29 @@ const MarketingBrandProjectOverview = ({
           }`}
         >
           <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={onBack || (() => window.history.back())}
-              className="ov-back-btn flex h-9 w-9 items-center justify-center rounded-full text-slate-600"
-              aria-label={t.back}
-            >
+         <button
+          type="button"
+          onClick={() => {
+          if (location.state?.navContext === "portfolio") {
+              navigate("/portfolio", {
+                state: {
+                  navContext: "portfolio",
+                  portfolioTab: location.state?.portfolioTab || "technology",
+                },
+              });
+              return;
+            }
+
+            if (typeof onBack === "function") {
+              onBack();
+              return;
+            }
+
+            navigate(-1);
+          }}
+          className="ov-back-btn flex h-9 w-9 items-center justify-center rounded-full text-slate-600"
+          aria-label={t.back}
+        >
               <ChevronLeft className="h-4 w-4" />
             </button>
 

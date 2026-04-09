@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import deviceMockup from "../assets/Frame 220.png";
+import serviceVideo from "../assets/Service.webm";
 import unionShape from "../assets/Union.png";
 import BlueShape from "./BlueShape";
 import FloatingCards from "./FloatingCards";
@@ -78,8 +78,34 @@ const ServicesSection = () => {
   const { lang } = useLanguage();
   const t = translations[lang] || translations.fr;
   const sectionRef = useRef(null);
+  const videoRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
+  // ── Lecture vidéo avec son dès que la section entre dans le viewport ──
+  useEffect(() => {
+  const video = videoRef.current;
+  const section = sectionRef.current;
+  if (!video || !section) return;
+
+  // iOS exige muted pour autoplay — on démute après si possible
+  video.muted = true;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+        video.currentTime = 0;
+      }
+    },
+    { threshold: 0.2 } // ← réduit de 0.3 à 0.2 : se déclenche plus tôt sur petit écran
+  );
+
+  observer.observe(section);
+  return () => observer.disconnect();
+}, []);
+  // ── Animation d'entrée (fade) ──
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -122,14 +148,6 @@ const ServicesSection = () => {
         .sv-d2 { transition-delay: 0.20s; }
         .sv-d3 { transition-delay: 0.32s; }
         .sv-d4 { transition-delay: 0.44s; }
-
-        /* ── Mockup float ── */
-        @keyframes mockupFloat {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          40% { transform: translateY(-12px) rotate(0.5deg); }
-          70% { transform: translateY(-6px) rotate(-0.3deg); }
-        }
-        .mockup-float { animation: mockupFloat 7s ease-in-out infinite; }
 
         /* ── Union float ── */
         @keyframes unionFloat {
@@ -266,20 +284,14 @@ const ServicesSection = () => {
         }
         .sv-learn-more:hover::after { transform: scaleX(1); }
 
-        /* ══════════════════════════════════════════
-           LOGO — Repositionné & impactant
-           Centré verticalement dans la zone droite
-           de l'en-tête, entre les stats et le titre
-        ══════════════════════════════════════════ */
+        /* ── Logo stage ── */
         .sv-logo-stage {
-          /* Prend toute la colonne droite de l'en-tête */
           display: flex;
           flex-direction: column;
           align-items: flex-end;
           gap: 24px;
         }
 
-        /* Conteneur isolé du logo */
         .sv-logo-wrap {
           position: relative;
           width: min(42vw, 340px);
@@ -288,7 +300,6 @@ const ServicesSection = () => {
           pointer-events: none;
         }
 
-        /* Halo lumineux derrière le logo */
         .sv-logo-wrap::before {
           content: "";
           position: absolute;
@@ -304,7 +315,6 @@ const ServicesSection = () => {
           animation: svHaloPulse 5s ease-in-out infinite;
         }
 
-        /* Second halo — anneau externe */
         .sv-logo-wrap::after {
           content: "";
           position: absolute;
@@ -314,7 +324,6 @@ const ServicesSection = () => {
           animation: svRingExpand 5s ease-in-out infinite;
         }
 
-        /* Vidéo elle-même */
         .sv-logo-video {
           position: absolute;
           inset: 0;
@@ -339,8 +348,8 @@ const ServicesSection = () => {
         }
 
         @keyframes svHaloPulse {
-          0%, 100% { transform: scale(1);   opacity: 0.7; }
-          50%       { transform: scale(1.12); opacity: 1; }
+          0%, 100% { transform: scale(1);    opacity: 0.7; }
+          50%       { transform: scale(1.12); opacity: 1;   }
         }
 
         @keyframes svRingExpand {
@@ -349,31 +358,27 @@ const ServicesSection = () => {
         }
 
         @keyframes svLogoFloat {
-          0%, 100% { transform: scale(1)    translateY(0px);  }
-          50%       { transform: scale(1)    translateY(-10px); }
+          0%, 100% { transform: scale(1) translateY(0px);   }
+          50%       { transform: scale(1) translateY(-10px); }
         }
 
-        /* Masquer sur mobile / tablette — le logo
-           prend de la place, on garde la lisibilité */
-      @media (max-width: 1023px) {
-  .sv-logo-stage {
-    align-items: center;
-    gap: 16px;
-  }
-
-  .sv-logo-wrap {
-    display: block;
-    width: min(52vw, 180px);
-    height: min(52vw, 180px);
-    margin: 0 auto;
-  }
-
-  .sv-logo-video {
-    filter:
-      drop-shadow(0 14px 28px rgba(31,108,140,0.18))
-      drop-shadow(0 4px 10px rgba(31,108,140,0.10));
-  }
-}
+        @media (max-width: 1023px) {
+          .sv-logo-stage {
+            align-items: center;
+            gap: 16px;
+          }
+          .sv-logo-wrap {
+            display: block;
+            width: min(52vw, 180px);
+            height: min(52vw, 180px);
+            margin: 0 auto;
+          }
+          .sv-logo-video {
+            filter:
+              drop-shadow(0 14px 28px rgba(31,108,140,0.18))
+              drop-shadow(0 4px 10px rgba(31,108,140,0.10));
+          }
+        }
       `}</style>
 
       <BlueShape />
@@ -417,12 +422,9 @@ const ServicesSection = () => {
             </p>
           </div>
 
-          {/* Droite — logo CENTRÉ + stats + CTA */}
-          <div
-            className={`sv-fade-up sv-d2 sv-logo-stage ${visible ? "show" : ""}`}
-          >
+          {/* Droite — logo + stats + CTA */}
+          <div className={`sv-fade-up sv-d2 sv-logo-stage ${visible ? "show" : ""}`}>
 
-            {/* ★ LOGO — pièce maîtresse de la colonne droite ★ */}
             <div className="sv-logo-wrap" aria-hidden="true">
               <video
                 className={`sv-logo-video ${visible ? "show" : ""}`}
@@ -431,7 +433,7 @@ const ServicesSection = () => {
                 loop
                 playsInline
               >
-                <source src={logoAnimation} type="video/mp4" />
+                <source src={logoAnimation} type="video/webm" />
               </video>
             </div>
 
@@ -472,18 +474,25 @@ const ServicesSection = () => {
 
         {/* ── Grille principale ── */}
         <div className="relative grid grid-cols-1 gap-8 xl:grid-cols-[0.95fr_1.05fr] xl:gap-10">
-          {/* Mockup */}
+
+          {/* Vidéo service — scroll-triggered avec son */}
           <div
             className={`sv-fade-left sv-d1 relative z-10 flex items-center justify-center ${
               visible ? "show" : ""
             }`}
           >
             <div className="relative w-full max-w-3xl">
-              <img
-                src={deviceMockup}
-                alt={t.mockupAlt}
-                className="mockup-float relative z-10 w-full object-contain drop-shadow-[0_25px_60px_rgba(15,23,42,0.17)]"
-              />
+             <video
+            ref={videoRef}
+            className="relative z-10 w-full object-contain drop-shadow-[0_25px_60px_rgba(15,23,42,0.17)]"
+            muted          
+            loop            
+            playsInline     
+            preload="auto"
+            aria-label={t.mockupAlt}
+          >
+            <source src={serviceVideo} type="video/webm" />
+          </video>
               <img
                 src={unionShape}
                 alt=""
@@ -495,6 +504,7 @@ const ServicesSection = () => {
 
           {/* Cartes */}
           <div className="relative z-10 flex flex-col gap-5 pl-0 xl:pl-8">
+
             {/* Carte globale */}
             <div
               className={`sv-fade-right sv-d2 sv-card-global overflow-hidden rounded-[22px] ${
@@ -533,6 +543,7 @@ const ServicesSection = () => {
 
             {/* 2 petites cartes */}
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+
               {/* Tech */}
               <div
                 className={`sv-fade-up sv-d3 sv-card-small overflow-hidden rounded-[22px] ${
@@ -619,6 +630,7 @@ const ServicesSection = () => {
                   </a>
                 </div>
               </div>
+
             </div>
           </div>
         </div>

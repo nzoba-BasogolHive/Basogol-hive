@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLanguage } from "./LanguageContext";
-import heroVideo from "../assets/HeroBASOGOL.mp4";
+import heroVideo from "../assets/BASOGOL-HIVE_Hero_site_web_Vrs_final.mp4";
 
 const translations = {
   fr: {
-    badge: "Tech & studio Creatif",
+    badge: "Tech & studio Créatif",
     title:
       "Nous créons des expériences digitales et visuelles qui donnent une nouvelle dimension à votre marque.",
     description:
-      "De l’idée à l’exécution, nous imaginons des solutions élégantes, utiles et mémorables pour aider votre entreprise à se démarquer, inspirer confiance et attirer les bonnes opportunités.",
+      "De l'idée à l'exécution, nous imaginons des solutions élégantes, utiles et mémorables pour aider votre entreprise à se démarquer, inspirer confiance et attirer les bonnes opportunités.",
     primaryCta: "Demander un devis",
     secondaryCta: "Voir nos réalisations",
-    stat1Title: "Tech",
+    stat1Title: "Technologie",
     stat1Text: "Applications, logiciels et hébergement",
     stat2Title: "Studio",
     stat2Text: "Branding, design, vidéo et contenus visuels",
@@ -19,9 +19,8 @@ const translations = {
     stat3Text: "Des solutions adaptées à votre activité",
     videoAriaLabel: "Vidéo de présentation Basogol-Hive",
   },
-
   en: {
-    badge: "Tech & Creative studio",
+    badge: "Tech & Creative Studio",
     title:
       "We create digital and visual experiences that give a new dimension to your brand.",
     description:
@@ -44,17 +43,14 @@ const HeroCarousel = () => {
 
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
-
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-
     video.muted = true;
     video.playsInline = true;
     video.volume = 1;
-
     video.play().catch(() => {});
   }, []);
 
@@ -62,42 +58,29 @@ const HeroCarousel = () => {
     const video = videoRef.current;
     if (!video) return;
 
-    const enableSoundOnFirstInteraction = async () => {
+    const enableSound = async () => {
       try {
         video.muted = false;
         video.volume = 1;
         await video.play();
         setHasUserInteracted(true);
-      } catch (error) {
-        console.error("Impossible d’activer le son :", error);
-      }
-
-      window.removeEventListener("click", enableSoundOnFirstInteraction);
-      window.removeEventListener("touchstart", enableSoundOnFirstInteraction);
-      window.removeEventListener("keydown", enableSoundOnFirstInteraction);
+      } catch (e) {}
     };
 
-    window.addEventListener("click", enableSoundOnFirstInteraction, {
-      once: true,
-    });
-    window.addEventListener("touchstart", enableSoundOnFirstInteraction, {
-      once: true,
-    });
-    window.addEventListener("keydown", enableSoundOnFirstInteraction, {
-      once: true,
-    });
+    window.addEventListener("click", enableSound, { once: true });
+    window.addEventListener("touchstart", enableSound, { once: true });
+    window.addEventListener("keydown", enableSound, { once: true });
 
     return () => {
-      window.removeEventListener("click", enableSoundOnFirstInteraction);
-      window.removeEventListener("touchstart", enableSoundOnFirstInteraction);
-      window.removeEventListener("keydown", enableSoundOnFirstInteraction);
+      window.removeEventListener("click", enableSound);
+      window.removeEventListener("touchstart", enableSound);
+      window.removeEventListener("keydown", enableSound);
     };
   }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
     const video = videoRef.current;
-
     if (!section || !video) return;
 
     const observer = new IntersectionObserver(
@@ -109,101 +92,109 @@ const HeroCarousel = () => {
           } else {
             video.pause();
           }
-        } catch (error) {
-          console.error("Erreur vidéo :", error);
-        }
+        } catch (e) {}
       },
-      {
-        threshold: 0.35,
-      }
+      { threshold: 0.35 }
     );
 
     observer.observe(section);
-
     return () => observer.disconnect();
   }, [hasUserInteracted]);
 
   return (
     <section
-  ref={sectionRef}
-  id="home"
-  data-page-hero
-  className="relative min-h-screen overflow-hidden"
->
-  <video
-    ref={videoRef}
-    className="absolute inset-0 h-full w-full object-cover"
-    autoPlay
-    muted
-    loop
-    playsInline
-    preload="auto"
-    aria-label={t.videoAriaLabel}
-  >
-    <source src={heroVideo} type="video/mp4" />
-  </video>
+      ref={sectionRef}
+      id="home"
+      data-page-hero
+      className="relative min-h-screen overflow-hidden"
+    >
+      {/* ── Vidéo fond ── */}
+      <video
+        ref={videoRef}
+        className="absolute inset-0 h-full w-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-label={t.videoAriaLabel}
+      >
+        <source src={heroVideo} type="video/mp4" />
+      </video>
 
-      <div className="absolute inset-0 bg-black/55" />
+      {/* ── Overlay — moins opaque sur mobile pour voir la vidéo ── */}
+      <div className="absolute inset-0 bg-black/40 sm:bg-black/50" />
 
-      <div className="absolute inset-0">
-        <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-sky-500/20 blur-3xl" />
+      {/* ── Halos décoratifs ── */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute left-0 top-0 h-48 w-48 rounded-full bg-cyan-500/15 blur-3xl sm:h-72 sm:w-72 sm:bg-cyan-500/20" />
+        <div className="absolute bottom-0 right-0 h-52 w-52 rounded-full bg-sky-500/15 blur-3xl sm:h-80 sm:w-80 sm:bg-sky-500/20" />
       </div>
-       <div className="relative z-10 mx-auto flex min-h-screen max-w-screen-2xl items-center px-4 pb-10 pt-24 sm:px-6 md:pt-28 lg:px-8 lg:pt-32 xl:pt-40">
+
+      {/* ── Contenu ── */}
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-screen-2xl items-center px-5 pb-8 pt-20 sm:px-6 sm:pt-24 md:pt-28 lg:px-8 lg:pt-32 xl:pt-40">
         <div className="w-full">
           <div className="max-w-4xl">
-            <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white backdrop-blur-sm sm:text-sm">
+
+            {/* Badge */}
+            <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white backdrop-blur-sm sm:px-4 sm:py-2 sm:text-xs">
               {t.badge}
             </span>
 
-            <h1 className="mt-6 max-w-5xl text-2xl font-bold leading-[1.15] tracking-tight text-white sm:text-md md:text-3xl lg:text-3xl xl:text-4xl">
+            {/* Titre */}
+            <h1
+              className="mt-4 max-w-5xl text-[22px] font-bold leading-[1.18] tracking-tight text-white sm:mt-6 sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl"
+              style={{ fontFamily: "Literata, serif" }}
+            >
               {t.title}
             </h1>
 
+            {/* Description */}
             <p
-              className="mt-6 max-w-3xl text-sm leading-7 text-white/85 sm:text-base md:text-lg lg:text-xl"
+              className="mt-3 max-w-3xl text-[13px] leading-[1.75] text-white/80 sm:mt-5 sm:text-base md:text-lg"
               style={{ fontFamily: "Literata, serif" }}
             >
               {t.description}
             </p>
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+            {/* CTA */}
+            <div className="mt-5 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
               <a
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-xl bg-[#206687] px-6 py-3 text-base font-semibold text-white shadow-xl transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
+                className="inline-flex items-center justify-center rounded-xl bg-[#206687] px-5 py-2.5 text-sm font-semibold text-white shadow-xl transition duration-300 hover:-translate-y-1 hover:shadow-2xl sm:px-6 sm:py-3 sm:text-base"
               >
                 {t.primaryCta}
               </a>
-
               <a
                 href="/portfolio"
-                className="inline-flex items-center justify-center rounded-xl border border-white/25 bg-white/10 px-6 py-3 text-base font-semibold text-white backdrop-blur-sm transition duration-300 hover:bg-white/20"
+                className="inline-flex items-center justify-center rounded-xl border border-white/25 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition duration-300 hover:bg-white/20 sm:px-6 sm:py-3 sm:text-base"
               >
                 {t.secondaryCta}
               </a>
             </div>
 
-            <div className="mt-10 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
-              <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
-                <p className="text-2xl font-bold text-white">{t.stat1Title}</p>
-                <p className="mt-1 text-sm text-white/75">{t.stat1Text}</p>
+            {/* Stats cards */}
+            <div className="mt-6 grid max-w-3xl grid-cols-3 gap-2 sm:mt-10 sm:gap-4">
+              <div className="rounded-xl border border-white/15 bg-white/10 p-3 backdrop-blur-sm sm:rounded-2xl sm:p-4">
+                <p className="text-sm font-bold text-white sm:text-xl">{t.stat1Title}</p>
+                <p className="mt-0.5 text-[11px] leading-[1.4] text-white/70 sm:mt-1 sm:text-sm">{t.stat1Text}</p>
               </div>
-
-              <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
-                <p className="text-2xl font-bold text-white">{t.stat2Title}</p>
-                <p className="mt-1 text-sm text-white/75">{t.stat2Text}</p>
+              <div className="rounded-xl border border-white/15 bg-white/10 p-3 backdrop-blur-sm sm:rounded-2xl sm:p-4">
+                <p className="text-sm font-bold text-white sm:text-xl">{t.stat2Title}</p>
+                <p className="mt-0.5 text-[11px] leading-[1.4] text-white/70 sm:mt-1 sm:text-sm">{t.stat2Text}</p>
               </div>
-
-              <div className="rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
-                <p className="text-2xl font-bold text-white">{t.stat3Title}</p>
-                <p className="mt-1 text-sm text-white/75">{t.stat3Text}</p>
+              <div className="rounded-xl border border-white/15 bg-white/10 p-3 backdrop-blur-sm sm:rounded-2xl sm:p-4">
+                <p className="text-sm font-bold text-white sm:text-xl">{t.stat3Title}</p>
+                <p className="mt-0.5 text-[11px] leading-[1.4] text-white/70 sm:mt-1 sm:text-sm">{t.stat3Text}</p>
               </div>
             </div>
+
           </div>
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950 to-transparent" />
+      {/* ── Gradient bas ── */}
+      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-950 to-transparent sm:h-24" />
     </section>
   );
 };

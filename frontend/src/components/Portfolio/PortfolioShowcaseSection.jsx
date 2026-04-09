@@ -1,4 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import christlandImg from "../../assets/ch.png";
+import dibi from "../../assets/dib1.png";
+import basogol from "../../assets/ba.png";
 import {
   Megaphone,
   Cpu,
@@ -6,7 +9,7 @@ import {
   Sparkles,
   LayoutGrid,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useLanguage } from "../LanguageContext";
 import leftOutlineShape from "../../assets/Union0.png";
 import rightSoftShape from "../../assets/Group14.png";
@@ -56,22 +59,22 @@ const translations = {
           image:
             "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80",
         },
-        {
-          slug: "reseaux-sociaux",
-          type: "marketing-brand",
-          category: "Social Direction",
-          title: "Direction créative pour présence sociale",
-          image:
-            "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80",
-        },
-        {
-          slug: "identite-de-marque",
-          type: "marketing-brand",
-          category: "Visual Identity",
-          title: "Refonte d’identité pour marque premium",
-          image:
-            "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=1400&q=80",
-        },
+        // {
+        //   slug: "reseaux-sociaux",
+        //   type: "marketing-brand",
+        //   category: "Social Direction",
+        //   title: "Direction créative pour présence sociale",
+        //   image:
+        //     "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80",
+        // },
+        // {
+        //   slug: "identite-de-marque",
+        //   type: "marketing-brand",
+        //   category: "Visual Identity",
+        //   title: "Refonte d’identité pour marque premium",
+        //   image:
+        //     "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=1400&q=80",
+        // },
       ],
     },
     technology: {
@@ -80,49 +83,48 @@ const translations = {
       introDescription:
         "Nous développons des expériences et des produits qui allient structure technique, précision fonctionnelle et qualité visuelle. Chaque projet vise une exécution fiable, claire et évolutive.",
       featured: {
-        slug: "developpement-web",
+         slug: "Web-Platform",
         type: "technology",
-        category: "Platform Design",
-        title: "Conception d’une plateforme digitale orientée performance",
-        description:
-          "Une approche centrée sur les usages, l’architecture et l’expérience afin de créer une solution plus fluide, plus lisible et prête à évoluer.",
-        metric: "+42% d’efficacité perçue",
+        category:  "Platform Design",
+        title: "Une plateforme éducative digitale performante, offrant une expérience d’apprentissage fluide",
         image:
-          "https://images.unsplash.com/photo-1516321165247-4aa89a48be28?auto=format&fit=crop&w=1400&q=80",
+          dibi,
+        metric: "+42% d’efficacité perçue",
+     
       },
       projects: [
         {
           slug: "developpement-web",
           type: "technology",
-          category: "Web Platform",
-          title: "Interface produit pensée pour l’usage",
+          category: "site e-comerce",
+          title: "Site vitrine interactif e-commerce ",
           image:
-            "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80",
+            christlandImg,
         },
         {
-          slug: "dashboard-analytique",
+          slug: "basogol-hive",
           type: "technology",
-          category: "Dashboard",
-          title: "Système de pilotage et visualisation",
+          category: "Tech & Branding",
+          title: "Plateforme digitale pour les services technologiques et de Branding",
           image:
-            "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1400&q=80",
+            basogol,
         },
-        {
-          slug: "ux-architecture",
-          type: "technology",
-          category: "UX Architecture",
-          title: "Parcours structurés pour service digital",
-          image:
-            "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1400&q=80",
-        },
-        {
-          slug: "product-build",
-          type: "technology",
-          category: "Product Build",
-          title: "Développement d’un environnement sur mesure",
-          image:
-            "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1400&q=80",
-        },
+        // {
+        //   slug: "ux-architecture",
+        //   type: "technology",
+        //   category: "UX Architecture",
+        //   title: "Parcours structurés pour service digital",
+        //   image:
+        //     "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1400&q=80",
+        // },
+        // {
+        //   slug: "product-build",
+        //   type: "technology",
+        //   category: "Product Build",
+        //   title: "Développement d’un environnement sur mesure",
+        //   image:
+        //     "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1400&q=80",
+        // },
       ],
     },
   },
@@ -193,33 +195,31 @@ const translations = {
       introDescription:
         "We build experiences and products that combine technical structure, functional precision and visual quality. Each project aims for reliable, clear and scalable execution.",
       featured: {
-        slug: "developpement-web",
-        type: "technology",
-        category: "Platform Design",
-        title: "Design of a performance-oriented digital platform",
-        description:
-          "A method centered on usage, architecture and experience to create a solution that is clearer, smoother and ready to evolve.",
-        metric: "+42% perceived efficiency",
-        image:
-          "https://images.unsplash.com/photo-1516321165247-4aa89a48be28?auto=format&fit=crop&w=1400&q=80",
-      },
+      slug: "Web-Platform",
+      type: "technology",
+      category: "Platform Design",
+      title: "A high-performance digital educational platform delivering a seamless learning experience",
+      image: dibi,
+      metric: "+42% perceived efficiency",
+    },
       projects: [
         {
           slug: "developpement-web",
           type: "technology",
-          category: "Web Platform",
-          title: "Product interface designed for usage",
+          category: "site e-comerce",
+          title: "Interactive e-commerce showcase website ",
           image:
-            "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80",
+            christlandImg,
         },
-        {
-          slug: "dashboard-analytique",
-          type: "technology",
-          category: "Dashboard",
-          title: "Monitoring and visualization system",
-          image:
-            "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1400&q=80",
-        },
+       
+       {
+        slug: "basogol-hive",
+        type: "technology",
+        category: "Tech & Branding",
+        title: "Digital platform for tech and brand services",
+        image:
+         basogol,
+      },
         {
           slug: "ux-architecture",
           type: "technology",
@@ -241,11 +241,14 @@ const translations = {
   },
 };
 
-const ProjectCard = ({ project, t }) => {
+const ProjectCard = ({ project, t, activeTab }) => {
   return (
     <Link
       to={`/${project.type}/${project.slug}`}
-      state={{ navContext: "portfolio" }}
+      state={{
+        navContext: "portfolio",
+        portfolioTab: activeTab,
+      }}
       className="group relative block overflow-hidden rounded-[24px] border border-white/60 bg-white/55 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur-[12px]"
     >
       <div className="relative h-[290px] overflow-hidden">
@@ -291,14 +294,30 @@ const ProjectCard = ({ project, t }) => {
 
 const PortfolioShowcaseSection = () => {
   const { lang } = useLanguage();
+  const location = useLocation();
   const t = translations[lang] || translations.fr;
 
-  const [active, setActive] = useState("marketing");
+  const initialTab =
+    location.state?.portfolioTab === "technology" ||
+    location.state?.portfolioTab === "marketing"
+      ? location.state.portfolioTab
+      : "marketing";
+
+  const [active, setActive] = useState(initialTab);
   const [visible, setVisible] = useState(false);
   const [contentVisible, setContentVisible] = useState(true);
   const sectionRef = useRef(null);
 
   const activeData = useMemo(() => t[active], [t, active]);
+
+  useEffect(() => {
+    if (
+      location.state?.portfolioTab === "technology" ||
+      location.state?.portfolioTab === "marketing"
+    ) {
+      setActive(location.state.portfolioTab);
+    }
+  }, [location.state]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -504,7 +523,12 @@ const PortfolioShowcaseSection = () => {
 
               <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
                 {activeData.projects.map((project) => (
-                  <ProjectCard key={project.slug} project={project} t={t} />
+                 <ProjectCard
+                  key={project.slug}
+                  project={project}
+                  t={t}
+                  activeTab={active}
+                />
                 ))}
               </div>
             </div>
@@ -571,11 +595,15 @@ const PortfolioShowcaseSection = () => {
                   </div>
 
                   <div className="mt-7">
-                    <Link
-                      to={`/${activeData.featured.type}/${activeData.featured.slug}`}
-                      className="inline-flex items-center gap-2 rounded-[12px] bg-[#1f6c8c] px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(31,108,140,0.24)] transition-transform duration-300 hover:translate-y-[-2px]"
-                      style={{ fontFamily: "Literata, serif" }}
-                    >
+                     <Link
+                          to={`/${activeData.featured.type}/${activeData.featured.slug}`}
+                          state={{
+                            navContext: "portfolio",
+                            portfolioTab: active,
+                          }}
+                          className="inline-flex items-center gap-2 rounded-[12px] bg-[#1f6c8c] px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(31,108,140,0.24)] transition-transform duration-300 hover:translate-y-[-2px]"
+                          style={{ fontFamily: "Literata, serif" }}
+                        >
                       {t.viewProject}
                       <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
                     </Link>

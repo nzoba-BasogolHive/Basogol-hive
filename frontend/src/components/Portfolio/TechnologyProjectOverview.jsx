@@ -6,6 +6,7 @@ import {
   Zap,
   Compass,
 } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "../LanguageContext";
 import groupShape from "../../assets/Group14.png";
 
@@ -32,6 +33,8 @@ const TechnologyProjectOverview = ({
 }) => {
   const { lang } = useLanguage();
   const t = translations[lang] || translations.fr;
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const sectionRef = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -51,6 +54,24 @@ const TechnologyProjectOverview = ({
   const resolvedTitle =
     serviceTitle?.[lang] || serviceTitle || category?.[lang] || category || t.category;
 
+  const handleBackClick = () => {
+  if (location.state?.navContext === "portfolio") {
+    navigate("/portfolio", {
+      state: {
+        navContext: "portfolio",
+        portfolioTab: location.state?.portfolioTab || "technology",
+      },
+    });
+    return;
+  }
+
+  if (typeof onBack === "function") {
+    onBack();
+    return;
+  }
+
+  navigate(-1);
+};
   return (
     <section
       id="tech-service-detail-content"
@@ -75,7 +96,7 @@ const TechnologyProjectOverview = ({
           <div className="flex items-center gap-3">
             <button
               type="button"
-              onClick={onBack || (() => window.history.back())}
+              onClick={handleBackClick}
               className="flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-white/70 text-slate-600 shadow-sm backdrop-blur"
               aria-label={t.back}
             >
@@ -86,7 +107,8 @@ const TechnologyProjectOverview = ({
               className="inline-flex items-center rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.20em] text-white"
               style={{
                 fontFamily: "Literata, serif",
-                background: "linear-gradient(135deg, rgba(31,108,140,0.88), rgba(42,144,184,0.84))",
+                background:
+                  "linear-gradient(135deg, rgba(31,108,140,0.88), rgba(42,144,184,0.84))",
               }}
             >
               {resolvedTitle}
@@ -94,7 +116,13 @@ const TechnologyProjectOverview = ({
           </div>
 
           <div className="flex items-center gap-2">
-            <div style={{ width: "24px", height: "1px", background: "rgba(31,108,140,0.30)" }} />
+            <div
+              style={{
+                width: "24px",
+                height: "1px",
+                background: "rgba(31,108,140,0.30)",
+              }}
+            />
             <span
               className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400"
               style={{ fontFamily: "Literata, serif" }}
@@ -116,7 +144,9 @@ const TechnologyProjectOverview = ({
               <article
                 key={index}
                 className={`rounded-[18px] px-6 py-7 transition-all duration-700 ${
-                  visible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-6 scale-[0.97]"
+                  visible
+                    ? "opacity-100 translate-y-0 scale-100"
+                    : "opacity-0 translate-y-6 scale-[0.97]"
                 } ${isFeatured ? "text-white" : "text-slate-900"}`}
                 style={{
                   transitionDelay: `${index * 0.09}s`,
@@ -134,7 +164,9 @@ const TechnologyProjectOverview = ({
                   <div
                     className="flex h-11 w-11 items-center justify-center rounded-[12px]"
                     style={{
-                      background: isFeatured ? "rgba(255,255,255,0.16)" : "rgba(31,108,140,0.08)",
+                      background: isFeatured
+                        ? "rgba(255,255,255,0.16)"
+                        : "rgba(31,108,140,0.08)",
                       border: isFeatured
                         ? "1px solid rgba(255,255,255,0.28)"
                         : "1px solid rgba(31,108,140,0.14)",

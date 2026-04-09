@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import { subscribeNewsletter } from "../hooks/useFetchQuery";
+
 import {
   Facebook,
   Instagram,
@@ -6,7 +8,12 @@ import {
   Youtube,
   Mail,
   Send,
+  CheckCircle2,
+  Info,
+  XCircle,
+  X,
 } from "lucide-react";
+
 import { Link } from "react-router-dom";
 import logo from "../assets/basogollogo.png";
 import leftTopMain from "../assets/Untitled.png";
@@ -93,6 +100,15 @@ const translations = {
     inputPlaceholder: "entrez votre email",
     newsletterText: "Abonnez-vous à notre newsletter",
     subscribeButton: "S'abonner",
+    newsletterLoading: "Inscription...",
+    newsletterSuccess: "Merci, votre email a bien été ajouté.",
+    newsletterError: "Une erreur est survenue. Veuillez réessayer.",
+    newsletterInvalid: "Veuillez entrer une adresse email valide.",
+    newsletterAlreadySubscribed: "Vous êtes déjà abonné à la newsletter.",
+    newsletterPopupSuccessTitle: "Abonnement réussi",
+    newsletterPopupInfoTitle: "Déjà abonné",
+    newsletterPopupErrorTitle: "Une erreur est survenue",
+    popupClose: "Fermer",
     socialLinks: [
       { label: "Facebook", href: "#" },
       { label: "Instagram", href: "#" },
@@ -183,6 +199,15 @@ const translations = {
     inputPlaceholder: "enter your email",
     newsletterText: "Subscribe to our newsletter",
     subscribeButton: "Subscribe",
+    newsletterLoading: "Subscribing...",
+    newsletterSuccess: "Thank you, your email has been added.",
+    newsletterError: "Something went wrong. Please try again.",
+    newsletterInvalid: "Please enter a valid email address.",
+    newsletterAlreadySubscribed: "You are already subscribed to the newsletter.",
+    newsletterPopupSuccessTitle: "Subscription successful",
+    newsletterPopupInfoTitle: "Already subscribed",
+    newsletterPopupErrorTitle: "Something went wrong",
+    popupClose: "Close",
     socialLinks: [
       { label: "Facebook", href: "#" },
       { label: "Instagram", href: "#" },
@@ -212,6 +237,27 @@ const FooterSection = () => {
   const footerRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterLoading, setNewsletterLoading] = useState(false);
+  const [newsletterStatus, setNewsletterStatus] = useState({
+    type: "",
+    message: "",
+  });
+const [newsletterPopup, setNewsletterPopup] = useState({
+  open: false,
+  type: "",
+  title: "",
+  message: "",
+});
+const closeNewsletterPopup = () => {
+  setNewsletterPopup({
+    open: false,
+    type: "",
+    title: "",
+    message: "",
+  });
+};
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -223,12 +269,70 @@ const FooterSection = () => {
     return () => observer.disconnect();
   }, []);
 
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+const handleNewsletterSubmit = async (e) => {
+  e.preventDefault();
+
+  setNewsletterStatus({ type: "", message: "" });
+
+  const cleanEmail = newsletterEmail.trim().toLowerCase();
+
+  if (!isValidEmail(cleanEmail)) {
+    setNewsletterPopup({
+      open: true,
+      type: "error",
+      title: t.newsletterPopupErrorTitle,
+      message: t.newsletterInvalid,
+    });
+    return;
+  }
+
+  setNewsletterLoading(true);
+
+  try {
+    const response = await subscribeNewsletter({
+      email: cleanEmail,
+      language: lang,
+    });
+
+    if (response?.already_subscribed) {
+      setNewsletterPopup({
+        open: true,
+        type: "info",
+        title: t.newsletterPopupInfoTitle,
+        message: response.message || t.newsletterAlreadySubscribed,
+      });
+    } else {
+      setNewsletterPopup({
+        open: true,
+        type: "success",
+        title: t.newsletterPopupSuccessTitle,
+        message: response.message || t.newsletterSuccess,
+      });
+      setNewsletterEmail("");
+    }
+  } catch (error) {
+    console.error("Newsletter subscribe error:", error);
+    setNewsletterPopup({
+      open: true,
+      type: "error",
+      title: t.newsletterPopupErrorTitle,
+      message: error.message || t.newsletterError,
+    });
+  } finally {
+    setNewsletterLoading(false);
+  }
+};
+
   return (
     <footer
       ref={footerRef}
       className="relative overflow-hidden text-white"
       style={{
-        background: "linear-gradient(135deg, #1a5f7a 0%, #1f739b 45%, #1a6688 100%)",
+        background:
+          "linear-gradient(135deg, #1a5f7a 0%, #1f739b 45%, #1a6688 100%)",
       }}
     >
       <style>{`
@@ -353,6 +457,11 @@ const FooterSection = () => {
           transform: translateY(-2px);
           box-shadow: 0 8px 22px rgba(0,0,0,0.20), 0 1px 0 rgba(255,255,255,0.28) inset;
         }
+        .footer-subscribe-btn:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+          transform: none;
+        }
 
         .footer-logo-wrap {
           background: rgba(255,255,255,0.12);
@@ -399,7 +508,157 @@ const FooterSection = () => {
             transparent 70%
           );
         }
+
+       .newsletter-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.32);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 9999;
+  animation: newsletterFadeIn 0.28s ease;
+}
+
+.newsletter-popup-card {
+  width: 100%;
+  max-width: 460px;
+  border-radius: 24px;
+  padding: 30px 28px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.72);
+  box-shadow:
+    0 24px 80px rgba(15,23,42,0.16),
+    0 1px 0 rgba(255,255,255,0.85) inset;
+  animation: newsletterPopIn 0.32s cubic-bezier(0.22,1,0.36,1);
+  position: relative;
+  overflow: hidden;
+}
+
+.newsletter-popup-icon {
+  width: 62px;
+  height: 62px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.newsletter-popup-success {
+  background: linear-gradient(135deg, rgba(16,185,129,0.16), rgba(5,150,105,0.10));
+  border: 1px solid rgba(16,185,129,0.18);
+}
+
+.newsletter-popup-info {
+  background: linear-gradient(135deg, rgba(59,130,246,0.16), rgba(37,99,235,0.10));
+  border: 1px solid rgba(59,130,246,0.18);
+}
+
+.newsletter-popup-error {
+  background: linear-gradient(135deg, rgba(239,68,68,0.14), rgba(220,38,38,0.10));
+  border: 1px solid rgba(239,68,68,0.18);
+}
+
+.newsletter-popup-button {
+  background: rgba(26, 95, 122, 1);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow:
+    0 8px 24px rgba(26,95,122,0.24),
+    0 1px 0 rgba(255,255,255,0.20) inset;
+  transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
+}
+
+.newsletter-popup-button:hover {
+  transform: translateY(-1px);
+}
+
+@keyframes newsletterFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes newsletterPopIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+} 
       `}</style>
+{newsletterPopup.open && (
+  <div className="newsletter-popup-overlay" onClick={closeNewsletterPopup}>
+    <div
+      className="newsletter-popup-card"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        type="button"
+        onClick={closeNewsletterPopup}
+        className="absolute right-4 top-4 rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-700"
+        aria-label={t.popupClose}
+      >
+        <X className="h-4 w-4" />
+      </button>
+
+      <div
+        className={`newsletter-popup-icon ${
+          newsletterPopup.type === "success"
+            ? "newsletter-popup-success"
+            : newsletterPopup.type === "info"
+            ? "newsletter-popup-info"
+            : "newsletter-popup-error"
+        }`}
+      >
+        {newsletterPopup.type === "success" ? (
+          <CheckCircle2 className="h-8 w-8 text-emerald-600" />
+        ) : newsletterPopup.type === "info" ? (
+          <Info className="h-8 w-8 text-blue-600" />
+        ) : (
+          <XCircle className="h-8 w-8 text-red-500" />
+        )}
+      </div>
+
+      <h3
+        className="text-2xl font-bold text-slate-900"
+        style={{ fontFamily: "Literata, serif" }}
+      >
+        {newsletterPopup.title}
+      </h3>
+
+      <div
+        className="mt-3 h-[2px] w-10 rounded-full"
+        style={{ background: "linear-gradient(90deg, #1a5f7a, #7dd3fc)" }}
+      />
+
+      <p
+        className="mt-5 text-sm leading-7 text-slate-600"
+        style={{ fontFamily: "Literata, serif" }}
+      >
+        {newsletterPopup.message}
+      </p>
+
+      <div className="mt-7 flex justify-end">
+        <button
+          type="button"
+          onClick={closeNewsletterPopup}
+          className="newsletter-popup-button rounded-[12px] px-5 py-3 text-sm font-semibold text-white"
+          style={{ fontFamily: "Literata, serif" }}
+        >
+          {t.popupClose}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
       <div className="footer-halo pointer-events-none absolute inset-0 z-0" />
 
@@ -437,10 +696,11 @@ const FooterSection = () => {
               </div>
               <div>
                 <h3
-                  className="text-xl font-semibold notranslate" translate="no"
+                  className="text-xl font-semibold notranslate"
+                  translate="no"
                   style={{ fontFamily: "Literata, serif" }}
                 >
-                  Basogol Hive
+                  Basogol-Hive
                 </h3>
                 <p className="text-sm text-white/70">{t.brandSubtitle}</p>
               </div>
@@ -519,21 +779,29 @@ const FooterSection = () => {
               {t.newsletterText}
             </h4>
 
-            <div className="mt-5 flex flex-col gap-3">
+            <form
+              onSubmit={handleNewsletterSubmit}
+              className="mt-5 flex flex-col gap-3"
+            >
               <input
                 type="email"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
                 placeholder={t.inputPlaceholder}
                 className="footer-input h-12 w-full rounded-[10px] px-4 text-sm"
                 style={{ fontFamily: "Literata, serif" }}
+                required
               />
+
               <button
-                type="button"
+                type="submit"
+                disabled={newsletterLoading}
                 className="footer-subscribe-btn w-full rounded-[10px] py-3 text-sm font-semibold text-white"
                 style={{ fontFamily: "Literata, serif" }}
               >
-                {t.subscribeButton}
+                {newsletterLoading ? t.newsletterLoading : t.subscribeButton}
               </button>
-            </div>
+            </form>
 
             <div className="footer-divider my-7" />
 
@@ -575,7 +843,9 @@ const FooterSection = () => {
                     className="footer-bottom-link inline-flex items-center gap-2 text-xs text-white/60 hover:text-white"
                   >
                     <Icon className="h-3.5 w-3.5" />
-                    <span style={{ fontFamily: "Literata, serif" }}>{item.label}</span>
+                    <span style={{ fontFamily: "Literata, serif" }}>
+                      {item.label}
+                    </span>
                   </a>
                 );
               })}
@@ -584,6 +854,7 @@ const FooterSection = () => {
         </div>
       </div>
     </footer>
+    
   );
 };
 

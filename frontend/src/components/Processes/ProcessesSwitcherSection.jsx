@@ -10,7 +10,6 @@ import {
   Database,
   Code2,
   Gauge,
-  CheckCircle2,
   ChevronDown,
 } from "lucide-react";
 import { useLanguage } from "../LanguageContext";
@@ -25,8 +24,8 @@ const translations = {
     sectionTitle: "Deux expertises, une méthode claire et maîtrisée",
     sectionDescription:
       "Selon la nature de votre projet, nous adaptons notre méthode de travail pour offrir un accompagnement structuré, cohérent et orienté résultats. Explorez notre approche en marketing ou en technologie.",
-    marketingTab: "Process Marketing",
-    technologyTab: "Process Technology",
+    marketingTab: "Marketing de processus",
+    technologyTab: "Technologie des procédés",
     more: "Voir plus",
     less: "Réduire",
     marketing: {
@@ -41,24 +40,28 @@ const translations = {
         "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1800&q=80",
       steps: [
         {
+          id: "marketing-analysis",
           title: "Analyse & compréhension",
           text: "Nous étudions votre marque, votre marché, votre audience et votre contexte afin de poser une base stratégique solide.",
           details:
             "Cette phase permet de révéler les opportunités, comprendre les attentes de votre audience et identifier les éléments qui doivent guider toute la suite du projet. Nous posons ici les bases de la cohérence stratégique.",
         },
         {
+          id: "marketing-positioning",
           title: "Positionnement stratégique",
           text: "Nous définissons une direction claire, un territoire de marque pertinent et des axes de différenciation cohérents.",
           details:
             "Nous organisons les éléments clés de votre identité pour construire un positionnement lisible, fort et mémorable. Cette étape donne de la clarté à votre discours et oriente les futures prises de décision.",
         },
         {
+          id: "marketing-creation",
           title: "Création & narration",
           text: "Nous développons les messages, les supports et les éléments visuels qui donnent corps à votre image.",
           details:
             "Le travail créatif s’appuie sur la stratégie définie en amont afin de produire un univers de marque cohérent. Nous structurons les messages, les codes visuels et les contenus qui renforcent votre image.",
         },
         {
+          id: "marketing-deployment",
           title: "Déploiement & optimisation",
           text: "Nous mettons en œuvre les actions choisies et suivons leur performance pour ajuster, affiner et amplifier les résultats.",
           details:
@@ -72,6 +75,10 @@ const translations = {
         "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80",
       imageBottom:
         "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=1400&q=80",
+      bottomTitle:
+        "Un process pensé pour renforcer la valeur, la clarté et l’impact de votre marque",
+      bottomText:
+        "Nous combinons vision, structure et créativité pour donner à chaque projet marketing une direction forte et une exécution cohérente.",
     },
     technology: {
       introTitle: "Une méthode technique conçue pour bâtir des solutions fiables",
@@ -85,24 +92,28 @@ const translations = {
         "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1800&q=80",
       steps: [
         {
+          id: "technology-architecture",
           title: "Cadrage & architecture",
           text: "Nous identifions les besoins, les contraintes et l’environnement technique afin de concevoir une base saine et scalable.",
           details:
             "Nous définissons ici les fondations du projet : architecture, logique technique, contraintes d’intégration, choix structurants et feuille de route. Cette étape réduit les risques et sécurise l’exécution.",
         },
         {
+          id: "technology-functional-design",
           title: "Conception fonctionnelle",
           text: "Nous organisons les parcours, les flux, les interactions et les priorités pour transformer les besoins en solution claire.",
           details:
             "Nous traduisons les objectifs métier en logique produit. Les parcours utilisateurs, les interactions et les priorités fonctionnelles sont clarifiés afin de rendre le développement plus précis et plus fluide.",
         },
         {
+          id: "technology-development",
           title: "Développement & intégration",
           text: "Nous mettons en œuvre la solution avec rigueur, en assurant cohérence du code, performance et qualité d’intégration.",
           details:
             "Le développement s’appuie sur une structure propre, maintenable et évolutive. Nous veillons à la cohérence technique, à la performance de l’ensemble et à la qualité des connexions entre les différentes briques du projet.",
         },
         {
+          id: "technology-testing",
           title: "Tests, livraison & suivi",
           text: "Nous validons, optimisons et livrons un produit prêt à évoluer, avec une attention portée à la stabilité et à la pérennité.",
           details:
@@ -116,8 +127,13 @@ const translations = {
         "https://images.unsplash.com/photo-1516321165247-4aa89a48be28?auto=format&fit=crop&w=1400&q=80",
       imageBottom:
         "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80",
+      bottomTitle:
+        "Un process technique pensé pour construire des solutions performantes et durables",
+      bottomText:
+        "Nous combinons cadrage, logique produit et rigueur technique pour faire avancer chaque projet avec maîtrise et efficacité.",
     },
   },
+
   en: {
     sectionLabel: "Our process",
     sectionTitle: "Two expertises, one clear and controlled method",
@@ -139,24 +155,28 @@ const translations = {
         "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1800&q=80",
       steps: [
         {
+          id: "marketing-analysis",
           title: "Analysis & understanding",
           text: "We study your brand, market, audience and context in order to establish a strong strategic foundation.",
           details:
             "This phase reveals opportunities, clarifies audience expectations and identifies the elements that should guide the rest of the project. It builds the strategic consistency needed for strong execution.",
         },
         {
+          id: "marketing-positioning",
           title: "Strategic positioning",
           text: "We define a clear direction, a relevant brand territory and coherent differentiation axes.",
           details:
             "We organize the key dimensions of your identity to create a readable, strong and memorable positioning. This stage brings clarity to your message and helps guide future decisions.",
         },
         {
+          id: "marketing-creation",
           title: "Creation & storytelling",
           text: "We develop the messages, assets and visual elements that bring your identity to life.",
           details:
             "Creative production is grounded in the strategy previously defined. We shape the messages, visual codes and supporting materials that strengthen your brand image across every touchpoint.",
         },
         {
+          id: "marketing-deployment",
           title: "Deployment & optimization",
           text: "We implement the chosen actions and monitor performance to adjust, refine and amplify the results.",
           details:
@@ -170,6 +190,10 @@ const translations = {
         "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80",
       imageBottom:
         "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=1400&q=80",
+      bottomTitle:
+        "A process designed to strengthen the value, clarity and impact of your brand",
+      bottomText:
+        "We combine vision, structure and creativity to give every marketing project a strong direction and consistent execution.",
     },
     technology: {
       introTitle: "A technical method built to deliver reliable solutions",
@@ -183,24 +207,28 @@ const translations = {
         "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1800&q=80",
       steps: [
         {
+          id: "technology-architecture",
           title: "Scoping & architecture",
           text: "We identify needs, constraints and the technical environment in order to design a healthy and scalable foundation.",
           details:
             "Here we define the core foundations of the project: architecture, technical logic, integration constraints, structural choices and delivery direction. This stage reduces risk and secures execution.",
         },
         {
+          id: "technology-functional-design",
           title: "Functional design",
           text: "We organize flows, interactions and priorities to turn requirements into a clear solution.",
           details:
             "We translate business goals into product logic. User journeys, interactions and functional priorities are clarified to make development more precise and more fluid.",
         },
         {
+          id: "technology-development",
           title: "Development & integration",
           text: "We implement the solution with rigor, ensuring code consistency, performance and integration quality.",
           details:
             "Development relies on a clean, maintainable and scalable structure. We ensure technical consistency, overall performance and high-quality integration between all parts of the project.",
         },
         {
+          id: "technology-testing",
           title: "Testing, delivery & follow-up",
           text: "We validate, optimize and deliver a product ready to evolve, with strong attention to stability and long-term reliability.",
           details:
@@ -214,6 +242,10 @@ const translations = {
         "https://images.unsplash.com/photo-1516321165247-4aa89a48be28?auto=format&fit=crop&w=1400&q=80",
       imageBottom:
         "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80",
+      bottomTitle:
+        "A technical process designed to build scalable and durable solutions",
+      bottomText:
+        "We combine framing, product logic and technical rigor to move every project forward with control and efficiency.",
     },
   },
 };
@@ -249,16 +281,13 @@ const ProcessCard = ({
   index,
   visible,
   icon: Icon,
-  rightSide,
   isOpen,
   onToggle,
   labels,
 }) => {
   return (
     <div
-      className={`prs-step-card ${visible ? "show" : ""} ${
-        rightSide ? "lg:ml-auto" : ""
-      }`}
+      className={`prs-step-card ${visible ? "show" : ""}`}
       style={{ transitionDelay: `${index * 0.12}s` }}
     >
       <div
@@ -345,7 +374,9 @@ const ProcessesSwitcherSection = () => {
   const [visible, setVisible] = useState(false);
   const [contentVisible, setContentVisible] = useState(true);
   const [openStep, setOpenStep] = useState(0);
+
   const sectionRef = useRef(null);
+  const timeoutRef = useRef(null);
 
   const activeData = useMemo(() => t[active], [t, active]);
   const activeIcons = active === "marketing" ? marketingIcons : technologyIcons;
@@ -359,15 +390,24 @@ const ProcessesSwitcherSection = () => {
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
+
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, []);
 
   const handleTabChange = (nextTab) => {
     if (nextTab === active) return;
 
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
     setContentVisible(false);
 
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       setActive(nextTab);
       setOpenStep(0);
       setContentVisible(true);
@@ -832,6 +872,7 @@ const ProcessesSwitcherSection = () => {
         </div>
 
         <div
+          key={`${lang}-${active}`}
           className={`prs-content-wrap mt-16 ${
             contentVisible ? "" : "hidden-state"
           }`}
@@ -870,37 +911,36 @@ const ProcessesSwitcherSection = () => {
                 {[activeData.stat1, activeData.stat2, activeData.stat3].map(
                   (item, index) => (
                     <div
-                      key={item}
-                      className="prs-mini-stat rounded-[18px] px-5 py-5 text-center"
+                      key={`${active}-${item}`}
+                      className="prs-mini-stat rounded-[24px] px-6 py-7 text-center"
                     >
-                      <CheckCircle2
-                        className="mx-auto h-5 w-5 text-[#1f6c8c]"
-                        strokeWidth={1.9}
-                      />
+                      <div className="mx-auto flex h-8 w-8 items-center justify-center rounded-full border border-[#1f6c8c]/12 bg-[#1f6c8c]/6 text-[#1f6c8c]">
+                        <span className="text-[12px] font-bold">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                      </div>
+
                       <p
-                        className="mt-3 text-[13px] font-semibold text-slate-700"
+                        className="mt-4 text-[22px] font-bold text-slate-900"
                         style={{ fontFamily: "Literata, serif" }}
                       >
                         {item}
                       </p>
-                      <span className="mt-1 block text-[10px] uppercase tracking-[0.20em] text-slate-400">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
                     </div>
                   )
                 )}
               </div>
 
-              <div className="prs-top-card mt-10 rounded-[24px] p-6 sm:p-7">
+              <div className="prs-soft-panel mt-12 rounded-[28px] p-6 sm:p-7">
                 <h4
-                  className="text-[28px] font-bold leading-tight text-slate-900"
+                  className="text-[28px] font-bold leading-tight text-slate-950"
                   style={{ fontFamily: "Literata, serif" }}
                 >
                   {activeData.featureTitle}
                 </h4>
 
                 <p
-                  className="mt-4 text-[14px] leading-[1.9] text-slate-600"
+                  className="mt-4 max-w-[560px] text-[14px] leading-[1.9] text-slate-600"
                   style={{ fontFamily: "Literata, serif" }}
                 >
                   {activeData.featureText}
@@ -909,41 +949,41 @@ const ProcessesSwitcherSection = () => {
             </div>
 
             <div className="order-1 lg:order-2">
-              <div className="relative z-10 mx-auto max-w-[720px]">
-                <div
-                  className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-                  style={{
-                    background:
-                      "radial-gradient(circle, rgba(31,108,140,0.10) 0%, rgba(168,212,232,0.07) 42%, transparent 74%)",
-                  }}
-                />
-
-                <div className="prs-main-image-entry relative ml-auto w-[90%] sm:w-[88%]">
-                  <div className="h-[320px] sm:h-[380px] lg:h-[460px]">
-                    <ElegantImageCard
-                      src={activeData.imageBottom}
-                      alt={activeData.introTitle}
-                      rounded="rounded-[34px]"
-                    />
-                  </div>
+              <div className="relative">
+                <div className="prs-main-image-entry ml-auto w-full max-w-[520px]">
+                  <ElegantImageCard
+                    src={activeData.imageBottom}
+                    alt={activeData.introTitle}
+                    rounded="rounded-[34px]"
+                  />
                 </div>
 
-                <div className="prs-small-image-entry absolute -left-[2%] top-[8%] w-[48%] sm:w-[44%]">
-                  <div className="h-[170px] sm:h-[190px] lg:h-[220px]">
-                    <ElegantImageCard
-                      src={activeData.imageTop}
-                      alt={activeData.introTitle}
-                      rounded="rounded-[26px]"
-                    />
-                  </div>
+                <div className="prs-small-image-entry absolute -left-2 -top-10 hidden w-[46%] sm:block">
+                  <ElegantImageCard
+                    src={activeData.imageTop}
+                    alt={activeData.featureTitle}
+                    rounded="rounded-[24px]"
+                  />
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="relative mt-20 lg:mt-24">
-            <div className="absolute left-1/2 top-0 hidden h-full -translate-x-1/2 lg:block">
-              <div className="prs-timeline-line h-full w-[2px]" />
+          <div className="mt-20">
+            <div className="mx-auto mb-12 max-w-[760px] text-center">
+              <h3
+                className="text-[34px] font-bold leading-tight text-slate-950 sm:text-[42px]"
+                style={{ fontFamily: "Literata, serif" }}
+              >
+                {activeData.featureTitle}
+              </h3>
+
+              <p
+                className="mx-auto mt-4 max-w-[680px] text-[14px] leading-[1.9] text-slate-600"
+                style={{ fontFamily: "Literata, serif" }}
+              >
+                {activeData.featureText}
+              </p>
             </div>
 
             <div className="space-y-16 lg:space-y-20">
@@ -954,25 +994,28 @@ const ProcessesSwitcherSection = () => {
 
                 return (
                   <div
-                    key={`${active}-${index}`}
+                    key={`${lang}-${active}-${step.id}`}
                     className="relative grid grid-cols-1 items-center gap-8 lg:grid-cols-[1fr_80px_1fr]"
                   >
-                    <div className="hidden lg:block">
-                      {!isRight && (
-                        <ProcessCard
-                          step={step}
-                          index={index}
-                          visible={contentVisible}
-                          icon={Icon}
-                          rightSide={false}
-                          isOpen={isOpen}
-                          onToggle={() => toggleStep(index)}
-                          labels={{ more: t.more, less: t.less }}
-                        />
-                      )}
+                    <div className={`${isRight ? "lg:invisible" : ""}`}>
+                      <div className="hidden lg:block">
+                        {!isRight && (
+                          <ProcessCard
+                            step={step}
+                            index={index}
+                            visible={contentVisible}
+                            icon={Icon}
+                            isOpen={isOpen}
+                            onToggle={() => toggleStep(index)}
+                            labels={{ more: t.more, less: t.less }}
+                          />
+                        )}
+                      </div>
                     </div>
 
                     <div className="relative flex justify-center">
+                      <div className="prs-timeline-line absolute top-0 hidden h-full w-[2px] lg:block" />
+
                       <div
                         className={`prs-node z-10 flex h-12 w-12 items-center justify-center rounded-full ${
                           isOpen ? "active" : ""
@@ -987,19 +1030,20 @@ const ProcessesSwitcherSection = () => {
                       </div>
                     </div>
 
-                    <div className="hidden lg:block">
-                      {isRight && (
-                        <ProcessCard
-                          step={step}
-                          index={index}
-                          visible={contentVisible}
-                          icon={Icon}
-                          rightSide
-                          isOpen={isOpen}
-                          onToggle={() => toggleStep(index)}
-                          labels={{ more: t.more, less: t.less }}
-                        />
-                      )}
+                    <div className={`${!isRight ? "lg:invisible" : ""}`}>
+                      <div className="hidden lg:block">
+                        {isRight && (
+                          <ProcessCard
+                            step={step}
+                            index={index}
+                            visible={contentVisible}
+                            icon={Icon}
+                            isOpen={isOpen}
+                            onToggle={() => toggleStep(index)}
+                            labels={{ more: t.more, less: t.less }}
+                          />
+                        )}
+                      </div>
                     </div>
 
                     <div className="lg:hidden">
@@ -1031,26 +1075,14 @@ const ProcessesSwitcherSection = () => {
               className="mx-auto mt-4 max-w-[760px] text-[30px] font-bold leading-tight text-slate-900 sm:text-[38px]"
               style={{ fontFamily: "Literata, serif" }}
             >
-              {active === "marketing"
-                ? lang === "fr"
-                  ? "Un process pensé pour renforcer la valeur, la clarté et l’impact de votre marque"
-                  : "A process designed to strengthen the value, clarity and impact of your brand"
-                : lang === "fr"
-                ? "Un process technique pensé pour construire des solutions performantes et durables"
-                : "A technical process designed to build scalable and durable solutions"}
+              {activeData.bottomTitle}
             </h4>
 
             <p
               className="mx-auto mt-4 max-w-[720px] text-[14px] leading-[1.9] text-slate-600"
               style={{ fontFamily: "Literata, serif" }}
             >
-              {active === "marketing"
-                ? lang === "fr"
-                  ? "Nous combinons vision, structure et créativité pour donner à chaque projet marketing une direction forte et une exécution cohérente."
-                  : "We combine vision, structure and creativity to give every marketing project a strong direction and consistent execution."
-                : lang === "fr"
-                ? "Nous combinons cadrage, logique produit et rigueur technique pour faire avancer chaque projet avec maîtrise et efficacité."
-                : "We combine framing, product logic and technical rigor to move every project forward with control and efficiency."}
+              {activeData.bottomText}
             </p>
           </div>
         </div>
