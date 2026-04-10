@@ -5,8 +5,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import NewsletterSubscriber
 from .serializers import ContactMessageSerializer
-
-
+from email.mime.image import MIMEImage
+import os
+from smtplib import SMTPException
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 class ContactMessageCreateView(APIView):
     authentication_classes = []
     permission_classes = []
@@ -14,29 +17,40 @@ class ContactMessageCreateView(APIView):
     def post(self, request):
         serializer = ContactMessageSerializer(data=request.data)
 
-        if serializer.is_valid():
-            contact = serializer.save()
-
-            department = request.data.get("department", "tech")
-
-            if department == "marketing":
-                recipient_email = settings.CONTACT_RECIPIENT_MARKETING
-                service_label = "Marketing & Brand"
-            else:
-                recipient_email = settings.CONTACT_RECIPIENT_TECH
-                service_label = "Technologie"
-
-            full_name = f"{contact.first_name} {contact.last_name}".strip()
-
-            email_subject = f"Nouveau message de contact - {full_name}"
-            email_message = (
-                f"Vous avez reçu un nouveau message depuis le site Basogol.\n\n"
-                f"Service : {service_label}\n"
-                f"Nom : {full_name}\n"
-                f"Email : {contact.email}\n"
-                f"Sujet : {contact.subject}\n"
-                f"Message :\n{contact.message}\n"
+        if not serializer.is_valid():
+            return Response(
+                {
+                    "success": False,
+                    "message": "Les informations envoyées sont invalides.",
+                    "errors": serializer.errors,
+                },
+                status=status.HTTP_400_BAD_REQUEST,
             )
+
+        contact = serializer.save()
+        department = request.data.get("department", "tech")
+
+        if department == "marketing":
+            recipient_email = settings.CONTACT_RECIPIENT_MARKETING
+            service_label = "Marketing & Brand"
+        else:
+            recipient_email = settings.CONTACT_RECIPIENT_TECH
+            service_label = "Technologie"
+
+        full_name = f"{contact.first_name} {contact.last_name}".strip()
+
+        email_subject = f"Nouveau message de contact - {full_name}"
+        email_message = (
+            f"Vous avez reçu un nouveau message depuis le site Basogol.\n\n"
+            f"Service : {service_label}\n"
+            f"Nom : {full_name}\n"
+            f"Email : {contact.email}\n"
+            f"Sujet : {contact.subject}\n"
+            f"Message :\n{contact.message}\n"
+        )
+
+        try:
+            validate_email(contact.email)
 
             send_mail(
                 email_subject,
@@ -47,12 +61,40 @@ class ContactMessageCreateView(APIView):
             )
 
             return Response(
-                {"success": True, "message": "Message enregistré et email envoyé."},
+                {
+                    "success": True,
+                    "message": "Votre message a bien été envoyé."
+                },
                 status=status.HTTP_201_CREATED,
             )
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except ValidationError:
+            return Response(
+                {
+                    "success": False,
+                    "message": "L’adresse email saisie est invalide."
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
+        except SMTPException:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Une erreur est survenue lors de l’envoi de l’email. Veuillez réessayer plus tard."
+                },
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+
+        except Exception:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Une erreur inattendue est survenue. Veuillez réessayer."
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+        
 
 class NewsletterSubscribeView(APIView):
     authentication_classes = []
@@ -64,7 +106,29 @@ class NewsletterSubscribeView(APIView):
 
         if not email:
             return Response(
-                {"success": False, "message": "Email requis."},
+                {
+                    "success": False,
+                    "message": (
+                        "Email requis."
+                        if language == "fr"
+                        else "Email is required."
+                    ),
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            validate_email(email)
+        except ValidationError:
+            return Response(
+                {
+                    "success": False,
+                    "message": (
+                        "L’adresse email saisie est invalide."
+                        if language == "fr"
+                        else "The email address is invalid."
+                    ),
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -163,55 +227,110 @@ class NewsletterSubscribeView(APIView):
                 </p>
               </div>
 
-             <p style="margin:0 0 6px; font-size:15px; color:#334155; line-height:1.8;">
-  {"À très bientôt," if language == "fr" else "See you soon,"}
-</p>
-<p style="margin:0; font-size:15px; color:#0f172a; font-weight:700;">
-  {"L'équipe Basogol-Hive" if language == "fr" else "The Basogol-Hive team"}
-</p>
+              <p style="margin:0 0 6px; font-size:15px; color:#334155; line-height:1.8;">
+                {"À très bientôt," if language == "fr" else "See you soon,"}
+              </p>
+              <p style="margin:0; font-size:15px; color:#0f172a; font-weight:700;">
+                {"L'équipe Basogol-Hive" if language == "fr" else "The Basogol-Hive team"}
+              </p>
 
-<div style="margin-top:16px;">
-  <img
-    src="https://basogol-hive-git-project-basogolhive-tech.vercel.app/bas.png"
-    alt="Basogol-Hive"
-    style="display:block; width:100%; height:auto; border-radius:12px;"
-  >
-</div>
+              <div style="margin-top:16px; text-align:center;">
+                <img
+                  src="cid:basogol_banner"
+                  alt="Basogol-Hive"
+                  style="display:inline-block; width:100%; max-width:420px; height:auto; border-radius:12px;"
+                >
+              </div>
 
-<div style="
-  margin-top:28px;
-  padding-top:18px;
-  border-top:1px solid #e2e8f0;
-  font-size:13px;
-  color:#64748b;
-  line-height:1.7;
-">
-  projets-tech@basogolhive.com
-</div>
+              <div style="
+                margin-top:28px;
+                padding-top:18px;
+                border-top:1px solid #e2e8f0;
+                font-size:13px;
+                color:#64748b;
+                line-height:1.7;
+              ">
+                projets-tech@basogolhive.com
+              </div>
             </div>
           </div>
         </div>
         """
 
-        email_message = EmailMultiAlternatives(
-            subject=subject,
-            body=text_content,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[email],
-        )
-        email_message.attach_alternative(html_content, "text/html")
-        email_message.send()
+        try:
+            email_message = EmailMultiAlternatives(
+                subject=subject,
+                body=text_content,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[email],
+            )
+            email_message.attach_alternative(html_content, "text/html")
 
-        return Response(
-            {
-                "success": True,
-                "message": (
-                    "Merci, votre email a bien été ajouté."
-                    if language == "fr"
-                    else "Thank you, your email has been added."
-                ),
-                "created": True,
-                "already_subscribed": False,
-            },
-            status=status.HTTP_201_CREATED,
-        )
+            image_path = os.path.join(settings.BASE_DIR, "public", "bas.jpg")
+
+            with open(image_path, "rb") as img_file:
+                img = MIMEImage(img_file.read())
+                img.add_header("Content-ID", "<basogol_banner>")
+                img.add_header("Content-Disposition", "inline", filename="bas.jpg")
+                email_message.attach(img)
+
+            email_message.send()
+
+            return Response(
+                {
+                    "success": True,
+                    "message": (
+                        "Merci, votre email a bien été ajouté."
+                        if language == "fr"
+                        else "Thank you, your email has been added."
+                    ),
+                    "created": True,
+                    "already_subscribed": False,
+                },
+                status=status.HTTP_201_CREATED,
+            )
+
+        except FileNotFoundError:
+            return Response(
+                {
+                    "success": False,
+                    "message": (
+                        "Une erreur est survenue lors de la préparation de l’email."
+                        if language == "fr"
+                        else "An error occurred while preparing the email."
+                    ),
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+        except SMTPException:
+            return Response(
+                {
+                    "success": False,
+                    "message": (
+                        "Une erreur est survenue lors de l’envoi de l’email. Veuillez réessayer plus tard."
+                        if language == "fr"
+                        else "An email sending error occurred. Please try again later."
+                    ),
+                },
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+
+        except Exception:
+            return Response(
+                {
+                    "success": False,
+                    "message": (
+                        "Une erreur inattendue est survenue."
+                        if language == "fr"
+                        else "An unexpected error occurred."
+                    ),
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+    
+#     <img
+#   src="https://basogol-hive-git-project-basogolhive-tech.vercel.app/bas.png"
+#   alt="Basogol-Hive"
+#   style="display:inline-block; width:100%; max-width:420px; height:auto; border-radius:12px;"
+# >

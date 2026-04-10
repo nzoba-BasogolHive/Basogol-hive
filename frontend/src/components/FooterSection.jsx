@@ -313,17 +313,23 @@ const handleNewsletterSubmit = async (e) => {
       });
       setNewsletterEmail("");
     }
-  } catch (error) {
-    console.error("Newsletter subscribe error:", error);
-    setNewsletterPopup({
-      open: true,
-      type: "error",
-      title: t.newsletterPopupErrorTitle,
-      message: error.message || t.newsletterError,
-    });
-  } finally {
-    setNewsletterLoading(false);
-  }
+} catch (error) {
+  console.error("Newsletter subscribe error:", error);
+
+  const errorMessage =
+    error?.response?.data?.message ||
+    error?.data?.message ||
+    t.newsletterError;
+
+  setNewsletterPopup({
+    open: true,
+    type: "error",
+    title: t.newsletterPopupErrorTitle,
+    message: errorMessage,
+  });
+} finally {
+  setNewsletterLoading(false);
+}
 };
 
   return (

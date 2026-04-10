@@ -229,11 +229,14 @@ const ContactSection = () => {
       resetForm();
     } catch (error) {
       console.error(error);
-      setPopup({
-        open: true,
-        type: "error",
-        message: error.message || t.errorMessage,
-      });
+     setPopup({
+      open: true,
+      type: "error",
+      message:
+        error?.response?.data?.message ||
+        error?.messageFromApi ||
+        t.errorMessage,
+    });
     } finally {
       setIsSubmitting(false);
     }
