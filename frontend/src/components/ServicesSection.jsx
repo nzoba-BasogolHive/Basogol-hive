@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import serviceVideo from "../assets/Service.webm";
+import serviceVideoMov from "../assets/Servicecomplet.mov";
 import unionShape from "../assets/Union.png";
 import BlueShape from "./BlueShape";
 import FloatingCards from "./FloatingCards";
 import { useLanguage } from "./LanguageContext";
 import logoAnimation from "../assets/logoanimation.webm";
+import logoAnimationMov from "../assets/logotransparent12.mov";
 
 
 const translations = {
@@ -84,28 +86,29 @@ const ServicesSection = () => {
 
   // ── Lecture vidéo avec son dès que la section entre dans le viewport ──
   useEffect(() => {
-  const video = videoRef.current;
-  const section = sectionRef.current;
-  if (!video || !section) return;
+    const video = videoRef.current;
+    const section = sectionRef.current;
+    if (!video || !section) return;
 
-  // iOS exige muted pour autoplay — on démute après si possible
-  video.muted = true;
+    // iOS exige muted pour autoplay — on démute après si possible
+    video.muted = true;
 
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        video.play().catch(() => {});
-      } else {
-        video.pause();
-        video.currentTime = 0;
-      }
-    },
-    { threshold: 0.2 } // ← réduit de 0.3 à 0.2 : se déclenche plus tôt sur petit écran
-  );
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+          video.currentTime = 0;
+        }
+      },
+      { threshold: 0.2 }
+    );
 
-  observer.observe(section);
-  return () => observer.disconnect();
-}, []);
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   // ── Animation d'entrée (fade) ──
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -125,6 +128,18 @@ const ServicesSection = () => {
       className="section-shell overflow-x-hidden overflow-y-visible"
     >
       <style>{`
+        /* ── Transparence vidéo iOS ── */
+        video {
+          background: transparent !important;
+          -webkit-background-color: transparent !important;
+        }
+        .sv-logo-wrap,
+        .sv-card-img video,
+        .sv-logo-video {
+          background: transparent !important;
+          -webkit-background-color: transparent !important;
+        }
+
         /* ── Entrées ── */
         .sv-fade-up {
           opacity: 0; transform: translateY(32px);
@@ -299,6 +314,7 @@ const ServicesSection = () => {
           height: min(42vw, 340px);
           flex-shrink: 0;
           pointer-events: none;
+          background: transparent !important;
         }
 
         .sv-logo-wrap::before {
@@ -341,6 +357,8 @@ const ServicesSection = () => {
             drop-shadow(0 24px 48px rgba(31,108,140,0.22))
             drop-shadow(0 6px 16px rgba(31,108,140,0.14));
           animation: svLogoFloat 7s ease-in-out infinite;
+          background: transparent !important;
+          -webkit-background-color: transparent !important;
         }
 
         .sv-logo-video.show {
@@ -427,13 +445,16 @@ const ServicesSection = () => {
           <div className={`sv-fade-up sv-d2 sv-logo-stage ${visible ? "show" : ""}`}>
 
             <div className="sv-logo-wrap" aria-hidden="true">
+              {/* .mov en PREMIER pour iOS Safari, .webm en fallback pour Chrome/Firefox */}
               <video
                 className={`sv-logo-video ${visible ? "show" : ""}`}
                 autoPlay
                 muted
                 loop
                 playsInline
+                style={{ background: "transparent" }}
               >
+                <source src={logoAnimationMov} type="video/quicktime" />
                 <source src={logoAnimation} type="video/webm" />
               </video>
             </div>
@@ -476,24 +497,27 @@ const ServicesSection = () => {
         {/* ── Grille principale ── */}
         <div className="relative grid grid-cols-1 gap-8 xl:grid-cols-[0.95fr_1.05fr] xl:gap-10">
 
-          {/* Vidéo service — scroll-triggered avec son */}
+          {/* Vidéo service — scroll-triggered */}
           <div
             className={`sv-fade-left sv-d1 relative z-10 flex items-center justify-center ${
               visible ? "show" : ""
             }`}
           >
             <div className="relative w-full max-w-3xl">
-             <video
-            ref={videoRef}
-            className="relative z-10 w-full object-contain drop-shadow-[0_25px_60px_rgba(15,23,42,0.17)]"
-            muted          
-            loop            
-            playsInline     
-            preload="auto"
-            aria-label={t.mockupAlt}
-          >
-            <source src={serviceVideo} type="video/webm" />
-          </video>
+              {/* .mov en PREMIER pour iOS Safari, .webm en fallback */}
+              <video
+                ref={videoRef}
+                className="relative z-10 w-full object-contain drop-shadow-[0_25px_60px_rgba(15,23,42,0.17)]"
+                muted
+                loop
+                playsInline
+                preload="auto"
+                aria-label={t.mockupAlt}
+                style={{ background: "transparent" }}
+              >
+                <source src={serviceVideoMov} type="video/quicktime" />
+                <source src={serviceVideo} type="video/webm" />
+              </video>
               <img
                 src={unionShape}
                 alt=""
@@ -600,6 +624,7 @@ const ServicesSection = () => {
                     playsInline
                     poster="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=80"
                     aria-label={t.studioVideoAlt}
+                    style={{ background: "transparent" }}
                   >
                     <source
                       src="https://www.w3schools.com/html/mov_bbb.mp4"
