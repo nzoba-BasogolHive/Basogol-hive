@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import serviceVideo from "../assets/Service.webm";
+import serviceVideoWebm from "../assets/Service.webm";
+import serviceVideoMov from "../assets/Servicecomplet.mov";
 import unionShape from "../assets/Union.png";
 import BlueShape from "./BlueShape";
 import FloatingCards from "./FloatingCards";
 import { useLanguage } from "./LanguageContext";
-import logoAnimation from "../assets/logoanimation.webm";
+import logoAnimationWebm from "../assets/logoanimation.webm";
+import logoAnimationMov from "../assets/logotransparent12.mov";
 
 const translations = {
   fr: {
@@ -379,6 +381,10 @@ const ServicesSection = () => {
               drop-shadow(0 4px 10px rgba(31,108,140,0.10));
           }
         }
+          .sv-logo-video,
+.sv-transparent-video {
+  background: transparent !important;
+}
       `}</style>
 
       <BlueShape />
@@ -426,15 +432,17 @@ const ServicesSection = () => {
           <div className={`sv-fade-up sv-d2 sv-logo-stage ${visible ? "show" : ""}`}>
 
             <div className="sv-logo-wrap" aria-hidden="true">
-              <video
-                className={`sv-logo-video ${visible ? "show" : ""}`}
-                autoPlay
-                muted
-                loop
-                playsInline
-              >
-                <source src={logoAnimation} type="video/webm" />
-              </video>
+          <video
+            className={`sv-logo-video ${visible ? "show" : ""}`}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          >
+            <source src={logoAnimationMov} />
+            <source src={logoAnimationWebm} type="video/webm" />
+          </video>
             </div>
 
             {/* Stats */}
@@ -482,16 +490,17 @@ const ServicesSection = () => {
             }`}
           >
             <div className="relative w-full max-w-3xl">
-             <video
+            <video
             ref={videoRef}
-            className="relative z-10 w-full object-contain drop-shadow-[0_25px_60px_rgba(15,23,42,0.17)]"
-            muted          
-            loop            
-            playsInline     
+            className="sv-transparent-video relative z-10 block w-full object-contain bg-transparent drop-shadow-[0_25px_60px_rgba(15,23,42,0.17)]"
+            muted
+            loop
+            playsInline
             preload="auto"
             aria-label={t.mockupAlt}
           >
-            <source src={serviceVideo} type="video/webm" />
+            <source src={serviceVideoMov} />
+            <source src={serviceVideoWebm} type="video/webm" />
           </video>
               <img
                 src={unionShape}
@@ -590,7 +599,7 @@ const ServicesSection = () => {
                 }`}
               >
                 <div className="sv-card-bar" />
-                <div className="sv-card-img h-52 bg-black">
+                <div className="sv-card-img h-52 bg-transparent">
                   <video
                     className="h-full w-full object-cover"
                     autoPlay

@@ -1,15 +1,47 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useLanguage } from "../LanguageContext";
 import unionImage from "../../assets/Union_01.png";
 
+const translations = {
+  fr: {
+    tag: "Notre vision",
+    imageAlt: "Illustration architecturale en noir et blanc",
+    quote:
+      "Nous croyons que chaque marque mérite une vision claire, une identité forte et des solutions à la hauteur de ses ambitions.",
+    brand: "Basogol-Hive",
+    stats: [
+      { number: "5+", label: "Années d'expérience" },
+      { number: "80+", label: "Projets livrés" },
+    ],
+  },
+  en: {
+    tag: "Our vision",
+    imageAlt: "Black and white architectural illustration",
+    quote:
+      "We believe that every brand deserves a clear vision, a strong identity, and solutions that match its ambitions.",
+    brand: "Basogol-Hive",
+    stats: [
+      { number: "5+", label: "Years of experience" },
+      { number: "80+", label: "Projects delivered" },
+    ],
+  },
+};
+
 const AboutImageQuoteSection = () => {
+  const { lang } = useLanguage();
+  const t = translations[lang] || translations.fr;
+
   const sectionRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
       { threshold: 0.18 }
     );
+
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
@@ -75,7 +107,6 @@ const AboutImageQuoteSection = () => {
           box-shadow: 0 2px 8px rgba(31,108,140,0.08), 0 1px 0 rgba(255,255,255,0.50) inset;
         }
 
-        /* Guillemets géants en fond */
         .iq-bg-quote {
           position: absolute;
           top: 50%;
@@ -91,46 +122,33 @@ const AboutImageQuoteSection = () => {
         }
       `}</style>
 
-      {/* Halo de fond centré */}
       <div className="iq-halo pointer-events-none absolute inset-0 z-0" />
-
-      {/* Guillemets géants en fond décoratif */}
       <div className="iq-bg-quote hidden lg:block">"</div>
 
       <div className="page-container relative z-10">
-
-        {/* Layout centré : image à gauche, citation à droite */}
         <div className="flex flex-col items-start gap-10 lg:flex-row lg:items-start lg:gap-14">
-
-          {/* Colonne gauche — image */}
           <div className={`iq-img-entry w-full lg:w-[55%] ${visible ? "show" : ""}`}>
-
-            {/* Tag */}
             <div className="mb-3 inline-flex">
               <span
                 className="iq-tag rounded-full px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1f6c8c]"
                 style={{ fontFamily: "Literata, serif" }}
               >
-                Notre vision
+                {t.tag}
               </span>
             </div>
 
-            {/* Cadre image glassmorphisme */}
             <div className="iq-glass-frame relative overflow-hidden rounded-[14px] p-[5px]">
               <div className="overflow-hidden rounded-[10px]">
                 <img
                   src={unionImage}
-                  alt="Illustration architecturale en noir et blanc"
+                  alt={t.imageAlt}
                   className="h-[220px] w-full object-cover transition-transform duration-700 hover:scale-[1.03] sm:h-[280px] lg:h-[340px]"
                 />
               </div>
             </div>
           </div>
 
-          {/* Colonne droite — citation */}
           <div className={`iq-quote-entry flex w-full flex-col justify-center lg:w-[45%] lg:pt-14 ${visible ? "show" : ""}`}>
-
-            {/* Guillemets décoratifs */}
             <div
               className="mb-4 text-[72px] font-black leading-none text-[#1f6c8c]/20"
               style={{ fontFamily: "Literata, serif" }}
@@ -138,19 +156,17 @@ const AboutImageQuoteSection = () => {
               "
             </div>
 
-            {/* Citation glassmorphisme */}
             <div
               className="iq-glass-frame relative rounded-[14px] px-6 py-6"
               style={{ background: "rgba(255,255,255,0.30)" }}
             >
-              {/* Ligne décorative gauche */}
               <div className="absolute left-0 top-6 bottom-6 w-[3px] rounded-full bg-gradient-to-b from-[#1f6c8c] to-[#a8d4e8]" />
 
               <p
                 className="pl-4 text-[14px] italic leading-[1.85] text-slate-600 sm:text-[15px]"
                 style={{ fontFamily: "Literata, serif" }}
               >
-                Nous croyons que chaque marque mérite une vision claire, une identité forte et des solutions à la hauteur de ses ambitions.
+                {t.quote}
               </p>
 
               <div className="mt-5 flex items-center gap-3 pl-4">
@@ -159,17 +175,13 @@ const AboutImageQuoteSection = () => {
                   className="text-[12px] font-semibold text-[#1f6c8c]"
                   style={{ fontFamily: "Literata, serif" }}
                 >
-                  Basogol Hive
+                  {t.brand}
                 </span>
               </div>
             </div>
 
-            {/* Stat décorative sous la citation */}
             <div className="mt-6 flex gap-6">
-              {[
-                { number: "5+", label: "Années d'expérience" },
-                { number: "80+", label: "Projets livrés" },
-              ].map((stat, i) => (
+              {t.stats.map((stat, i) => (
                 <div
                   key={i}
                   className="iq-glass-frame relative rounded-[10px] px-5 py-4 text-center"
@@ -190,7 +202,6 @@ const AboutImageQuoteSection = () => {
                 </div>
               ))}
             </div>
-
           </div>
         </div>
       </div>
