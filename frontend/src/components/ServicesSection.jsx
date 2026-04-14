@@ -83,31 +83,35 @@ const ServicesSection = () => {
   const videoRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
-  // ── Lecture vidéo avec son dès que la section entre dans le viewport ──
+  const isSafari =
+    typeof window !== "undefined" &&
+    /^((?!chrome|android).)*safari/i.test(window.navigator.userAgent);
+
+  // ── Lecture vidéo quand la section entre dans le viewport ──
   useEffect(() => {
-  const video = videoRef.current;
-  const section = sectionRef.current;
-  if (!video || !section) return;
+    const video = videoRef.current;
+    const section = sectionRef.current;
+    if (!video || !section) return;
 
-  // iOS exige muted pour autoplay — on démute après si possible
-  video.muted = true;
+    video.muted = true;
 
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        video.play().catch(() => {});
-      } else {
-        video.pause();
-        video.currentTime = 0;
-      }
-    },
-    { threshold: 0.2 } // ← réduit de 0.3 à 0.2 : se déclenche plus tôt sur petit écran
-  );
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+          video.currentTime = 0;
+        }
+      },
+      { threshold: 0.2 }
+    );
 
-  observer.observe(section);
-  return () => observer.disconnect();
-}, []);
-  // ── Animation d'entrée (fade) ──
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  // ── Animation d'entrée ──
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -128,22 +132,34 @@ const ServicesSection = () => {
       <style>{`
         /* ── Entrées ── */
         .sv-fade-up {
-          opacity: 0; transform: translateY(32px);
+          opacity: 0;
+          transform: translateY(32px);
           transition: opacity 0.82s ease, transform 0.82s cubic-bezier(0.22,1,0.36,1);
         }
-        .sv-fade-up.show { opacity: 1; transform: translateY(0); }
+        .sv-fade-up.show {
+          opacity: 1;
+          transform: translateY(0);
+        }
 
         .sv-fade-left {
-          opacity: 0; transform: translateX(-36px);
+          opacity: 0;
+          transform: translateX(-36px);
           transition: opacity 0.88s ease, transform 0.88s cubic-bezier(0.22,1,0.36,1);
         }
-        .sv-fade-left.show { opacity: 1; transform: translateX(0); }
+        .sv-fade-left.show {
+          opacity: 1;
+          transform: translateX(0);
+        }
 
         .sv-fade-right {
-          opacity: 0; transform: translateX(36px);
+          opacity: 0;
+          transform: translateX(36px);
           transition: opacity 0.88s ease, transform 0.88s cubic-bezier(0.22,1,0.36,1);
         }
-        .sv-fade-right.show { opacity: 1; transform: translateX(0); }
+        .sv-fade-right.show {
+          opacity: 1;
+          transform: translateX(0);
+        }
 
         .sv-d0 { transition-delay: 0s; }
         .sv-d1 { transition-delay: 0.10s; }
@@ -342,6 +358,7 @@ const ServicesSection = () => {
             drop-shadow(0 24px 48px rgba(31,108,140,0.22))
             drop-shadow(0 6px 16px rgba(31,108,140,0.14));
           animation: svLogoFloat 7s ease-in-out infinite;
+          background: transparent !important;
         }
 
         .sv-logo-video.show {
@@ -349,19 +366,30 @@ const ServicesSection = () => {
           transform: scale(1) translateY(0);
         }
 
+        .sv-transparent-video {
+          background: transparent !important;
+        }
+
+        .sv-service-frame {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 420px;
+        }
+
         @keyframes svHaloPulse {
-          0%, 100% { transform: scale(1);    opacity: 0.7; }
-          50%       { transform: scale(1.12); opacity: 1;   }
+          0%, 100% { transform: scale(1); opacity: 0.7; }
+          50% { transform: scale(1.12); opacity: 1; }
         }
 
         @keyframes svRingExpand {
-          0%, 100% { transform: scale(1);    opacity: 0.55; }
-          50%       { transform: scale(1.06); opacity: 0.25; }
+          0%, 100% { transform: scale(1); opacity: 0.55; }
+          50% { transform: scale(1.06); opacity: 0.25; }
         }
 
         @keyframes svLogoFloat {
-          0%, 100% { transform: scale(1) translateY(0px);   }
-          50%       { transform: scale(1) translateY(-10px); }
+          0%, 100% { transform: scale(1) translateY(0px); }
+          50% { transform: scale(1) translateY(-10px); }
         }
 
         @media (max-width: 1023px) {
@@ -380,20 +408,18 @@ const ServicesSection = () => {
               drop-shadow(0 14px 28px rgba(31,108,140,0.18))
               drop-shadow(0 4px 10px rgba(31,108,140,0.10));
           }
+          .sv-service-frame {
+            min-height: auto;
+          }
         }
-          .sv-logo-video,
-.sv-transparent-video {
-  background: transparent !important;
-}
       `}</style>
 
       <BlueShape />
+      <FloatingCards />
 
       <div className="page-container relative z-10">
-
         {/* ── En-tête ── */}
         <div className="mb-14 flex flex-col gap-8 lg:mb-18 lg:flex-row lg:items-start lg:justify-between">
-
           {/* Gauche — badge + titre + desc */}
           <div className={`sv-fade-up sv-d0 max-w-2xl ${visible ? "show" : ""}`}>
             <span
@@ -430,19 +456,18 @@ const ServicesSection = () => {
 
           {/* Droite — logo + stats + CTA */}
           <div className={`sv-fade-up sv-d2 sv-logo-stage ${visible ? "show" : ""}`}>
-
             <div className="sv-logo-wrap" aria-hidden="true">
-          <video
-            className={`sv-logo-video ${visible ? "show" : ""}`}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-          >
-            <source src={logoAnimationMov} />
-            <source src={logoAnimationWebm} type="video/webm" />
-          </video>
+              <video
+                className={`sv-logo-video ${visible ? "show" : ""}`}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                aria-label={t.logoAnimationAlt}
+              >
+                <source src={isSafari ? logoAnimationMov : logoAnimationWebm} />
+              </video>
             </div>
 
             {/* Stats */}
@@ -481,27 +506,26 @@ const ServicesSection = () => {
         </div>
 
         {/* ── Grille principale ── */}
-        <div className="relative grid grid-cols-1 gap-8 xl:grid-cols-[0.95fr_1.05fr] xl:gap-10">
-
-          {/* Vidéo service — scroll-triggered avec son */}
+        <div className="relative grid grid-cols-1 gap-8 xl:grid-cols-[0.85fr_1.15fr] xl:gap-10">
+          {/* Vidéo service */}
           <div
-            className={`sv-fade-left sv-d1 relative z-10 flex items-center justify-center ${
+            className={`sv-fade-left sv-d1 sv-service-frame relative z-10 ${
               visible ? "show" : ""
             }`}
           >
-            <div className="relative w-full max-w-3xl">
-            <video
-            ref={videoRef}
-            className="sv-transparent-video relative z-10 block w-full object-contain bg-transparent drop-shadow-[0_25px_60px_rgba(15,23,42,0.17)]"
-            muted
-            loop
-            playsInline
-            preload="auto"
-            aria-label={t.mockupAlt}
-          >
-            <source src={serviceVideoMov} />
-            <source src={serviceVideoWebm} type="video/webm" />
-          </video>
+            <div className="relative mx-auto w-full max-w-[720px] xl:max-w-[760px]">
+              <video
+                ref={videoRef}
+                className="sv-transparent-video relative z-10 mx-auto block w-full max-h-[520px] object-contain bg-transparent drop-shadow-[0_25px_60px_rgba(15,23,42,0.17)]"
+                muted
+                loop
+                playsInline
+                preload="auto"
+                aria-label={t.mockupAlt}
+              >
+                <source src={isSafari ? serviceVideoMov : serviceVideoWebm} />
+              </video>
+
               <img
                 src={unionShape}
                 alt=""
@@ -513,7 +537,6 @@ const ServicesSection = () => {
 
           {/* Cartes */}
           <div className="relative z-10 flex flex-col gap-5 pl-0 xl:pl-8">
-
             {/* Carte globale */}
             <div
               className={`sv-fade-right sv-d2 sv-card-global overflow-hidden rounded-[22px] ${
@@ -552,7 +575,6 @@ const ServicesSection = () => {
 
             {/* 2 petites cartes */}
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-
               {/* Tech */}
               <div
                 className={`sv-fade-up sv-d3 sv-card-small overflow-hidden rounded-[22px] ${
@@ -639,7 +661,6 @@ const ServicesSection = () => {
                   </a>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
