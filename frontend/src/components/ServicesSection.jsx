@@ -8,7 +8,6 @@ import { useLanguage } from "./LanguageContext";
 import logoAnimation from "../assets/logoanimation.webm";
 import logoAnimationMov from "../assets/logotransparent12.mov";
 
-
 const translations = {
   fr: {
     badge: "Nos services",
@@ -84,13 +83,12 @@ const ServicesSection = () => {
   const videoRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
-  // ── Lecture vidéo avec son dès que la section entre dans le viewport ──
+  // ── Lecture vidéo scroll-triggered ──
   useEffect(() => {
     const video = videoRef.current;
     const section = sectionRef.current;
     if (!video || !section) return;
 
-    // iOS exige muted pour autoplay — on démute après si possible
     video.muted = true;
 
     const observer = new IntersectionObserver(
@@ -128,16 +126,21 @@ const ServicesSection = () => {
       className="section-shell overflow-x-hidden overflow-y-visible"
     >
       <style>{`
-        /* ── Transparence vidéo iOS ── */
+        /* ══════════════════════════════════════════════════════
+           TRANSPARENCE VIDÉO iOS — RÈGLE CRITIQUE
+           Safari iOS lit HEVC (H.265) avec canal alpha.
+           Le codec exact à déclarer : codecs=hvc1
+           Sans ça → fond noir.
+        ══════════════════════════════════════════════════════ */
         video {
           background: transparent !important;
-          -webkit-background-color: transparent !important;
+          background-color: transparent !important;
         }
         .sv-logo-wrap,
-        .sv-card-img video,
-        .sv-logo-video {
+        .sv-logo-video,
+        .sv-video-wrap {
           background: transparent !important;
-          -webkit-background-color: transparent !important;
+          background-color: transparent !important;
         }
 
         /* ── Entrées ── */
@@ -211,7 +214,7 @@ const ServicesSection = () => {
           box-shadow: 0 8px 22px rgba(31,108,140,0.13);
         }
 
-        /* ── Carte globale glassmorphisme ── */
+        /* ── Carte globale ── */
         .sv-card-global {
           background: rgba(255,255,255,0.78);
           backdrop-filter: blur(18px) saturate(150%);
@@ -272,9 +275,7 @@ const ServicesSection = () => {
           transition: width 0.5s cubic-bezier(0.22,1,0.36,1);
         }
         .sv-card-global:hover .sv-card-bar,
-        .sv-card-small:hover .sv-card-bar {
-          width: 100%;
-        }
+        .sv-card-small:hover .sv-card-bar { width: 100%; }
 
         /* ── Lien learn more ── */
         .sv-learn-more {
@@ -358,7 +359,6 @@ const ServicesSection = () => {
             drop-shadow(0 6px 16px rgba(31,108,140,0.14));
           animation: svLogoFloat 7s ease-in-out infinite;
           background: transparent !important;
-          -webkit-background-color: transparent !important;
         }
 
         .sv-logo-video.show {
@@ -370,12 +370,10 @@ const ServicesSection = () => {
           0%, 100% { transform: scale(1);    opacity: 0.7; }
           50%       { transform: scale(1.12); opacity: 1;   }
         }
-
         @keyframes svRingExpand {
           0%, 100% { transform: scale(1);    opacity: 0.55; }
           50%       { transform: scale(1.06); opacity: 0.25; }
         }
-
         @keyframes svLogoFloat {
           0%, 100% { transform: scale(1) translateY(0px);   }
           50%       { transform: scale(1) translateY(-10px); }
@@ -445,7 +443,24 @@ const ServicesSection = () => {
           <div className={`sv-fade-up sv-d2 sv-logo-stage ${visible ? "show" : ""}`}>
 
             <div className="sv-logo-wrap" aria-hidden="true">
-              {/* .mov en PREMIER pour iOS Safari, .webm en fallback pour Chrome/Firefox */}
+              {/*
+                ══════════════════════════════════════════════
+                TRANSPARENCE iOS — COMMENT ÇA MARCHE :
+
+                Safari iOS 13+ supporte HEVC (H.265) avec canal
+                alpha. Le type MIME exact est :
+                  "video/mp4; codecs=hvc1"
+
+                ⚠️  TON FICHIER .mov DOIT ÊTRE EXPORTÉ EN :
+                    • Codec : HEVC (H.265)
+                    • Canal alpha : activé
+                    • Depuis : After Effects > "Exporter > Media Encoder"
+                      ou Final Cut Pro > Compressor
+                    • Format conteneur : .mov ou .mp4
+
+                Si ton .mov est en ProRes ou H.264 → pas d'alpha.
+                ══════════════════════════════════════════════
+              */}
               <video
                 className={`sv-logo-video ${visible ? "show" : ""}`}
                 autoPlay
@@ -454,8 +469,10 @@ const ServicesSection = () => {
                 playsInline
                 style={{ background: "transparent" }}
               >
-                <source src={logoAnimationMov} type="video/quicktime" />
-                <source src={logoAnimation} type="video/webm" />
+                {/* iOS Safari : HEVC avec canal alpha */}
+                <source src={logoAnimationMov} type="video/mp4; codecs=hvc1" />
+                {/* Chrome / Firefox : VP9 webm avec canal alpha */}
+                <source src={logoAnimation} type="video/webm; codecs=vp9" />
               </video>
             </div>
 
@@ -503,8 +520,12 @@ const ServicesSection = () => {
               visible ? "show" : ""
             }`}
           >
-            <div className="relative w-full max-w-3xl">
-              {/* .mov en PREMIER pour iOS Safari, .webm en fallback */}
+            <div className="sv-video-wrap relative w-full max-w-3xl">
+              {/*
+                ══════════════════════════════════════════════
+                MÊME PRINCIPE : HEVC alpha pour iOS, VP9 pour les autres.
+                ══════════════════════════════════════════════
+              */}
               <video
                 ref={videoRef}
                 className="relative z-10 w-full object-contain drop-shadow-[0_25px_60px_rgba(15,23,42,0.17)]"
@@ -515,8 +536,10 @@ const ServicesSection = () => {
                 aria-label={t.mockupAlt}
                 style={{ background: "transparent" }}
               >
-                <source src={serviceVideoMov} type="video/quicktime" />
-                <source src={serviceVideo} type="video/webm" />
+                {/* iOS Safari : HEVC avec canal alpha */}
+                <source src={serviceVideoMov} type="video/mp4; codecs=hvc1" />
+                {/* Chrome / Firefox : VP9 webm avec canal alpha */}
+                <source src={serviceVideo} type="video/webm; codecs=vp9" />
               </video>
               <img
                 src={unionShape}
