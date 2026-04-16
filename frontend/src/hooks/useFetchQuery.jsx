@@ -2,13 +2,17 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 const isProd = import.meta.env.PROD;
 
-const API_BASE =
+const API_BASE = (
   import.meta.env.VITE_API_BASE ||
-  (isProd ? "https://basogolhive.com/" : "http://127.0.0.1:8000");
+  (isProd ? "https://basogolhive.com" : "http://127.0.0.1:8000")
+).replace(/\/+$/, "");
 
-const API_PREFIX = import.meta.env.VITE_API_PREFIX ?? "";
+const API_PREFIX = (import.meta.env.VITE_API_PREFIX || "").replace(/\/+$/, "");
 
-export const api = (path) => `${API_BASE}${API_PREFIX}${path}`;
+export const api = (path) => {
+  const cleanPath = path.startsWith("/") ? path : `/${path}`;
+  return `${API_BASE}${API_PREFIX}${cleanPath}`;
+};
 
 export const toQueryString = (params = {}) => {
   const sp = new URLSearchParams();
@@ -210,7 +214,7 @@ export async function postJson(path, payload) {
 ========================================================= */
 
 export async function sendContactMessage(payload) {
-  return postJson("/api/contact/", payload);
+  return postJson("/contact/", payload);
 }
 
 /* =========================================================
@@ -218,5 +222,5 @@ export async function sendContactMessage(payload) {
 ========================================================= */
 
 export async function subscribeNewsletter(payload) {
-  return postJson("/api/newsletter/", payload);
+  return postJson("/newsletter/", payload);
 }

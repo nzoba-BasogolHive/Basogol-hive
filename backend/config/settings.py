@@ -1,7 +1,6 @@
 """
 Django settings for config project.
-
-Production-ready settings for Docker / VPS deployment.
+Works for local development and production with environment variables.
 """
 
 from pathlib import Path
@@ -10,31 +9,21 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Charge les variables d'environnement depuis .env si présent
-# En Docker, ce sera souvent injecté directement par docker-compose,
-# mais cette ligne permet aussi de fonctionner en local.
+# Charge un fichier .env local si présent.
+# En production Docker, les variables peuvent être injectées par docker compose.
 load_dotenv(BASE_DIR / ".env")
 
-# =========================================================
-# CORE SETTINGS
-# =========================================================
-
 SECRET_KEY = os.getenv("SECRET_KEY", "change-me-in-production")
-
-DEBUG = os.getenv("DEBUG", "False") == "True"
+DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
 ALLOWED_HOSTS = [
     host.strip()
     for host in os.getenv(
         "ALLOWED_HOSTS",
-        "127.0.0.1,localhost,basogolhive.com,www.basogolhive.com"
+        "127.0.0.1,localhost"
     ).split(",")
     if host.strip()
 ]
-
-# =========================================================
-# APPLICATIONS
-# =========================================================
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -43,15 +32,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "rest_framework",
     "corsheaders",
     "basogolapp",
 ]
-
-# =========================================================
-# MIDDLEWARE
-# =========================================================
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -63,10 +47,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
-# =========================================================
-# URL / TEMPLATES / WSGI
-# =========================================================
 
 ROOT_URLCONF = "config.urls"
 
@@ -87,24 +67,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-# =========================================================
-# DATABASE
-# =========================================================
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": os.getenv("DB_HOST"),
+        "NAME": os.getenv("DB_NAME", ""),
+        "USER": os.getenv("DB_USER", ""),
+        "PASSWORD": os.getenv("DB_PASSWORD", ""),
+        "HOST": os.getenv("DB_HOST", "127.0.0.1"),
         "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
-
-# =========================================================
-# PASSWORD VALIDATION
-# =========================================================
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -121,83 +93,64 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# =========================================================
-# INTERNATIONALIZATION
-# =========================================================
-
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# =========================================================
-# STATIC FILES
-# =========================================================
-
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Si plus tard tu ajoutes des fichiers media
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-# =========================================================
-# EMAIL
-# =========================================================
-
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.getenv("EMAIL_HOST")
-EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
-EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_HOST = os.getenv("EMAIL_HOST", "")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True").lower() == "true"
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
 
 CONTACT_RECIPIENT_TECH = os.getenv(
     "CONTACT_RECIPIENT_TECH",
-    "n.nzoba@basogolhive.com"
+    "projects-tech@basogolhive.com"
 )
 CONTACT_RECIPIENT_MARKETING = os.getenv(
     "CONTACT_RECIPIENT_MARKETING",
-    "w.pouekoua@basogolhive.com"
+    "projects-studio@basogolhive.com"
 )
 
-# =========================================================
-# CORS / CSRF
-# =========================================================
+if DEBUG:
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5174",
+    ]
 
-CORS_ALLOWED_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv(
-        "CORS_ALLOWED_ORIGINS",
-        "http://localhost:5173,http://127.0.0.1:5173,https://basogolhive.com,https://www.basogolhive.com"
-    ).split(",")
-    if origin.strip()
-]
+    CSRF_TRUSTED_ORIGINS = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:5174",
+    ]
+else:
+    CORS_ALLOWED_ORIGINS = [
+        "https://basogolhive.com",
+        "https://www.basogolhive.com",
+    ]
 
-CSRF_TRUSTED_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv(
-        "CSRF_TRUSTED_ORIGINS",
-        "https://basogolhive.com,https://www.basogolhive.com"
-    ).split(",")
-    if origin.strip()
-]
-
-# =========================================================
-# SECURITY FOR PRODUCTION
-# =========================================================
+    CSRF_TRUSTED_ORIGINS = [
+        "https://basogolhive.com",
+        "https://www.basogolhive.com",
+    ]
 
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     X_FRAME_OPTIONS = "DENY"
-
-# =========================================================
-# DEFAULT PRIMARY KEY
-# =========================================================
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
