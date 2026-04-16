@@ -20,7 +20,7 @@ import leftTopMain from "../assets/Untitled.png";
 import leftBottomShape from "../assets/Untitlevcwevabd.png";
 import rightShape from "../assets/Untitlevabd.png";
 import { useLanguage } from "./LanguageContext";
-
+const currentYear = new Date().getFullYear();
 const translations = {
   fr: {
     brandSubtitle: "Tech & studio Creatif",
@@ -119,8 +119,9 @@ const translations = {
       { label: "WhatsApp", href: "#" },
       { label: "YouTube", href: "#" },
     ],
-    copyright: "© 2025 Basogol-Hive. Tous droits réservés.",
+    copyright: `© ${currentYear} Basogol-Hive. Conçu avec passion. Tous droits réservés.`,
   },
+
   en: {
     brandSubtitle: "Tech & Creative studio",
     navLinks: [
@@ -218,7 +219,7 @@ const translations = {
       { label: "WhatsApp", href: "#" },
       { label: "YouTube", href: "#" },
     ],
-    copyright: "© 2025 Basogol-Hive. All rights reserved.",
+  copyright: `© ${new Date().getFullYear()} Basogol-Hive. Built with passion. All rights reserved.`,
   },
 };
 

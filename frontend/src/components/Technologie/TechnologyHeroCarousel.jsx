@@ -3,7 +3,7 @@ import { useLanguage } from "../LanguageContext";
 import techIcon from "../../assets/Union1.png";
 import sideCardTop from "../../assets/Group14.png";
 import sideCardBottom from "../../assets/Group9.png";
-
+import { Link } from "react-router-dom";
 const translations = {
   fr: {
     title: "Technologie",
@@ -285,20 +285,20 @@ const TechnologyHeroCarousel = () => {
 
             {/* Boutons */}
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="/portfolio"
+              <Link
+                to="/portfolio"
                 className="th-btn-primary inline-flex items-center justify-center rounded-[10px] px-7 py-3.5 text-sm font-semibold"
                 style={{ fontFamily: "Literata, serif" }}
               >
                 {t.primaryCta}
-              </a>
-              <a
-                href="/contact"
+              </Link>
+              <Link
+                to="/contact"
                 className="th-btn-secondary inline-flex items-center justify-center rounded-[10px] px-7 py-3.5 text-sm font-semibold"
                 style={{ fontFamily: "Literata, serif" }}
               >
                 {t.secondaryCta}
-              </a>
+              </Link>
             </div>
 
             {/* Points décoratifs */}

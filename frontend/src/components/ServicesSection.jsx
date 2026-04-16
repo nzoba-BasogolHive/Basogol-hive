@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import serviceVideo from "../assets/Service.webm";
 import serviceVideoMov from "../assets/Servicecomplet.mov";
 import unionShape from "../assets/Union.png";
@@ -7,7 +7,181 @@ import FloatingCards from "./FloatingCards";
 import { useLanguage } from "./LanguageContext";
 import logoAnimation from "../assets/logoanimation.webm";
 import logoAnimationMov from "../assets/logotransparent12.mov";
+import { Link } from "react-router-dom";
+// ─────────────────────────────────────────────────────────────────────────────
+// Détection navigateur
+// ─────────────────────────────────────────────────────────────────────────────
+const isSafariIOS = () => {
+  if (typeof window === "undefined") return false;
+  const ua = navigator.userAgent;
+  const isIOS =
+    /iPad|iPhone|iPod/.test(ua) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isSafari = /^((?!chrome|android|crios|fxios).)*safari/i.test(ua);
+  return isIOS && isSafari;
+};
 
+const isIOSChrome = () => {
+  if (typeof window === "undefined") return false;
+  return /CriOS/.test(navigator.userAgent);
+};
+
+const isIOSFirefox = () => {
+  if (typeof window === "undefined") return false;
+  return /FxiOS/.test(navigator.userAgent);
+};
+
+// Tout navigateur iOS qui n'est pas Safari pur = on utilise le canvas
+const needsCanvasFallback = () => isIOSChrome() || isIOSFirefox();
+
+// ─────────────────────────────────────────────────────────────────────────────
+// VideoCanvas — lit une vidéo transparente et la dessine sur canvas
+// Fonctionne sur Chrome iOS, Firefox iOS, et tous navigateurs desktop
+// ─────────────────────────────────────────────────────────────────────────────
+const VideoCanvas = ({
+  movSrc,
+  webmSrc,
+  className,
+  style,
+  autoPlay = true,
+  loop = true,
+  onReady,
+  paused = false,
+}) => {
+  const canvasRef = useRef(null);
+  const videoRef = useRef(null);
+  const rafRef = useRef(null);
+  const [ready, setReady] = useState(false);
+
+  const drawFrame = useCallback(() => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas || video.paused || video.ended) return;
+
+    const ctx = canvas.getContext("2d");
+    if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
+      canvas.width = video.videoWidth || 1;
+      canvas.height = video.videoHeight || 1;
+    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    rafRef.current = requestAnimationFrame(drawFrame);
+  }, []);
+
+  useEffect(() => {
+    // Créer l'élément vidéo caché
+    const video = document.createElement("video");
+    video.muted = true;
+    video.loop = loop;
+    video.playsInline = true;
+    video.crossOrigin = "anonymous";
+    video.style.display = "none";
+    videoRef.current = video;
+
+    // Ajouter les sources — .mov d'abord pour Safari, .webm pour les autres
+    if (movSrc) {
+      const s1 = document.createElement("source");
+      s1.src = movSrc;
+      s1.type = "video/mp4; codecs=hvc1";
+      video.appendChild(s1);
+    }
+    if (webmSrc) {
+      const s2 = document.createElement("source");
+      s2.src = webmSrc;
+      s2.type = "video/webm; codecs=vp9";
+      video.appendChild(s2);
+    }
+
+    document.body.appendChild(video);
+
+    video.addEventListener("canplay", () => {
+      setReady(true);
+      onReady?.();
+      if (autoPlay) {
+        video.play().catch(() => {});
+        rafRef.current = requestAnimationFrame(drawFrame);
+      }
+    });
+
+    video.load();
+
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      video.pause();
+      document.body.removeChild(video);
+    };
+  }, [movSrc, webmSrc]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !ready) return;
+    if (paused) {
+      video.pause();
+      cancelAnimationFrame(rafRef.current);
+    } else {
+      video.play().catch(() => {});
+      rafRef.current = requestAnimationFrame(drawFrame);
+    }
+  }, [paused, ready, drawFrame]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className={className}
+      style={{ background: "transparent", ...style }}
+    />
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TransparentVideo — choisit automatiquement canvas ou balise video native
+// ─────────────────────────────────────────────────────────────────────────────
+const TransparentVideo = ({
+  movSrc,
+  webmSrc,
+  className,
+  style,
+  videoRef: externalRef,
+  paused = false,
+  ...props
+}) => {
+  const [useCanvas] = useState(() => needsCanvasFallback());
+
+  if (useCanvas) {
+    return (
+      <VideoCanvas
+        movSrc={movSrc}
+        webmSrc={webmSrc}
+        className={className}
+        style={style}
+        paused={paused}
+      />
+    );
+  }
+
+  // Safari iOS ou desktop : balise <video> native avec HEVC alpha
+  return (
+    <video
+      ref={externalRef}
+      className={className}
+      style={{ background: "transparent", ...style }}
+      autoPlay
+      muted
+      loop
+      playsInline
+      {...props}
+    >
+      {/* Safari iOS : HEVC H.265 avec canal alpha */}
+      {movSrc && <source src={movSrc} type="video/mp4; codecs=hvc1" />}
+      {/* Desktop Chrome/Firefox : VP9 webm avec canal alpha */}
+      {webmSrc && <source src={webmSrc} type="video/webm; codecs=vp9" />}
+    </video>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Traductions
+// ─────────────────────────────────────────────────────────────────────────────
 const translations = {
   fr: {
     badge: "Nos services",
@@ -76,28 +250,33 @@ const translations = {
   },
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
+// ServicesSection
+// ─────────────────────────────────────────────────────────────────────────────
 const ServicesSection = () => {
   const { lang } = useLanguage();
   const t = translations[lang] || translations.fr;
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
   const [visible, setVisible] = useState(false);
+  const [serviceVideoPaused, setServiceVideoPaused] = useState(true);
 
-  // ── Lecture vidéo scroll-triggered ──
+  // ── Lecture vidéo service scroll-triggered ──
   useEffect(() => {
-    const video = videoRef.current;
     const section = sectionRef.current;
-    if (!video || !section) return;
+    if (!section) return;
 
-    video.muted = true;
+    // Pour la balise <video> native (Safari / desktop)
+    const video = videoRef.current;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          video.play().catch(() => {});
+          setServiceVideoPaused(false);
+          if (video) { video.muted = true; video.play().catch(() => {}); }
         } else {
-          video.pause();
-          video.currentTime = 0;
+          setServiceVideoPaused(true);
+          if (video) { video.pause(); video.currentTime = 0; }
         }
       },
       { threshold: 0.2 }
@@ -119,6 +298,8 @@ const ServicesSection = () => {
     return () => observer.disconnect();
   }, []);
 
+  const useCanvas = needsCanvasFallback();
+
   return (
     <section
       id="services"
@@ -126,13 +307,7 @@ const ServicesSection = () => {
       className="section-shell overflow-x-hidden overflow-y-visible"
     >
       <style>{`
-        /* ══════════════════════════════════════════════════════
-           TRANSPARENCE VIDÉO iOS — RÈGLE CRITIQUE
-           Safari iOS lit HEVC (H.265) avec canal alpha.
-           Le codec exact à déclarer : codecs=hvc1
-           Sans ça → fond noir.
-        ══════════════════════════════════════════════════════ */
-        video {
+        video, canvas {
           background: transparent !important;
           background-color: transparent !important;
         }
@@ -175,7 +350,6 @@ const ServicesSection = () => {
         }
         .union-float { animation: unionFloat 9s ease-in-out infinite; }
 
-        /* ── Badge section ── */
         .sv-badge {
           background: rgba(186,230,255,0.32);
           backdrop-filter: blur(10px);
@@ -184,7 +358,6 @@ const ServicesSection = () => {
           color: #0e5f82;
         }
 
-        /* ── CTA ── */
         .sv-cta {
           background: rgba(255,255,255,0.88);
           backdrop-filter: blur(14px);
@@ -199,7 +372,6 @@ const ServicesSection = () => {
           box-shadow: 0 12px 32px rgba(15,23,42,0.17), 0 1px 0 rgba(255,255,255,0.92) inset;
         }
 
-        /* ── Stat pills ── */
         .sv-stat {
           background: rgba(255,255,255,0.70);
           backdrop-filter: blur(12px);
@@ -214,7 +386,6 @@ const ServicesSection = () => {
           box-shadow: 0 8px 22px rgba(31,108,140,0.13);
         }
 
-        /* ── Carte globale ── */
         .sv-card-global {
           background: rgba(255,255,255,0.78);
           backdrop-filter: blur(18px) saturate(150%);
@@ -228,7 +399,6 @@ const ServicesSection = () => {
           box-shadow: 0 18px 48px rgba(31,108,140,0.16), 0 1px 0 rgba(255,255,255,0.88) inset;
         }
 
-        /* ── Cartes petites ── */
         .sv-card-small {
           background: rgba(255,255,255,0.72);
           backdrop-filter: blur(16px) saturate(145%);
@@ -243,7 +413,6 @@ const ServicesSection = () => {
           border-color: rgba(31,108,140,0.16);
         }
 
-        /* Zoom image hover */
         .sv-card-img { overflow: hidden; }
         .sv-card-img img, .sv-card-img video {
           transition: transform 0.65s cubic-bezier(0.22,1,0.36,1);
@@ -254,7 +423,6 @@ const ServicesSection = () => {
           transform: scale(1.05);
         }
 
-        /* ── Badges cartes ── */
         .sv-badge-blue {
           background: rgba(224,242,254,0.85);
           color: #0e6e96;
@@ -266,7 +434,6 @@ const ServicesSection = () => {
           border: 1px solid rgba(203,213,225,0.40);
         }
 
-        /* ── Barre colorée haut carte ── */
         .sv-card-bar {
           height: 3px;
           border-radius: 999px;
@@ -277,7 +444,6 @@ const ServicesSection = () => {
         .sv-card-global:hover .sv-card-bar,
         .sv-card-small:hover .sv-card-bar { width: 100%; }
 
-        /* ── Lien learn more ── */
         .sv-learn-more {
           position: relative;
           display: inline-flex;
@@ -367,23 +533,20 @@ const ServicesSection = () => {
         }
 
         @keyframes svHaloPulse {
-          0%, 100% { transform: scale(1);    opacity: 0.7; }
-          50%       { transform: scale(1.12); opacity: 1;   }
+          0%, 100% { transform: scale(1); opacity: 0.7; }
+          50% { transform: scale(1.12); opacity: 1; }
         }
         @keyframes svRingExpand {
-          0%, 100% { transform: scale(1);    opacity: 0.55; }
-          50%       { transform: scale(1.06); opacity: 0.25; }
+          0%, 100% { transform: scale(1); opacity: 0.55; }
+          50% { transform: scale(1.06); opacity: 0.25; }
         }
         @keyframes svLogoFloat {
-          0%, 100% { transform: scale(1) translateY(0px);   }
-          50%       { transform: scale(1) translateY(-10px); }
+          0%, 100% { transform: scale(1) translateY(0px); }
+          50% { transform: scale(1) translateY(-10px); }
         }
 
         @media (max-width: 1023px) {
-          .sv-logo-stage {
-            align-items: center;
-            gap: 16px;
-          }
+          .sv-logo-stage { align-items: center; gap: 16px; }
           .sv-logo-wrap {
             display: block;
             width: min(52vw, 180px);
@@ -405,7 +568,7 @@ const ServicesSection = () => {
         {/* ── En-tête ── */}
         <div className="mb-14 flex flex-col gap-8 lg:mb-18 lg:flex-row lg:items-start lg:justify-between">
 
-          {/* Gauche — badge + titre + desc */}
+          {/* Gauche */}
           <div className={`sv-fade-up sv-d0 max-w-2xl ${visible ? "show" : ""}`}>
             <span
               className="sv-badge inline-flex rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-widest"
@@ -424,9 +587,7 @@ const ServicesSection = () => {
             <div
               className="mt-5"
               style={{
-                width: "36px",
-                height: "2px",
-                borderRadius: "999px",
+                width: "36px", height: "2px", borderRadius: "999px",
                 background: "linear-gradient(90deg, #1f6c8c, #a8d4e8)",
               }}
             />
@@ -444,36 +605,16 @@ const ServicesSection = () => {
 
             <div className="sv-logo-wrap" aria-hidden="true">
               {/*
-                ══════════════════════════════════════════════
-                TRANSPARENCE iOS — COMMENT ÇA MARCHE :
-
-                Safari iOS 13+ supporte HEVC (H.265) avec canal
-                alpha. Le type MIME exact est :
-                  "video/mp4; codecs=hvc1"
-
-                ⚠️  TON FICHIER .mov DOIT ÊTRE EXPORTÉ EN :
-                    • Codec : HEVC (H.265)
-                    • Canal alpha : activé
-                    • Depuis : After Effects > "Exporter > Media Encoder"
-                      ou Final Cut Pro > Compressor
-                    • Format conteneur : .mov ou .mp4
-
-                Si ton .mov est en ProRes ou H.264 → pas d'alpha.
-                ══════════════════════════════════════════════
+                ✅ Chrome iOS  → VideoCanvas (canvas 2D, frame par frame)
+                ✅ Safari iOS  → <video> native HEVC hvc1 avec canal alpha
+                ✅ Desktop     → <video> native VP9 webm avec canal alpha
               */}
-              <video
+              <TransparentVideo
+                movSrc={logoAnimationMov}
+                webmSrc={logoAnimation}
                 className={`sv-logo-video ${visible ? "show" : ""}`}
-                autoPlay
-                muted
-                loop
-                playsInline
                 style={{ background: "transparent" }}
-              >
-                {/* iOS Safari : HEVC avec canal alpha */}
-                <source src={logoAnimationMov} type="video/mp4; codecs=hvc1" />
-                {/* Chrome / Firefox : VP9 webm avec canal alpha */}
-                <source src={logoAnimation} type="video/webm; codecs=vp9" />
-              </video>
+              />
             </div>
 
             {/* Stats */}
@@ -501,20 +642,20 @@ const ServicesSection = () => {
             </div>
 
             {/* CTA */}
-            <a
-              href="/process"
+            <Link
+              to="/process"
               className="sv-cta inline-flex items-center justify-center rounded-[10px] px-6 py-3 text-sm font-semibold text-slate-900"
               style={{ fontFamily: "Literata, serif" }}
             >
               {t.cta} <span className="ml-2">→</span>
-            </a>
+            </Link>
           </div>
         </div>
 
         {/* ── Grille principale ── */}
         <div className="relative grid grid-cols-1 gap-8 xl:grid-cols-[0.95fr_1.05fr] xl:gap-10">
 
-          {/* Vidéo service — scroll-triggered */}
+          {/* Vidéo service */}
           <div
             className={`sv-fade-left sv-d1 relative z-10 flex items-center justify-center ${
               visible ? "show" : ""
@@ -522,25 +663,18 @@ const ServicesSection = () => {
           >
             <div className="sv-video-wrap relative w-full max-w-3xl">
               {/*
-                ══════════════════════════════════════════════
-                MÊME PRINCIPE : HEVC alpha pour iOS, VP9 pour les autres.
-                ══════════════════════════════════════════════
+                ✅ Même logique que le logo :
+                   Chrome iOS → canvas, Safari iOS → HEVC, desktop → VP9
               */}
-              <video
-                ref={videoRef}
+              <TransparentVideo
+                movSrc={serviceVideoMov}
+                webmSrc={serviceVideo}
+                videoRef={videoRef}
                 className="relative z-10 w-full object-contain drop-shadow-[0_25px_60px_rgba(15,23,42,0.17)]"
-                muted
-                loop
-                playsInline
-                preload="auto"
-                aria-label={t.mockupAlt}
                 style={{ background: "transparent" }}
-              >
-                {/* iOS Safari : HEVC avec canal alpha */}
-                <source src={serviceVideoMov} type="video/mp4; codecs=hvc1" />
-                {/* Chrome / Firefox : VP9 webm avec canal alpha */}
-                <source src={serviceVideo} type="video/webm; codecs=vp9" />
-              </video>
+                paused={serviceVideoPaused}
+                aria-label={t.mockupAlt}
+              />
               <img
                 src={unionShape}
                 alt=""
@@ -625,9 +759,9 @@ const ServicesSection = () => {
                   >
                     {t.techDescription}
                   </p>
-                  <a href="#technology" className="sv-learn-more mt-4 block">
+                  <Link to="/technology" className="sv-learn-more mt-4 block">
                     {t.learnMore} <span>→</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -674,9 +808,9 @@ const ServicesSection = () => {
                   >
                     {t.studioDescription}
                   </p>
-                  <a href="#marketing-brand" className="sv-learn-more mt-4 block">
+                  <Link to="/marketing-brand" className="sv-learn-more mt-4 block">
                     {t.learnMore} <span>→</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
 

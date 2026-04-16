@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLanguage } from "../LanguageContext";
 import heroBg from "../../assets/rfYVzjHWWemqX.webp";
 import brandIcon from "../../assets/ColorSwatchOutline.png";
+import { Link } from "react-router-dom";
 
 const translations = {
   fr: {
@@ -229,20 +230,20 @@ const MarketingBrandHeroCarousel = () => {
 
             {/* Boutons */}
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="/portfolio"
+              <Link
+                to="/portfolio"
                 className="mb-btn-primary inline-flex items-center justify-center rounded-[10px] px-7 py-3.5 text-sm"
                 style={{ fontFamily: "Literata, serif" }}
               >
                 {t.primaryCta}
-              </a>
-              <a
-                href="/contact"
+              </Link>
+              <Link
+                to="/contact"
                 className="mb-btn-secondary inline-flex items-center justify-center rounded-[10px] px-7 py-3.5 text-sm"
                 style={{ fontFamily: "Literata, serif" }}
               >
                 {t.secondaryCta}
-              </a>
+              </Link>
             </div>
           </div>
 

@@ -2,6 +2,11 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import christlandImg from "../../assets/ch.png";
 import dibi from "../../assets/dib1.png";
 import basogol from "../../assets/ba.png";
+import  tech from "../../assets/scene_04_shot_02.1-01.png";
+import  leb from "../../assets/Logo_Mockup_2.jpg";
+import  vid from "../../assets/A002C234.jpg";
+
+
 import {
   Megaphone,
   Cpu,
@@ -32,32 +37,33 @@ const translations = {
       introDescription:
         "Nous construisons des univers, des récits et des dispositifs visuels capables de traduire une vision claire. Chaque projet cherche l’équilibre entre cohérence stratégique, force esthétique et lisibilité.",
       featured: {
-        slug: "strategie-marketing",
+        slug: "Motion-Design",
         type: "marketing-brand",
-        category: "Brand Strategy",
-        title: "Repositionnement global d’une marque lifestyle",
+        category: "Motion-Design",
+        title: "Motion Design Publi-reportage 2D ",
         description:
-          "Une refonte pensée pour clarifier le positionnement, renforcer la cohérence visuelle et créer une expression de marque plus forte sur l’ensemble des supports.",
+          "Dibiyé simplifie l’éducation en centralisant les outils, les informations et les ressources essentielles dans une seule plateforme. Idée forte à retenir.",
         metric: "+38% de clarté perçue",
-        image:
-          "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80",
+         image:
+       tech ,
       },
       projects: [
         {
           slug: "strategie-marketing",
           type: "marketing-brand",
-          category: "Campaign",
-          title: "Lancement éditorial et identité de campagne",
+          category: "Reportage Culturel",
+          title: "Nekang pe Mungoum 311e Edition",
           image:
-            "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80",
+         vid,
+        // },
         },
         {
           slug: "marketing-contenu",
           type: "marketing-brand",
-          category: "Brand Content",
-          title: "Système visuel pour contenu de marque",
+          category: "Charte graphique Lengbe Africa",
+          title: "Branding Lengbe Africa",
           image:
-            "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80",
+            leb,
         },
         // {
         //   slug: "reseaux-sociaux",
@@ -143,50 +149,35 @@ const translations = {
         "Marketing projects designed to strengthen a brand’s presence and perception",
       introDescription:
         "We build worlds, narratives and visual systems capable of expressing a clear vision. Each project seeks the balance between strategic consistency, aesthetic strength and readability.",
-      featured: {
-        slug: "strategie-marketing",
-        type: "marketing-brand",
-        category: "Brand Strategy",
-        title: "Global repositioning for a lifestyle brand",
-        description:
-          "A redesign crafted to clarify positioning, strengthen visual consistency and create a stronger brand expression across every touchpoint.",
-        metric: "+38% perceived clarity",
-        image:
-          "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80",
-      },
-      projects: [
-        {
-          slug: "strategie-marketing",
-          type: "marketing-brand",
-          category: "Campaign",
-          title: "Editorial launch and campaign identity",
-          image:
-            "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80",
-        },
-        {
-          slug: "marketing-contenu",
-          type: "marketing-brand",
-          category: "Brand Content",
-          title: "Visual system for brand content",
-          image:
-            "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80",
-        },
-        {
-          slug: "reseaux-sociaux",
-          type: "marketing-brand",
-          category: "Social Direction",
-          title: "Creative direction for social presence",
-          image:
-            "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80",
-        },
-        {
-          slug: "identite-de-marque",
-          type: "marketing-brand",
-          category: "Visual Identity",
-          title: "Premium brand identity redesign",
-          image:
-            "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=1400&q=80",
-        },
+    featured: {
+    slug: "Motion-Design",
+    type: "marketing-brand",
+    category: "Motion Design",
+    title: "2D Motion Design Advertorial",
+    description:
+    "Dibiyé simplifies education by centralizing tools, information, and essential resources into a single platform. A strong key idea to remember.",
+  metric: "+38% perceived clarity",
+  image:
+   tech,
+},
+
+projects: [
+  {
+    slug: "strategie-marketing",
+    type: "marketing-brand",
+    category: "Cultural Reportage",
+    title: "Nekang pe Mungoum – 311th Edition",
+    image:
+      vid,
+  },
+  {
+    slug: "marketing-contenu",
+    type: "marketing-brand",
+    category: "Lengbe Africa Brand Guidelines",
+    title: "Lengbe Africa Branding",
+    image:
+     leb,
+  },
       ],
     },
     technology: {
@@ -220,22 +211,22 @@ const translations = {
         image:
          basogol,
       },
-        {
-          slug: "ux-architecture",
-          type: "technology",
-          category: "UX Architecture",
-          title: "Structured journeys for a digital service",
-          image:
-            "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1400&q=80",
-        },
-        {
-          slug: "product-build",
-          type: "technology",
-          category: "Product Build",
-          title: "Custom digital environment development",
-          image:
-            "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1400&q=80",
-        },
+        // {
+        //   slug: "ux-architecture",
+        //   type: "technology",
+        //   category: "UX Architecture",
+        //   title: "Structured journeys for a digital service",
+        //   image:
+        //     "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1400&q=80",
+        // },
+        // {
+        //   slug: "product-build",
+        //   type: "technology",
+        //   category: "Product Build",
+        //   title: "Custom digital environment development",
+        //   image:
+        //     "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1400&q=80",
+        // },
       ],
     },
   },

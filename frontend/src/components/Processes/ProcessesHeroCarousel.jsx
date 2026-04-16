@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ArrowRight, Layers3, Sparkles } from "lucide-react";
 import { useLanguage } from "../LanguageContext";
-
+import { Link } from "react-router-dom";
 const translations = {
   fr: {
     badge: "Notre Processus",
@@ -266,22 +266,22 @@ const ProcessesHeroCarousel = () => {
             </p>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="#processes-content"
+              {/* <a
+                to="/process"
                 className="prh-btn-primary inline-flex items-center justify-center gap-2 rounded-[10px] px-7 py-3.5 text-sm font-semibold"
                 style={{ fontFamily: "Literata, serif" }}
               >
                 {t.primaryCta}
                 <ArrowRight className="h-4 w-4" strokeWidth={2} />
-              </a>
+              </a> */}
 
-              <a
-                href="/contact"
+              <Link
+                to="/contact"
                 className="prh-btn-secondary inline-flex items-center justify-center rounded-[10px] px-7 py-3.5 text-sm font-semibold"
                 style={{ fontFamily: "Literata, serif" }}
               >
                 {t.secondaryCta}
-              </a>
+              </Link>
             </div>
           </div>
 

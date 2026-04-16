@@ -117,19 +117,21 @@ const TechnologyProjectDetailHero = ({ project }) => {
           </p>
 
           {projectTags.length > 0 && (
-            <div className="mt-6 flex flex-wrap gap-2">
-              {projectTags.map((tag, i) => (
-                <span
-                  key={i}
-                  className="tdh-cat-tag rounded-full px-3 py-1 text-[11px] font-semibold text-white/78"
-                  style={{ fontFamily: "Literata, serif" }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-
+  <div className="mt-10 flex flex-wrap gap-3">
+    {projectTags.map((tag, i) => (
+      <a
+        key={i}
+        href={tag.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="tdh-cat-tag inline-flex rounded-full px-6 py-1 text-[14px] font-semibold text-white"
+        style={{ fontFamily: "Literata, serif" }}
+      >
+        {tag.label}
+      </a>
+    ))}
+  </div>
+)}
           {/* <div className="mt-9">
             <a
               href="#tech-project-detail-content"

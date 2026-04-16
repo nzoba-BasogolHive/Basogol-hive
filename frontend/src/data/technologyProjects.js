@@ -48,10 +48,10 @@ export const technologyProjects = [
       en: "Web Platform",
     },
 
-    projectTags: {
-      fr: ["Plateforme", "Interface", "Usage"],
-      en: ["Platform", "Interface", "Usage"],
-    },
+ projectTags: {
+  fr: [{ label: "Voir le site", url: "https://christland.tech/" }],
+  en: [{ label: "Visit website", url: "https://christland.tech/" }],
+},
 
 overviewCards: [
   {
@@ -173,8 +173,8 @@ overviewCards: [
   },
 
   projectTags: {
-    fr: ["EdTech", "E-learning", "UX Design", "Plateforme"],
-    en: ["EdTech", "E-learning", "UX Design", "Platform"],
+  fr: [{ label: "Voir le site", url: "https://dibiye.com/" }],
+  en: [{ label: "Visit website", url: "https://dibiye.com/" }],
   },
 
  overviewCards: [
@@ -297,8 +297,8 @@ overviewCards: [
   },
 
   projectTags: {
-    fr: ["Tech", "Branding", "Identité", "UX/UI"],
-    en: ["Tech", "Branding", "Identity", "UX/UI"],
+    fr: [{ label: "Voir le site", url: "https://basogolhive.com//" }],
+  en: [{ label: "Visit website", url: "https://basogolhive.com/" }],
   },
 
   overviewCards: [

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "../LanguageContext";
 import aboutHeroBg from "../../assets/0.webp";
-
+import { Link } from "react-router-dom";
 const translations = {
   fr: {
     badge: "À propos",
@@ -168,20 +168,20 @@ const AboutHeroSection = () => {
 
           {/* Boutons */}
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <a
-              href="/portfolio"
+            <Link
+              to="/portfolio"
               className="hero-btn-primary inline-flex min-w-[220px] items-center justify-center rounded-[10px] px-7 py-3.5 text-sm font-semibold"
               style={{ fontFamily: "Literata, serif" }}
             >
               {t.primaryCta}
-            </a>
-            <a
-              href="/contact"
+            </Link>
+           <Link
+              to="/contact"
               className="hero-btn-secondary inline-flex min-w-[170px] items-center justify-center rounded-[10px] px-7 py-3.5 text-sm font-semibold"
               style={{ fontFamily: "Literata, serif" }}
             >
               {t.secondaryCta}
-            </a>
+            </Link>
           </div>
 
         </div>

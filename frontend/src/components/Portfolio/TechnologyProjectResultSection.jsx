@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useLanguage } from "../LanguageContext"; // adapte le chemin si besoin
 
 const translations = {
   fr: {
@@ -12,13 +13,14 @@ const translations = {
 };
 
 const TechnologyProjectResultSection = ({
-  lang = "fr",
   title,
   description,
   mainMedia,
   gallery = [],
 }) => {
+  const { lang } = useLanguage();
   const t = translations[lang] || translations.fr;
+
   const sectionRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -43,7 +45,11 @@ const TechnologyProjectResultSection = ({
       className="relative overflow-hidden bg-[#f7f7f5] py-16 sm:py-20 lg:py-24"
     >
       <div className="page-container relative z-10">
-        <div className={`mb-12 text-center transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
+        <div
+          className={`mb-12 text-center transition-all duration-700 ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+        >
           <span
             className="mb-4 inline-flex rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.24em]"
             style={{

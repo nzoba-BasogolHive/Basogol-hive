@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import shapeLeft from "../assets/Group14.png";
 import shapeRight from "../assets/Group13.png";
 import { useLanguage } from "./LanguageContext";
-
+import { Link } from "react-router-dom";
 const translations = {
   fr: {
     projects: [
@@ -411,14 +411,14 @@ const RecentProjectsSection = () => {
 
           {/* ── CTA ── */}
           <div className="mt-8 flex justify-end pr-2 sm:pr-6">
-            <a
-              href="/portfolio"
+          <Link
+              to="/portfolio"
               className="rp-cta inline-flex items-center gap-2 rounded-[10px] px-6 py-3 text-sm font-semibold text-white"
               style={{ fontFamily: "Literata, serif" }}
             >
               {t.cta}
               <span className="text-base">→</span>
-            </a>
+            </Link>
           </div>
 
         </div>
