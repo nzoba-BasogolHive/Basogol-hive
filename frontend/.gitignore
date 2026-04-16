@@ -1,23 +1,54 @@
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-.env.local
 
-node_modules
-dist
-dist-ssr
-*.local
+# Frontend / Node
+node_modules/
+dist/
+dist-ssr/
+build/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+backend/.env.docker
+backend/.env.local
+frontend/.env.local
+frontend/.env.production
+frontend/.env.development
+frontend/.env.production.local
+
+# Python / Django
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+.venv/
+venv/
+env/
+backend/.venv/
+
+# Generated files
+# staticfiles/
+# media/
+
+# Large file to exclude
+frontend/src/assets/ServiceSiteFULL00000000.mov
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
+Thumbs.db
 *.suo
 *.ntvs*
 *.njsproj

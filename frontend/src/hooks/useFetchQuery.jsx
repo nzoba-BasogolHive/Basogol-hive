@@ -4,7 +4,7 @@ const isProd = import.meta.env.PROD;
 
 const API_BASE =
   import.meta.env.VITE_API_BASE ||
-  (isProd ? "https://ton-domaine.com" : "http://127.0.0.1:8000");
+  (isProd ? "https://basogolhive.com/" : "http://127.0.0.1:8000");
 
 const API_PREFIX = import.meta.env.VITE_API_PREFIX ?? "";
 
