@@ -12,7 +12,7 @@ const translations = {
     scrollLabel: "Défiler",
     stats: [
       { num: "5+", label: "Années d'expérience" },
-      { num: "80+", label: "Projets livrés" },
+      { num: "20+", label: "Projets livrés" },
       { num: "100%", label: "Satisfaction client" },
     ],
   },
@@ -25,7 +25,7 @@ const translations = {
     scrollLabel: "Scroll",
     stats: [
       { num: "5+", label: "Years of experience" },
-      { num: "80+", label: "Projects delivered" },
+      { num: "20+", label: "Projects delivered" },
       { num: "100%", label: "Client satisfaction" },
     ],
   },

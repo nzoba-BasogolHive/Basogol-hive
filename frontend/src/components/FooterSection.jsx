@@ -115,8 +115,8 @@ const translations = {
       { label: "LinkedIn", href: "#" },
     ],
     bottomLinks: [
-      { label: "Email", href: "mailto:contact@basogol.com" },
-      { label: "WhatsApp", href: "#" },
+       { label: "Email", href: "mailto:projects-global@basogolhive.com" },
+      { label: "WhatsApp", href: "692548739" },
       { label: "YouTube", href: "#" },
     ],
     copyright: `© ${currentYear} Basogol-Hive. Conçu avec passion. Tous droits réservés.`,
@@ -215,8 +215,8 @@ const translations = {
       { label: "LinkedIn", href: "#" },
     ],
     bottomLinks: [
-      { label: "Email", href: "mailto:contact@basogol.com" },
-      { label: "WhatsApp", href: "#" },
+      { label: "Email", href: "mailto:projects-global@basogolhive.com" },
+      { label: "WhatsApp", href: "692548739" },
       { label: "YouTube", href: "#" },
     ],
   copyright: `© ${new Date().getFullYear()} Basogol-Hive. Built with passion. All rights reserved.`,

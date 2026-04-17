@@ -120,28 +120,35 @@ const [hasManualSoundChoice, setHasManualSoundChoice] = useState(false);
     video.muted = isMuted;
   }, [isMuted]);
 
-  useEffect(() => {
-    const section = sectionRef.current;
-    const video = videoRef.current;
-    if (!section || !video) return;
+ useEffect(() => {
+  const section = sectionRef.current;
+  const video = videoRef.current;
+  if (!section || !video) return;
 
-    const observer = new IntersectionObserver(
-      async ([entry]) => {
-        try {
-          if (entry.isIntersecting) {
-            video.muted = isMuted;
-            await video.play();
-          } else {
-            video.pause();
-          }
-        } catch (e) {}
-      },
-      { threshold: 0.35 }
-    );
+  video.playsInline = true;
+  video.loop = true;
+  video.muted = isMuted;
 
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, [hasUserInteracted, isMuted]);
+  const observer = new IntersectionObserver(
+    async ([entry]) => {
+      try {
+        if (entry.isIntersecting) {
+          video.muted = isMuted;
+          await video.play();
+        } else {
+          video.pause();
+        }
+      } catch (e) {}
+    },
+    {
+      threshold: 0.35,
+    }
+  );
+
+  observer.observe(section);
+
+  return () => observer.disconnect();
+}, [isMuted]);
 
  const handleToggleMute = async (e) => {
   e.stopPropagation();
@@ -173,17 +180,17 @@ const [hasManualSoundChoice, setHasManualSoundChoice] = useState(false);
     >
       {/* ── Vidéo fond ── */}
       <video
-        ref={videoRef}
-        className="absolute inset-0 h-full w-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        aria-label={t.videoAriaLabel}
-      >
-        <source src={heroVideo} type="video/mp4" />
-      </video>
+  ref={videoRef}
+  className="absolute inset-0 h-full w-full object-cover"
+  autoPlay
+  muted
+  loop
+  playsInline
+  preload="auto"
+  aria-label={t.videoAriaLabel}
+>
+  <source src={heroVideo} type="video/mp4" />
+</video>
 
       {/* ── Overlay — moins opaque sur mobile pour voir la vidéo ── */}
       <div className="absolute inset-0 bg-black/40 sm:bg-black/50" />
@@ -195,19 +202,78 @@ const [hasManualSoundChoice, setHasManualSoundChoice] = useState(false);
       </div>
 
       {/* ── Bouton son ── */}
-      <div className="absolute bottom-2 right-4 z-50 sm:bottom-28 sm:right-6 lg:bottom-10 lg:right-8">
-        <button
-          type="button"
-          onClick={handleToggleMute}
-          className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 text-[11px] font-semibold text-white backdrop-blur-sm transition duration-300 hover:bg-white/20 sm:px-4 sm:text-sm"
-          style={{ fontFamily: "Literata, serif" }}
-          aria-label={isMuted ? t.unmute : t.mute}
-          aria-pressed={!isMuted}
-        >
-          <span className="text-sm">{isMuted ? "🔇" : "🔊"}</span>
-          <span>{isMuted ? t.unmute : t.mute}</span>
-        </button>
-      </div>
+      <div className="absolute bottom-4 right-4 z-50 sm:bottom-8 sm:right-6 lg:bottom-10 lg:right-8">
+  <button
+    ref={soundButtonRef}
+    type="button"
+    onClick={handleToggleMute}
+    className="group relative overflow-hidden rounded-full border border-white/20 bg-white/10 px-4 py-2.5 text-white shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/16 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] sm:px-5 sm:py-3"
+    style={{ fontFamily: "Literata, serif" }}
+    aria-label={isMuted ? t.unmute : t.mute}
+    aria-pressed={!isMuted}
+  >
+    <span className="absolute inset-0 bg-gradient-to-r from-white/8 via-transparent to-white/8 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+    <span className="relative flex items-center gap-3">
+      <span
+        className={`flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-300 ${
+          isMuted
+            ? "border-white/15 bg-white/10"
+            : "border-cyan-300/40 bg-cyan-400/20 shadow-[0_0_20px_rgba(34,211,238,0.25)]"
+        }`}
+      >
+        {isMuted ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15.5 8.5a5 5 0 0 1 0 7"></path>
+            <path d="M19 5a10 10 0 0 1 0 14"></path>
+          </svg>
+        )}
+      </span>
+
+      <span className="flex flex-col items-start leading-none">
+        <span className="text-[10px] uppercase tracking-[0.2em] text-white/55">
+          Audio
+        </span>
+        <span className="text-[12px] font-semibold sm:text-sm">
+          {isMuted ? t.unmute : t.mute}
+        </span>
+      </span>
+
+      <span
+        className={`ml-1 h-2.5 w-2.5 rounded-full transition-all duration-300 ${
+          isMuted
+            ? "bg-white/35"
+            : "bg-cyan-300 shadow-[0_0_14px_rgba(34,211,238,0.9)]"
+        }`}
+      />
+    </span>
+  </button>
+</div>
 
       {/* ── Contenu ── */}
       <div className="relative z-10 mx-auto flex min-h-screen max-w-screen-2xl items-center px-5 pb-8 pt-20 sm:px-6 sm:pt-24 md:pt-28 lg:px-8 lg:pt-32 xl:pt-40">

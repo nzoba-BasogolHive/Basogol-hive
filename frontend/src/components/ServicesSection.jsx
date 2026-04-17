@@ -8,6 +8,7 @@ import { useLanguage } from "./LanguageContext";
 import logoAnimation from "../assets/logoanimation.webm";
 import logoAnimationMov from "../assets/logotransparent12.mov";
 import { Link } from "react-router-dom";
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Détection navigateur
 // ─────────────────────────────────────────────────────────────────────────────
@@ -31,12 +32,20 @@ const isIOSFirefox = () => {
   return /FxiOS/.test(navigator.userAgent);
 };
 
-// Tout navigateur iOS qui n'est pas Safari pur = on utilise le canvas
-const needsCanvasFallback = () => isIOSChrome() || isIOSFirefox();
+// ✅ FIX PRINCIPAL : tout iOS (Safari inclus) utilise le canvas fallback
+// Safari iOS ne rend pas correctement les vidéos HEVC alpha dans <video> natif
+const needsCanvasFallback = () => {
+  if (typeof window === "undefined") return false;
+  const ua = navigator.userAgent;
+  const isIOS =
+    /iPad|iPhone|iPod/.test(ua) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  return isIOS; // ← tout iOS, pas seulement Chrome/Firefox
+};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // VideoCanvas — lit une vidéo transparente et la dessine sur canvas
-// Fonctionne sur Chrome iOS, Firefox iOS, et tous navigateurs desktop
+// Fonctionne sur tout iOS (Safari, Chrome, Firefox) et desktop
 // ─────────────────────────────────────────────────────────────────────────────
 const VideoCanvas = ({
   movSrc,
@@ -59,7 +68,10 @@ const VideoCanvas = ({
     if (!video || !canvas || video.paused || video.ended) return;
 
     const ctx = canvas.getContext("2d");
-    if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
+    if (
+      canvas.width !== video.videoWidth ||
+      canvas.height !== video.videoHeight
+    ) {
       canvas.width = video.videoWidth || 1;
       canvas.height = video.videoHeight || 1;
     }
@@ -69,26 +81,27 @@ const VideoCanvas = ({
   }, []);
 
   useEffect(() => {
-    // Créer l'élément vidéo caché
     const video = document.createElement("video");
     video.muted = true;
     video.loop = loop;
     video.playsInline = true;
-    video.crossOrigin = "anonymous";
+    // ✅ FIX : crossOrigin retiré — bloquait le rendu canvas sur Safari iOS
+    // video.crossOrigin = "anonymous"; ← supprimé
     video.style.display = "none";
     videoRef.current = video;
 
-    // Ajouter les sources — .mov d'abord pour Safari, .webm pour les autres
-    if (movSrc) {
+    // ✅ FIX : WebM en premier pour le canvas (VP9 fonctionne partout en canvas)
+    // .mov en fallback uniquement si WebM non supporté
+    if (webmSrc) {
       const s1 = document.createElement("source");
-      s1.src = movSrc;
-      s1.type = "video/mp4; codecs=hvc1";
+      s1.src = webmSrc;
+      s1.type = "video/webm; codecs=vp9";
       video.appendChild(s1);
     }
-    if (webmSrc) {
+    if (movSrc) {
       const s2 = document.createElement("source");
-      s2.src = webmSrc;
-      s2.type = "video/webm; codecs=vp9";
+      s2.src = movSrc;
+      s2.type = "video/mp4; codecs=hvc1";
       video.appendChild(s2);
     }
 
@@ -108,7 +121,9 @@ const VideoCanvas = ({
     return () => {
       cancelAnimationFrame(rafRef.current);
       video.pause();
-      document.body.removeChild(video);
+      if (document.body.contains(video)) {
+        document.body.removeChild(video);
+      }
     };
   }, [movSrc, webmSrc]);
 
@@ -135,6 +150,8 @@ const VideoCanvas = ({
 
 // ─────────────────────────────────────────────────────────────────────────────
 // TransparentVideo — choisit automatiquement canvas ou balise video native
+// iOS (tout navigateur) → canvas avec VP9 WebM
+// Desktop                → <video> native VP9 webm / HEVC mov
 // ─────────────────────────────────────────────────────────────────────────────
 const TransparentVideo = ({
   movSrc,
@@ -159,7 +176,7 @@ const TransparentVideo = ({
     );
   }
 
-  // Safari iOS ou desktop : balise <video> native avec HEVC alpha
+  // Desktop uniquement : balise <video> native
   return (
     <video
       ref={externalRef}
@@ -171,10 +188,10 @@ const TransparentVideo = ({
       playsInline
       {...props}
     >
-      {/* Safari iOS : HEVC H.265 avec canal alpha */}
-      {movSrc && <source src={movSrc} type="video/mp4; codecs=hvc1" />}
       {/* Desktop Chrome/Firefox : VP9 webm avec canal alpha */}
       {webmSrc && <source src={webmSrc} type="video/webm; codecs=vp9" />}
+      {/* Desktop Safari : HEVC H.265 avec canal alpha */}
+      {movSrc && <source src={movSrc} type="video/mp4; codecs=hvc1" />}
     </video>
   );
 };
@@ -266,17 +283,22 @@ const ServicesSection = () => {
     const section = sectionRef.current;
     if (!section) return;
 
-    // Pour la balise <video> native (Safari / desktop)
     const video = videoRef.current;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setServiceVideoPaused(false);
-          if (video) { video.muted = true; video.play().catch(() => {}); }
+          if (video) {
+            video.muted = true;
+            video.play().catch(() => {});
+          }
         } else {
           setServiceVideoPaused(true);
-          if (video) { video.pause(); video.currentTime = 0; }
+          if (video) {
+            video.pause();
+            video.currentTime = 0;
+          }
         }
       },
       { threshold: 0.2 }
@@ -297,8 +319,6 @@ const ServicesSection = () => {
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
-
-  const useCanvas = needsCanvasFallback();
 
   return (
     <section
@@ -605,9 +625,9 @@ const ServicesSection = () => {
 
             <div className="sv-logo-wrap" aria-hidden="true">
               {/*
-                ✅ Chrome iOS  → VideoCanvas (canvas 2D, frame par frame)
-                ✅ Safari iOS  → <video> native HEVC hvc1 avec canal alpha
-                ✅ Desktop     → <video> native VP9 webm avec canal alpha
+                ✅ Tout iOS (Safari inclus) → VideoCanvas (canvas 2D + VP9 WebM)
+                ✅ Desktop Chrome/Firefox   → <video> native VP9 WebM
+                ✅ Desktop Safari           → <video> native HEVC hvc1
               */}
               <TransparentVideo
                 movSrc={logoAnimationMov}
@@ -663,8 +683,8 @@ const ServicesSection = () => {
           >
             <div className="sv-video-wrap relative w-full max-w-3xl">
               {/*
-                ✅ Même logique que le logo :
-                   Chrome iOS → canvas, Safari iOS → HEVC, desktop → VP9
+                ✅ Même logique corrigée :
+                   Tout iOS → canvas VP9, Desktop → <video> native
               */}
               <TransparentVideo
                 movSrc={serviceVideoMov}
