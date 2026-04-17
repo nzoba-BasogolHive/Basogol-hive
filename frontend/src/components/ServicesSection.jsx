@@ -1,54 +1,27 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import serviceVideo from "../assets/Service.webm";
-import serviceVideoMov from "../assets/Servicecomplet.mov";
 import unionShape from "../assets/Union.png";
 import BlueShape from "./BlueShape";
-import FloatingCards from "./FloatingCards";
 import { useLanguage } from "./LanguageContext";
 import logoAnimation from "../assets/logoanimation.webm";
-import logoAnimationMov from "../assets/logotransparent12.mov";
 import { Link } from "react-router-dom";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Détection navigateur
+// Détection iOS
 // ─────────────────────────────────────────────────────────────────────────────
-const isSafariIOS = () => {
-  if (typeof window === "undefined") return false;
-  const ua = navigator.userAgent;
-  const isIOS =
-    /iPad|iPhone|iPod/.test(ua) ||
-    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  const isSafari = /^((?!chrome|android|crios|fxios).)*safari/i.test(ua);
-  return isIOS && isSafari;
-};
-
-const isIOSChrome = () => {
-  if (typeof window === "undefined") return false;
-  return /CriOS/.test(navigator.userAgent);
-};
-
-const isIOSFirefox = () => {
-  if (typeof window === "undefined") return false;
-  return /FxiOS/.test(navigator.userAgent);
-};
-
-// ✅ FIX PRINCIPAL : tout iOS (Safari inclus) utilise le canvas fallback
-// Safari iOS ne rend pas correctement les vidéos HEVC alpha dans <video> natif
 const needsCanvasFallback = () => {
   if (typeof window === "undefined") return false;
-  const ua = navigator.userAgent;
-  const isIOS =
-    /iPad|iPhone|iPod/.test(ua) ||
-    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  return isIOS; // ← tout iOS, pas seulement Chrome/Firefox
+
+  return (
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+  );
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// VideoCanvas — lit une vidéo transparente et la dessine sur canvas
-// Fonctionne sur tout iOS (Safari, Chrome, Firefox) et desktop
+// VideoCanvas — lecture WebM dans une vidéo cachée puis dessin dans canvas
 // ─────────────────────────────────────────────────────────────────────────────
 const VideoCanvas = ({
-  movSrc,
   webmSrc,
   className,
   style,
@@ -62,12 +35,22 @@ const VideoCanvas = ({
   const rafRef = useRef(null);
   const [ready, setReady] = useState(false);
 
+  const stopDrawing = useCallback(() => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+  }, []);
+
   const drawFrame = useCallback(() => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
+
     if (!video || !canvas || video.paused || video.ended) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
+    if (!ctx) return;
+
     if (
       canvas.width !== video.videoWidth ||
       canvas.height !== video.videoHeight
@@ -75,69 +58,76 @@ const VideoCanvas = ({
       canvas.width = video.videoWidth || 1;
       canvas.height = video.videoHeight || 1;
     }
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
     rafRef.current = requestAnimationFrame(drawFrame);
   }, []);
 
   useEffect(() => {
+    if (!webmSrc) return;
+
     const video = document.createElement("video");
     video.muted = true;
     video.loop = loop;
     video.playsInline = true;
-    // ✅ FIX : crossOrigin retiré — bloquait le rendu canvas sur Safari iOS
-    // video.crossOrigin = "anonymous"; ← supprimé
+    video.preload = "auto";
     video.style.display = "none";
+
+    const source = document.createElement("source");
+    source.src = webmSrc;
+    source.type = 'video/webm; codecs="vp9"';
+    video.appendChild(source);
+
     videoRef.current = video;
-
-    // ✅ FIX : WebM en premier pour le canvas (VP9 fonctionne partout en canvas)
-    // .mov en fallback uniquement si WebM non supporté
-    if (webmSrc) {
-      const s1 = document.createElement("source");
-      s1.src = webmSrc;
-      s1.type = "video/webm; codecs=vp9";
-      video.appendChild(s1);
-    }
-    if (movSrc) {
-      const s2 = document.createElement("source");
-      s2.src = movSrc;
-      s2.type = "video/mp4; codecs=hvc1";
-      video.appendChild(s2);
-    }
-
     document.body.appendChild(video);
 
-    video.addEventListener("canplay", () => {
+    const handleCanPlay = async () => {
       setReady(true);
       onReady?.();
-      if (autoPlay) {
-        video.play().catch(() => {});
-        rafRef.current = requestAnimationFrame(drawFrame);
-      }
-    });
 
+      if (autoPlay && !paused) {
+        try {
+          await video.play();
+          rafRef.current = requestAnimationFrame(drawFrame);
+        } catch (e) {}
+      }
+    };
+
+    video.addEventListener("canplay", handleCanPlay);
     video.load();
 
     return () => {
-      cancelAnimationFrame(rafRef.current);
+      stopDrawing();
       video.pause();
+      video.removeEventListener("canplay", handleCanPlay);
+
       if (document.body.contains(video)) {
         document.body.removeChild(video);
       }
     };
-  }, [movSrc, webmSrc]);
+  }, [webmSrc, loop, autoPlay, paused, onReady, drawFrame, stopDrawing]);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !ready) return;
-    if (paused) {
-      video.pause();
-      cancelAnimationFrame(rafRef.current);
-    } else {
-      video.play().catch(() => {});
-      rafRef.current = requestAnimationFrame(drawFrame);
-    }
-  }, [paused, ready, drawFrame]);
+
+    const run = async () => {
+      if (paused) {
+        video.pause();
+        stopDrawing();
+      } else {
+        try {
+          await video.play();
+          stopDrawing();
+          rafRef.current = requestAnimationFrame(drawFrame);
+        } catch (e) {}
+      }
+    };
+
+    run();
+  }, [paused, ready, drawFrame, stopDrawing]);
 
   return (
     <canvas
@@ -149,12 +139,11 @@ const VideoCanvas = ({
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// TransparentVideo — choisit automatiquement canvas ou balise video native
-// iOS (tout navigateur) → canvas avec VP9 WebM
-// Desktop                → <video> native VP9 webm / HEVC mov
+// TransparentVideo — WebM uniquement
+// iOS → canvas fallback
+// autres → video native
 // ─────────────────────────────────────────────────────────────────────────────
 const TransparentVideo = ({
-  movSrc,
   webmSrc,
   className,
   style,
@@ -167,7 +156,6 @@ const TransparentVideo = ({
   if (useCanvas) {
     return (
       <VideoCanvas
-        movSrc={movSrc}
         webmSrc={webmSrc}
         className={className}
         style={style}
@@ -176,7 +164,6 @@ const TransparentVideo = ({
     );
   }
 
-  // Desktop uniquement : balise <video> native
   return (
     <video
       ref={externalRef}
@@ -186,19 +173,14 @@ const TransparentVideo = ({
       muted
       loop
       playsInline
+      preload="auto"
       {...props}
     >
-      {/* Desktop Chrome/Firefox : VP9 webm avec canal alpha */}
-      {webmSrc && <source src={webmSrc} type="video/webm; codecs=vp9" />}
-      {/* Desktop Safari : HEVC H.265 avec canal alpha */}
-      {movSrc && <source src={movSrc} type="video/mp4; codecs=hvc1" />}
+      <source src={webmSrc} type='video/webm; codecs="vp9"' />
     </video>
   );
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Traductions
-// ─────────────────────────────────────────────────────────────────────────────
 const translations = {
   fr: {
     badge: "Nos services",
@@ -206,7 +188,7 @@ const translations = {
       "Nous créons des expériences digitales et visuelles qui donnent de la valeur à votre entreprise",
     description:
       "De la technologie au studio créatif, nous accompagnons les entreprises avec des solutions complètes : développement web et mobile, logiciels sur mesure, branding, design, vidéo et contenus de communication.",
-    cta: "Voir  nos processus",
+    cta: "Voir nos processus",
     globalBadge: "Accompagnement global",
     globalTitle:
       "Une approche stratégique pour transformer vos idées en projets solides",
@@ -225,7 +207,6 @@ const translations = {
     globalAlt: "Équipe en réunion autour d'un projet digital",
     techAlt: "Développement technologique et solutions digitales",
     studioVideoAlt: "Branding, design et contenus visuels",
-    logoAnimationAlt: "Animation du logo Basogol",
     stat1: "Projets livrés",
     stat1Val: "80+",
     stat2: "Satisfaction",
@@ -257,7 +238,6 @@ const translations = {
     globalAlt: "Team meeting around a digital project",
     techAlt: "Technology development and digital solutions",
     studioVideoAlt: "Branding, design and visual content production",
-    logoAnimationAlt: "Basogol logo animation",
     stat1: "Projects",
     stat1Val: "80+",
     stat2: "Satisfaction",
@@ -267,9 +247,6 @@ const translations = {
   },
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// ServicesSection
-// ─────────────────────────────────────────────────────────────────────────────
 const ServicesSection = () => {
   const { lang } = useLanguage();
   const t = translations[lang] || translations.fr;
@@ -278,15 +255,14 @@ const ServicesSection = () => {
   const [visible, setVisible] = useState(false);
   const [serviceVideoPaused, setServiceVideoPaused] = useState(true);
 
-  // ── Lecture vidéo service scroll-triggered ──
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
-    const video = videoRef.current;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
+        const video = videoRef.current;
+
         if (entry.isIntersecting) {
           setServiceVideoPaused(false);
           if (video) {
@@ -308,7 +284,6 @@ const ServicesSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  // ── Animation d'entrée (fade) ──
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -316,6 +291,7 @@ const ServicesSection = () => {
       },
       { threshold: 0.06 }
     );
+
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
@@ -331,6 +307,7 @@ const ServicesSection = () => {
           background: transparent !important;
           background-color: transparent !important;
         }
+
         .sv-logo-wrap,
         .sv-logo-video,
         .sv-video-wrap {
@@ -338,21 +315,23 @@ const ServicesSection = () => {
           background-color: transparent !important;
         }
 
-        /* ── Entrées ── */
         .sv-fade-up {
-          opacity: 0; transform: translateY(32px);
+          opacity: 0;
+          transform: translateY(32px);
           transition: opacity 0.82s ease, transform 0.82s cubic-bezier(0.22,1,0.36,1);
         }
         .sv-fade-up.show { opacity: 1; transform: translateY(0); }
 
         .sv-fade-left {
-          opacity: 0; transform: translateX(-36px);
+          opacity: 0;
+          transform: translateX(-36px);
           transition: opacity 0.88s ease, transform 0.88s cubic-bezier(0.22,1,0.36,1);
         }
         .sv-fade-left.show { opacity: 1; transform: translateX(0); }
 
         .sv-fade-right {
-          opacity: 0; transform: translateX(36px);
+          opacity: 0;
+          transform: translateX(36px);
           transition: opacity 0.88s ease, transform 0.88s cubic-bezier(0.22,1,0.36,1);
         }
         .sv-fade-right.show { opacity: 1; transform: translateX(0); }
@@ -363,7 +342,6 @@ const ServicesSection = () => {
         .sv-d3 { transition-delay: 0.32s; }
         .sv-d4 { transition-delay: 0.44s; }
 
-        /* ── Union float ── */
         @keyframes unionFloat {
           0%, 100% { transform: scaleX(-1) translateY(0px); }
           50% { transform: scaleX(-1) translateY(-14px); }
@@ -434,12 +412,15 @@ const ServicesSection = () => {
         }
 
         .sv-card-img { overflow: hidden; }
-        .sv-card-img img, .sv-card-img video {
+        .sv-card-img img,
+        .sv-card-img video,
+        .sv-card-img canvas {
           transition: transform 0.65s cubic-bezier(0.22,1,0.36,1);
         }
         .sv-card-global:hover .sv-card-img img,
         .sv-card-small:hover .sv-card-img img,
-        .sv-card-small:hover .sv-card-img video {
+        .sv-card-small:hover .sv-card-img video,
+        .sv-card-small:hover .sv-card-img canvas {
           transform: scale(1.05);
         }
 
@@ -448,6 +429,7 @@ const ServicesSection = () => {
           color: #0e6e96;
           border: 1px solid rgba(125,200,240,0.28);
         }
+
         .sv-badge-slate {
           background: rgba(241,245,249,0.90);
           color: #475569;
@@ -478,7 +460,9 @@ const ServicesSection = () => {
         .sv-learn-more::after {
           content: "";
           position: absolute;
-          bottom: -2px; left: 0; right: 0;
+          bottom: -2px;
+          left: 0;
+          right: 0;
           height: 1px;
           background: currentColor;
           transform: scaleX(0);
@@ -487,7 +471,6 @@ const ServicesSection = () => {
         }
         .sv-learn-more:hover::after { transform: scaleX(1); }
 
-        /* ── Logo stage ── */
         .sv-logo-stage {
           display: flex;
           flex-direction: column;
@@ -556,10 +539,12 @@ const ServicesSection = () => {
           0%, 100% { transform: scale(1); opacity: 0.7; }
           50% { transform: scale(1.12); opacity: 1; }
         }
+
         @keyframes svRingExpand {
           0%, 100% { transform: scale(1); opacity: 0.55; }
           50% { transform: scale(1.06); opacity: 0.25; }
         }
+
         @keyframes svLogoFloat {
           0%, 100% { transform: scale(1) translateY(0px); }
           50% { transform: scale(1) translateY(-10px); }
@@ -567,12 +552,14 @@ const ServicesSection = () => {
 
         @media (max-width: 1023px) {
           .sv-logo-stage { align-items: center; gap: 16px; }
+
           .sv-logo-wrap {
             display: block;
             width: min(52vw, 180px);
             height: min(52vw, 180px);
             margin: 0 auto;
           }
+
           .sv-logo-video {
             filter:
               drop-shadow(0 14px 28px rgba(31,108,140,0.18))
@@ -584,11 +571,7 @@ const ServicesSection = () => {
       <BlueShape />
 
       <div className="page-container relative z-10">
-
-        {/* ── En-tête ── */}
         <div className="mb-14 flex flex-col gap-8 lg:mb-18 lg:flex-row lg:items-start lg:justify-between">
-
-          {/* Gauche */}
           <div className={`sv-fade-up sv-d0 max-w-2xl ${visible ? "show" : ""}`}>
             <span
               className="sv-badge inline-flex rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-widest"
@@ -607,7 +590,9 @@ const ServicesSection = () => {
             <div
               className="mt-5"
               style={{
-                width: "36px", height: "2px", borderRadius: "999px",
+                width: "36px",
+                height: "2px",
+                borderRadius: "999px",
                 background: "linear-gradient(90deg, #1f6c8c, #a8d4e8)",
               }}
             />
@@ -620,24 +605,15 @@ const ServicesSection = () => {
             </p>
           </div>
 
-          {/* Droite — logo + stats + CTA */}
           <div className={`sv-fade-up sv-d2 sv-logo-stage ${visible ? "show" : ""}`}>
-
             <div className="sv-logo-wrap" aria-hidden="true">
-              {/*
-                ✅ Tout iOS (Safari inclus) → VideoCanvas (canvas 2D + VP9 WebM)
-                ✅ Desktop Chrome/Firefox   → <video> native VP9 WebM
-                ✅ Desktop Safari           → <video> native HEVC hvc1
-              */}
               <TransparentVideo
-                movSrc={logoAnimationMov}
                 webmSrc={logoAnimation}
                 className={`sv-logo-video ${visible ? "show" : ""}`}
                 style={{ background: "transparent" }}
               />
             </div>
 
-            {/* Stats */}
             <div className="flex gap-3">
               {[
                 { val: t.stat1Val, label: t.stat1 },
@@ -661,7 +637,6 @@ const ServicesSection = () => {
               ))}
             </div>
 
-            {/* CTA */}
             <Link
               to="/process"
               className="sv-cta inline-flex items-center justify-center rounded-[10px] px-6 py-3 text-sm font-semibold text-slate-900"
@@ -672,22 +647,14 @@ const ServicesSection = () => {
           </div>
         </div>
 
-        {/* ── Grille principale ── */}
         <div className="relative grid grid-cols-1 gap-8 xl:grid-cols-[0.95fr_1.05fr] xl:gap-10">
-
-          {/* Vidéo service */}
           <div
             className={`sv-fade-left sv-d1 relative z-10 flex items-center justify-center ${
               visible ? "show" : ""
             }`}
           >
             <div className="sv-video-wrap relative w-full max-w-3xl">
-              {/*
-                ✅ Même logique corrigée :
-                   Tout iOS → canvas VP9, Desktop → <video> native
-              */}
               <TransparentVideo
-                movSrc={serviceVideoMov}
                 webmSrc={serviceVideo}
                 videoRef={videoRef}
                 className="relative z-10 w-full object-contain drop-shadow-[0_25px_60px_rgba(15,23,42,0.17)]"
@@ -695,6 +662,7 @@ const ServicesSection = () => {
                 paused={serviceVideoPaused}
                 aria-label={t.mockupAlt}
               />
+
               <img
                 src={unionShape}
                 alt=""
@@ -704,10 +672,7 @@ const ServicesSection = () => {
             </div>
           </div>
 
-          {/* Cartes */}
           <div className="relative z-10 flex flex-col gap-5 pl-0 xl:pl-8">
-
-            {/* Carte globale */}
             <div
               className={`sv-fade-right sv-d2 sv-card-global overflow-hidden rounded-[22px] ${
                 visible ? "show" : ""
@@ -743,10 +708,7 @@ const ServicesSection = () => {
               </div>
             </div>
 
-            {/* 2 petites cartes */}
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-
-              {/* Tech */}
               <div
                 className={`sv-fade-up sv-d3 sv-card-small overflow-hidden rounded-[22px] ${
                   visible ? "show" : ""
@@ -785,7 +747,6 @@ const ServicesSection = () => {
                 </div>
               </div>
 
-              {/* Studio */}
               <div
                 className={`sv-fade-up sv-d4 sv-card-small overflow-hidden rounded-[22px] ${
                   visible ? "show" : ""
@@ -833,7 +794,6 @@ const ServicesSection = () => {
                   </Link>
                 </div>
               </div>
-
             </div>
           </div>
         </div>

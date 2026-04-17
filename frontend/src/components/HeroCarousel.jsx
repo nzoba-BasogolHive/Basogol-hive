@@ -202,7 +202,7 @@ const [hasManualSoundChoice, setHasManualSoundChoice] = useState(false);
       </div>
 
       {/* ── Bouton son ── */}
-      <div className="absolute bottom-4 right-4 z-50 sm:bottom-8 sm:right-6 lg:bottom-10 lg:right-8">
+      <div className="absolute bottom-6 right-4 z-20 sm:bottom-8 sm:right-6 lg:bottom-10 lg:right-8">
   <button
     ref={soundButtonRef}
     type="button"
