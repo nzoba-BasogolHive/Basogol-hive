@@ -1,14 +1,14 @@
 services:
   db:
     image: postgres:16
+    ports:
+     - "127.0.0.1:55432:5432"
     container_name: basogol_db
     restart: unless-stopped
     environment:
       POSTGRES_DB: basogol
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Admin1234
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -21,27 +21,11 @@ services:
     volumes:
       - ./backend:/app
     ports:
-      - "8000:8000"
+      - "8002:8000"
     env_file:
       - ./backend/.env.docker
     depends_on:
       - db
-
-  frontend:
-    build:
-      context: ./frontend
-    container_name: basogol_frontend
-    restart: unless-stopped
-    command: npm run dev -- --host
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    ports:
-      - "5173:5173"
-    env_file:
-      - ./frontend/.env
-    depends_on:
-      - backend
 
 volumes:
   postgres_data:
