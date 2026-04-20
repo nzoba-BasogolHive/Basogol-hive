@@ -14,7 +14,7 @@ import  vid from "../assets/A002C234.jpg";
 import  vid6 from "../assets/A002C2152.jpg";
 import  vid7 from "../assets/A002C0393.jpg";
 import  vid8 from "../assets/A002C204.jpg";
-import  vid4 from "../assets/A002C2065.jpg";
+import  vid4 from "../assets/A002C017_22.jpg";
 import  vid5 from "../assets/A002C2151.jpg";
 import  vid3 from "../assets/A002C2358.jpg";
 
