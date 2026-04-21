@@ -14,7 +14,7 @@ import {
   Sparkles,
   LayoutGrid,
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLanguage } from "../LanguageContext";
 import leftOutlineShape from "../../assets/Union0.png";
 import rightSoftShape from "../../assets/Group14.png";
@@ -27,7 +27,7 @@ const translations = {
     sectionDescription:
       "Nous concevons des réalisations qui associent direction créative, logique d’usage et qualité d’exécution. Explorez nos projets marketing et technologiques à travers une lecture claire et immersive.",
     marketingTab: "Marketing & Brand",
-    technologyTab: "Technology",
+    technologyTab: "Technologie",
     viewProject: "Voir le projet",
     featuredLabel: "Projet en avant",
     metricLabel: "Impact",
@@ -233,6 +233,7 @@ projects: [
 };
 
 const ProjectCard = ({ project, t, activeTab }) => {
+
   return (
     <Link
       to={`/${project.type}/${project.slug}`}
@@ -287,7 +288,7 @@ const PortfolioShowcaseSection = () => {
   const { lang } = useLanguage();
   const location = useLocation();
   const t = translations[lang] || translations.fr;
-
+  const navigate = useNavigate();
   const initialTab =
     location.state?.portfolioTab === "technology" ||
     location.state?.portfolioTab === "marketing"
@@ -322,14 +323,25 @@ const PortfolioShowcaseSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  const handleTabChange = (nextTab) => {
-    if (nextTab === active) return;
-    setContentVisible(false);
-    setTimeout(() => {
-      setActive(nextTab);
-      setContentVisible(true);
-    }, 220);
-  };
+ const handleTabChange = (nextTab) => {
+  if (nextTab === active) return;
+
+  setContentVisible(false);
+
+  setTimeout(() => {
+    setActive(nextTab);
+
+    navigate("/portfolio", {
+      replace: true,
+      state: {
+        ...location.state,
+        portfolioTab: nextTab,
+      },
+    });
+
+    setContentVisible(true);
+  }, 220);
+};
 
   return (
     <section

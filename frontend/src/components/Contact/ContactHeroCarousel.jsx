@@ -11,8 +11,8 @@ const translations = {
     imageAlt: "Image d'en-tête de la page contact",
     scrollLabel: "Défiler",
     stats: [
-      { num: "5+", label: "Années d'expérience" },
-      { num: "20+", label: "Projets livrés" },
+      { num: "02+", label: "Années d'expérience" },
+      { num: "09+", label: "Projets livrés" },
       { num: "100%", label: "Satisfaction client" },
     ],
   },
@@ -24,8 +24,8 @@ const translations = {
     imageAlt: "Contact page hero image",
     scrollLabel: "Scroll",
     stats: [
-      { num: "5+", label: "Years of experience" },
-      { num: "20+", label: "Projects delivered" },
+      { num: "02+", label: "Years of experience" },
+      { num: "09+", label: "Projects delivered" },
       { num: "100%", label: "Client satisfaction" },
     ],
   },

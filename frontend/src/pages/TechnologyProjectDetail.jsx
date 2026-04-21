@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, Navigate, useNavigate } from "react-router-dom";
+import { useParams, Navigate, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import FooterSection from "../components/FooterSection";
 import TechnologyProjectDetailHero from "../components/Portfolio/TechnologyProjectDetailHero";
@@ -24,6 +24,7 @@ const getLocalizedArray = (value, lang) => {
 const TechnologyProjectDetail = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { lang } = useLanguage();
 
   const project = technologyProjects.find((item) => item.slug === slug);
@@ -69,7 +70,18 @@ const TechnologyProjectDetail = () => {
         cards={localizedCards}
         category={localizedProject.projectCategory}
         projectTitle={localizedProject.projectName}
-        onBack={() => navigate(-1)}
+        onBack={() => {
+          if (location.state?.portfolioTab) {
+            navigate("/portfolio", {
+              state: { portfolioTab: location.state.portfolioTab },
+            });
+            return;
+          }
+
+          navigate("/portfolio", {
+            state: { portfolioTab: "technology" },
+          });
+        }}
       />
 
       <TechnologyProjectResultSection

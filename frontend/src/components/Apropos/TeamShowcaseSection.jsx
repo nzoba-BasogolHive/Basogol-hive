@@ -7,56 +7,65 @@ const translations = {
   fr: {
     title: "Une équipe créative au service de votre croissance",
     intro:
-      "Chez Basogol Hive, nous réunissons des profils complémentaires en stratégie, design, marketing et technologie pour concevoir des solutions utiles, élégantes et performantes. Chaque projet est pensé avec méthode, créativité et exigence pour accompagner durablement votre développement.",
-    button: "Découvrir",
+      "Chez Basogol-Hive, nous réunissons des profils complémentaires en stratégie, design, marketing et technologie pour concevoir des solutions utiles, élégantes et performantes. Chaque projet est pensé avec méthode, créativité et exigence pour accompagner durablement votre développement.",
+    button: "Équipe",
     members: [
       {
-        name: "Stratégie & Conseil",
-        text: "Nous analysons vos objectifs, votre marché et votre positionnement afin de construire une direction claire, cohérente et efficace pour votre marque.",
-        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80",
+        name: "Sop",
+        role: "CEO — Chief Executive Officer",
+        text: "Sop définit la vision globale de Basogol-Hive, pilote les orientations stratégiques de l’entreprise et veille à la cohérence entre ambition, innovation et qualité d’exécution sur chaque projet.",
+        image: "https://ui-avatars.com/api/?name=Sop&background=1f6c8c&color=ffffff&size=600",
       },
       {
-        name: "Création & Design",
-        text: "Nous concevons des identités visuelles, interfaces et supports de communication qui renforcent votre image et créent une vraie expérience de marque.",
-        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
+        name: "Mongoue",
+        role: "CTO — Chief Technology Officer",
+        text: "Mongoue supervise l’architecture technique, le développement des plateformes et la qualité des solutions digitales afin de garantir des produits fiables, performants et évolutifs.",
+        image: "https://ui-avatars.com/api/?name=Mongoue&background=1f6c8c&color=ffffff&size=600",
       },
       {
-        name: "Développement & Digital",
-        text: "Nous transformons les idées en solutions concrètes grâce à des sites, outils et expériences digitales pensés pour la performance et la simplicité.",
-        image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80",
+        name: "Bangsi",
+        role: "CCO — Chief Creative Officer",
+        text: "Bangsi dirige la vision créative de la marque, de l’identité visuelle aux contenus de communication, pour construire des expériences fortes, cohérentes et mémorables.",
+        image: "https://ui-avatars.com/api/?name=Bangsi&background=1f6c8c&color=ffffff&size=600",
       },
       {
-        name: "Communication & Impact",
-        text: "Nous vous aidons à diffuser le bon message, au bon moment, avec une communication capable de créer de la visibilité, de la confiance et des résultats.",
-        image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80",
+        name: "Noyou",
+        role: "CSO — Chief Sales Officer",
+        text: "Noyou pilote la stratégie commerciale, le développement des opportunités et la relation client afin de transformer la visibilité de l’entreprise en croissance concrète et durable.",
+        image: "https://ui-avatars.com/api/?name=Noyou&background=1f6c8c&color=ffffff&size=600",
       },
     ],
   },
+
   en: {
     title: "A creative team dedicated to your growth",
     intro:
-      "At Basogol Hive, we bring together complementary talents in strategy, design, marketing and technology to create useful, elegant and high-performing solutions. Every project is approached with clarity, creativity and high standards to support your growth over time.",
-    button: "Discover",
+      "At Basogol-Hive, we bring together complementary talents in strategy, design, marketing and technology to create useful, elegant and high-performing solutions. Every project is approached with clarity, creativity and high standards to support your growth over time.",
+    button: "Team",
     members: [
       {
-        name: "Strategy & Consulting",
-        text: "We study your goals, market and positioning to build a clear, consistent and effective direction for your brand.",
-        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80",
+        name: "Sop",
+        role: "CEO — Chief Executive Officer",
+        text: "Sop defines Basogol-Hive’s overall vision, leads the company’s strategic direction, and ensures strong alignment between ambition, innovation, and execution quality across every project.",
+        image: "https://ui-avatars.com/api/?name=Sop&background=1f6c8c&color=ffffff&size=600",
       },
       {
-        name: "Creative & Design",
-        text: "We design visual identities, interfaces and communication materials that strengthen your image and create a strong brand experience.",
-        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
+        name: "Mongoue",
+        role: "CTO — Chief Technology Officer",
+        text: "Mongoue oversees technical architecture, platform development, and the quality of digital solutions to ensure reliable, scalable, and high-performing products.",
+        image: "https://ui-avatars.com/api/?name=Mongoue&background=1f6c8c&color=ffffff&size=600",
       },
       {
-        name: "Development & Digital",
-        text: "We turn ideas into concrete solutions through websites, tools and digital experiences designed for performance and simplicity.",
-        image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80",
+        name: "Bangsi",
+        role: "CCO — Chief Creative Officer",
+        text: "Bangsi leads the brand’s creative vision, from visual identity to communication content, in order to build strong, consistent, and memorable experiences.",
+        image: "https://ui-avatars.com/api/?name=Bangsi&background=1f6c8c&color=ffffff&size=600",
       },
       {
-        name: "Communication & Impact",
-        text: "We help you deliver the right message at the right time through communication that builds visibility, trust and results.",
-        image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80",
+        name: "Noyou",
+        role: "CSO — Chief Sales Officer",
+        text: "Noyou leads the commercial strategy, business development, and client relationships to turn the company’s visibility into concrete and sustainable growth.",
+        image: "https://ui-avatars.com/api/?name=Noyou&background=1f6c8c&color=ffffff&size=600",
       },
     ],
   },
@@ -320,31 +329,35 @@ const TeamShowcaseSection = () => {
                     </div>
                   </div>
 
-                  <h3
-                    className="mt-5 text-center text-[15px] font-semibold text-[#0f3d52]"
+                 <h3
+                className="mt-5 text-center text-[15px] font-semibold text-[#0f3d52]"
+                style={{ fontFamily: "Literata, serif" }}
+              >
+                {member.name}
+              </h3>
+
+              <p
+                className="mt-1 text-center text-[11px] font-medium text-[#1f6c8c]"
+                style={{ fontFamily: "Literata, serif" }}
+              >
+                {member.role}
+              </p>
+
+              <div className="card-divider" />
+
+                 <p
+                  className="mx-auto mt-5 max-w-[220px] text-center text-[12px] leading-[2] text-slate-700"
+                  style={{ fontFamily: "Literata, serif" }}
+                >
+                  {member.text}
+                </p>
+
+                 <span
+                  className="mt-8 text-center text-[12px] font-semibold uppercase tracking-[0.28em] text-slate-400"
                     style={{ fontFamily: "Literata, serif" }}
                   >
-                    {member.name}
-                  </h3>
-
-                  <div className="card-divider" />
-
-                  <p
-                    className="mt-4 text-center text-[11px] leading-[1.7] text-slate-700"
-                    style={{ fontFamily: "Literata, serif" }}
-                  >
-                    {member.text}
-                  </p>
-
-                  <div className="mt-6 flex justify-center">
-                    <button
-                      type="button"
-                      className="glass-btn rounded-[8px] px-5 py-2 text-[13px] font-semibold text-white"
-                      style={{ fontFamily: "Literata, serif" }}
-                    >
-                      {t.button}
-                    </button>
-                  </div>
+                    {t.button}
+                  </span>
 
                 </div>
               </div>

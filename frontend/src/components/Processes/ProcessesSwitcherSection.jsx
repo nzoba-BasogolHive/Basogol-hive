@@ -24,8 +24,8 @@ const translations = {
     sectionTitle: "Deux expertises, une méthode claire et maîtrisée",
     sectionDescription:
       "Selon la nature de votre projet, nous adaptons notre méthode de travail pour offrir un accompagnement structuré, cohérent et orienté résultats. Explorez notre approche en marketing ou en technologie.",
-    marketingTab: "Marketing de processus",
-    technologyTab: "Technologie des procédés",
+    marketingTab: " Pôle Créatif ",
+    technologyTab: " Pôle Technologie",
     more: "Voir plus",
     less: "Réduire",
     marketing: {
@@ -139,8 +139,8 @@ const translations = {
     sectionTitle: "Two expertises, one clear and controlled method",
     sectionDescription:
       "Depending on the nature of your project, we adapt our workflow to provide structured, consistent and results-driven support. Explore our approach in marketing or technology.",
-    marketingTab: "Marketing Process",
-    technologyTab: "Technology Process",
+    marketingTab: "Creative Hub",
+    technologyTab: "Technology Hub",
     more: "Read more",
     less: "Reduce",
     marketing: {

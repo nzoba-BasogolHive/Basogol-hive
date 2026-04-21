@@ -21,7 +21,8 @@ const translations = {
       "Parlez-nous de votre projet, de vos besoins ou de vos objectifs. Notre équipe vous accompagne avec une approche claire, créative et adaptée à votre ambition.",
     formPlaceholderEmail: "Email",
     formPlaceholderSubject: "Sujet",
-    formPlaceholderDepartment: "Service",
+    departmentHelper: "Sélectionnez l’expertise la plus adaptée à votre besoin",
+    formPlaceholderDepartment: "Expertise",
     formPlaceholderLastName: "Nom",
     formPlaceholderFirstName: "Prénom",
     formPlaceholderMessage: "Votre message",
@@ -63,7 +64,8 @@ const translations = {
       "Tell us about your project, your needs or your goals. Our team supports you with a clear, creative approach tailored to your ambition.",
     formPlaceholderEmail: "Email",
     formPlaceholderSubject: "Subject",
-    formPlaceholderDepartment: "Department",
+    departmentHelper: "Sélectionnez l’expertise la plus adaptée à votre besoin",
+    formPlaceholderDepartment: "Expertise",
     formPlaceholderLastName: "Last name",
     formPlaceholderFirstName: "First name",
     formPlaceholderMessage: "Your message",
@@ -125,7 +127,7 @@ const ContactSection = () => {
   const [formData, setFormData] = useState({
     email: "",
     subject: "",
-    department: "tech",
+    department: "",
     lastName: "",
     firstName: "",
     message: "",
@@ -143,9 +145,8 @@ const ContactSection = () => {
     { value: "marketing", label: t.departmentMarketing },
   ];
 
-  const selectedDepartment =
-    departmentOptions.find((item) => item.value === formData.department) ||
-    departmentOptions[0];
+const selectedDepartment =
+  departmentOptions.find((item) => item.value === formData.department) || null;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -672,7 +673,11 @@ const ContactSection = () => {
                     onClick={() => setIsDepartmentOpen((prev) => !prev)}
                     className={`${inputClass} flex w-full items-center justify-between pr-4 text-left`}
                   >
-                    <span>{selectedDepartment.label}</span>
+                    <span className={selectedDepartment ? "text-slate-800" : "text-slate-400"}>
+                      {selectedDepartment
+                        ? selectedDepartment.label
+                        : t.departmentHelper}
+                    </span>
 
                     <svg
                       className={`h-4 w-4 text-[#1f6c8c] transition-transform duration-300 ${
@@ -854,19 +859,40 @@ const ContactSection = () => {
             </div>
 
             <div className="hidden lg:flex items-center gap-3">
-              {[Mail, Phone, MapPin].map((Icon, i) => (
-                <div
-                  key={i}
-                  className="flex h-12 w-12 items-center justify-center rounded-full"
-                  style={{
-                    background: "rgba(31,108,140,0.08)",
-                    border: "1px solid rgba(31,108,140,0.14)",
-                  }}
-                >
-                  <Icon className="h-4 w-4 text-[#1f6c8c]" />
-                </div>
-              ))}
-            </div>
+  {[
+    {
+      Icon: Mail,
+      href: "mailto:projects-global@basogolhive.com",
+      label: "Envoyer un email",
+    },
+    {
+      Icon: Phone,
+      href: "tel:+237692548739",
+      label: "Appeler le numéro",
+    },
+    {
+      Icon: MapPin,
+      href: "https://maps.app.goo.gl/HGRsCoAuqZnKiZxX8",
+      label: "Voir la localisation",
+    },
+  ].map(({ Icon, href, label }, i) => (
+    <a
+      key={i}
+      href={href}
+      aria-label={label}
+      className="flex h-12 w-12 items-center justify-center rounded-full transition hover:scale-105"
+      style={{
+        background: "rgba(31,108,140,0.08)",
+        border: "1px solid rgba(31,108,140,0.14)",
+      }}
+      {...(href.startsWith("https")
+        ? { target: "_blank", rel: "noopener noreferrer" }
+        : {})}
+    >
+      <Icon className="h-4 w-4 text-[#1f6c8c]" />
+    </a>
+  ))}
+</div>
           </div>
         </div>
       </div>

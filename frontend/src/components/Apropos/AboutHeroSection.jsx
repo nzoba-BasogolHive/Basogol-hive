@@ -7,7 +7,7 @@ const translations = {
     badge: "À propos",
     title: "Nous construisons des marques, des expériences et des solutions durables.",
     description:
-      "Basogol Hive accompagne les entreprises avec une vision qui relie stratégie, design et technologie. Nous créons des solutions élégantes, utiles et mémorables pour renforcer votre image et votre performance.",
+      "Basogol-Hive accompagne les entreprises avec une vision qui relie stratégie, design et technologie. Nous créons des solutions élégantes, utiles et mémorables pour renforcer votre image et votre performance.",
     primaryCta: "Découvrir notre univers",
     secondaryCta: "Nous contacter",
     imageAlt: "Image de présentation de la page à propos",

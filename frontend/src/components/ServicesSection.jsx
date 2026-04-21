@@ -5,7 +5,8 @@ import BlueShape from "./BlueShape";
 import { useLanguage } from "./LanguageContext";
 import logoAnimation from "../assets/logoanimation.webm";
 import { Link } from "react-router-dom";
-
+import { technologyServices } from "../data/technologyServices";
+import { marketingBrandServices } from "../data/marketingBrandServices";
 // ─────────────────────────────────────────────────────────────────────────────
 // Détection iOS
 // ─────────────────────────────────────────────────────────────────────────────
@@ -208,11 +209,11 @@ const translations = {
     techAlt: "Développement technologique et solutions digitales",
     studioVideoAlt: "Branding, design et contenus visuels",
     stat1: "Projets livrés",
-    stat1Val: "80+",
+    stat1Val: "09+",
     stat2: "Satisfaction",
     stat2Val: "100%",
     stat3: "Années",
-    stat3Val: "5+",
+    stat3Val: "02+",
   },
   en: {
     badge: "Our services",
@@ -239,11 +240,11 @@ const translations = {
     techAlt: "Technology development and digital solutions",
     studioVideoAlt: "Branding, design and visual content production",
     stat1: "Projects",
-    stat1Val: "80+",
+    stat1Val: "09+",
     stat2: "Satisfaction",
     stat2Val: "100%",
     stat3: "Years",
-    stat3Val: "5+",
+    stat3Val: "02+",
   },
 };
 
@@ -254,7 +255,19 @@ const ServicesSection = () => {
   const videoRef = useRef(null);
   const [visible, setVisible] = useState(false);
   const [serviceVideoPaused, setServiceVideoPaused] = useState(true);
+const techService = technologyServices.find(
+  (service) => service.slug === "websites-platforms"
+);
 
+const marketingService = marketingBrandServices.find(
+  (service) => service.slug === "brand-strategy-positioning"
+);
+
+const getLocalizedValue = (value) => {
+  if (typeof value === "string") return value;
+  if (value && typeof value === "object") return value[lang] || value.fr || "";
+  return "";
+};
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
@@ -710,90 +723,86 @@ const ServicesSection = () => {
 
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
               <div
-                className={`sv-fade-up sv-d3 sv-card-small overflow-hidden rounded-[22px] ${
-                  visible ? "show" : ""
-                }`}
-              >
-                <div className="sv-card-bar" />
-                <div className="sv-card-img h-52">
-                  <img
-                    src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
-                    alt={t.techAlt}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <div className="p-5">
-                  <span
-                    className="sv-badge-slate inline-flex rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider"
-                    style={{ fontFamily: "Literata, serif" }}
-                  >
-                    {t.techBadge}
-                  </span>
-                  <h4
-                    className="mt-3 text-lg font-bold leading-snug text-slate-900"
-                    style={{ fontFamily: "Literata, serif" }}
-                  >
-                    {t.techTitle}
-                  </h4>
-                  <p
-                    className="mt-3 text-sm leading-6 text-slate-500"
-                    style={{ fontFamily: "Literata, serif" }}
-                  >
-                    {t.techDescription}
-                  </p>
-                  <Link to="/technology" className="sv-learn-more mt-4 block">
-                    {t.learnMore} <span>→</span>
-                  </Link>
-                </div>
-              </div>
+  className={`sv-fade-up sv-d3 sv-card-small overflow-hidden rounded-[22px] ${
+    visible ? "show" : ""
+  }`}
+>
+  <div className="sv-card-bar" />
+  <div className="sv-card-img h-52">
+    <img
+      src={techService?.image}
+      alt={getLocalizedValue(techService?.title)}
+      className="h-full w-full object-cover"
+    />
+  </div>
+  <div className="p-5">
+    <span
+      className="sv-badge-slate inline-flex rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider"
+      style={{ fontFamily: "Literata, serif" }}
+    >
+      {t.techBadge}
+    </span>
+    <h4
+      className="mt-3 text-lg font-bold leading-snug text-slate-900"
+      style={{ fontFamily: "Literata, serif" }}
+    >
+      {getLocalizedValue(techService?.title)}
+    </h4>
+    <p
+      className="mt-3 text-sm leading-6 text-slate-500"
+      style={{ fontFamily: "Literata, serif" }}
+    >
+      {getLocalizedValue(techService?.heroDescription)}
+    </p>
+    <Link
+      to={`/technology#service-${techService?.slug}`}
+      className="sv-learn-more mt-4 block"
+    >
+      {t.learnMore} <span>→</span>
+    </Link>
+  </div>
+</div>
 
               <div
-                className={`sv-fade-up sv-d4 sv-card-small overflow-hidden rounded-[22px] ${
-                  visible ? "show" : ""
-                }`}
-              >
-                <div className="sv-card-bar" />
-                <div className="sv-card-img h-52 bg-black">
-                  <video
-                    className="h-full w-full object-cover"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    poster="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=80"
-                    aria-label={t.studioVideoAlt}
-                    style={{ background: "transparent" }}
-                  >
-                    <source
-                      src="https://www.w3schools.com/html/mov_bbb.mp4"
-                      type="video/mp4"
-                    />
-                  </video>
-                </div>
-                <div className="p-5">
-                  <span
-                    className="sv-badge-slate inline-flex rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider"
-                    style={{ fontFamily: "Literata, serif" }}
-                  >
-                    {t.studioBadge}
-                  </span>
-                  <h4
-                    className="mt-3 text-lg font-bold leading-snug text-slate-900"
-                    style={{ fontFamily: "Literata, serif" }}
-                  >
-                    {t.studioTitle}
-                  </h4>
-                  <p
-                    className="mt-3 text-sm leading-6 text-slate-500"
-                    style={{ fontFamily: "Literata, serif" }}
-                  >
-                    {t.studioDescription}
-                  </p>
-                  <Link to="/marketing-brand" className="sv-learn-more mt-4 block">
-                    {t.learnMore} <span>→</span>
-                  </Link>
-                </div>
-              </div>
+  className={`sv-fade-up sv-d4 sv-card-small overflow-hidden rounded-[22px] ${
+    visible ? "show" : ""
+  }`}
+>
+  <div className="sv-card-bar" />
+  <div className="sv-card-img h-52">
+    <img
+      src={marketingService?.image}
+      alt={getLocalizedValue(marketingService?.title)}
+      className="h-full w-full object-cover"
+    />
+  </div>
+  <div className="p-5">
+    <span
+      className="sv-badge-slate inline-flex rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider"
+      style={{ fontFamily: "Literata, serif" }}
+    >
+      {t.studioBadge}
+    </span>
+    <h4
+      className="mt-3 text-lg font-bold leading-snug text-slate-900"
+      style={{ fontFamily: "Literata, serif" }}
+    >
+      {getLocalizedValue(marketingService?.title)}
+    </h4>
+    <p
+      className="mt-3 text-sm leading-6 text-slate-500"
+      style={{ fontFamily: "Literata, serif" }}
+    >
+      {getLocalizedValue(marketingService?.heroDescription)}
+    </p>
+    <Link
+      to={`/marketing-brand#service-${marketingService?.slug}`}
+      className="sv-learn-more mt-4 block"
+    >
+      {t.learnMore} <span>→</span>
+    </Link>
+  </div>
+</div>
             </div>
           </div>
         </div>

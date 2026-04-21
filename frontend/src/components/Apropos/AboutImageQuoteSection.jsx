@@ -10,8 +10,8 @@ const translations = {
       "Nous croyons que chaque marque mérite une vision claire, une identité forte et des solutions à la hauteur de ses ambitions.",
     brand: "Basogol-Hive",
     stats: [
-      { number: "5+", label: "Années d'expérience" },
-      { number: "80+", label: "Projets livrés" },
+      { number: "02+", label: "Années d'expérience" },
+      { number: "09+", label: "Projets livrés" },
     ],
   },
   en: {
@@ -21,8 +21,8 @@ const translations = {
       "We believe that every brand deserves a clear vision, a strong identity, and solutions that match its ambitions.",
     brand: "Basogol-Hive",
     stats: [
-      { number: "5+", label: "Years of experience" },
-      { number: "80+", label: "Projects delivered" },
+      { number: "02+", label: "Years of experience" },
+      { number: "09+", label: "Projects delivered" },
     ],
   },
 };

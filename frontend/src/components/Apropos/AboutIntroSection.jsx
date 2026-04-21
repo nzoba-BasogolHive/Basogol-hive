@@ -8,40 +8,28 @@ import { useNavigate } from "react-router-dom";
 
 const translations = {
   fr: {
-    title: "Là où la technologie, le marketing & le Brandind se relient avec cohérence",
-   description: `
-Basogol-Hive est un studio créatif & tech. 
-Nés des racines, tournés vers le futur, nous avançons avec une organisation en cellules : agiles, spécialisées, parfaitement alignées.
-
-Parce qu’une idée ne vaut que si elle tient, nous construisons la Technology : produits web & mobile, plateformes, expériences digitales.
-
-Et parce qu’un produit ne marque que s’il est compris et désiré, nous façonnons le Marketing & Brand : stratégie, identité, UI/UX, contenus, motion & vidéo.
-
-Ainsi, tout se relie. 
-De l’idée au produit, du produit à l’image. 
-
-One Hive. Many skills.
-`,
+    title: "Là où la Technologie, le Marketing et le Branding se relient avec cohérence",
+    paragraphs: [
+      "Basogol-Hive est un studio créatif & tech. Nés des racines, tournés vers le futur, nous avançons à travers des cellules agiles, spécialisées, parfaitement alignées.",
+      "Parce qu’une idée ne vaut que si elle tient, nous construisons la technologie à travers des produits web & mobile, plateformes, expériences digitales.",
+      "Parce qu’un produit ne marque que s’il est compris et désiré, nous donnons forme à la marque en articulant stratégie, identité, UI/UX, contenus, motion & vidéo.",
+      "Chez nous, tout se relie. De l’idée au produit. Du produit à l’image.",
+      "One Hive. Many skills.",
+    ],
     topVisualAlt: "Composition visuelle décorative",
     videoLabel: "Vidéo de présentation de Basogol Hive",
     cta1: "Découvrir",
     cta2: "Nous contacter",
   },
   en: {
-    title: "Where technology, marketing and brand come together with clarity",
-   description: `
-Basogol-Hive is a creative & tech studio. 
-Rooted in our origins and driven by the future, we operate through a cell-based organization: agile, specialized, and perfectly aligned.
-
-Because an idea only matters if it stands strong, we build Technology: web & mobile products, platforms, and digital experiences.
-
-And because a product only makes an impact if it is understood and desired, we shape Marketing & Brand: strategy, identity, UI/UX, content, motion & video.
-
-Everything is connected. 
-From idea to product, from product to image.
-
-One Hive. Many skills.
-`,
+    title: "Where Technology, Marketing and Branding connect with clarity",
+    paragraphs: [
+      "Basogol-Hive is a creative & tech studio. Rooted in our origins and oriented toward the future, we move forward through agile, specialized and perfectly aligned cells.",
+      "Because an idea only matters if it holds, we build technology through web & mobile products, platforms and digital experiences.",
+      "Because a product only leaves a mark if it is understood and desired, we shape the brand through strategy, identity, UI/UX, content, motion and video.",
+      "Everything connects here. From idea to product. From product to image.",
+      "One Hive. Many skills.",
+    ],
     topVisualAlt: "Decorative visual composition",
     videoLabel: "Basogol Hive presentation video",
     cta1: "Discover",
@@ -217,7 +205,7 @@ const AboutIntroSection = () => {
       <div className="about-halo pointer-events-none absolute inset-0 z-0" />
 
       <div className="page-container relative z-10">
-        <div className="relative grid grid-cols-1 items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+       <div className="relative grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:gap-24 xl:gap-28">
           <div className="pointer-events-none absolute right-[1060px] top-[-110px] hidden opacity-[0.06] lg:block">
             <div
               className="text-[490px] font-black leading-none text-slate-400 xl:text-[950px]"
@@ -227,20 +215,33 @@ const AboutIntroSection = () => {
             </div>
           </div>
 
-          <div className={`text-entry relative z-10 max-w-xl pt-8 lg:pl-10 lg:pt-12 xl:pl-16 ${visible ? "show" : ""}`}>
+         <div
+          className={`text-entry relative z-10 max-w-[860px] pt-8 lg:pl-14 lg:pt-12 xl:pl-20 ${
+            visible ? "show" : ""
+          }`}
+        >
             <h2
-              className="text-4xl font-bold leading-tight text-black sm:text-5xl"
+              className="text-xl font-bold leading-tight text-black sm:text-4xl"
               style={{ fontFamily: "Literata, serif" }}
             >
               {t.title}
             </h2>
 
-            <p
-              className="mt-5 max-w-md text-sm leading-7 text-slate-700 sm:text-base"
-              style={{ fontFamily: "Literata, serif" }}
-            >
-              {t.description}
-            </p>
+            <div className="mt-6 max-w-[760px] space-y-5">
+              {t.paragraphs.map((paragraph, index) => (
+                <p
+                  key={index}
+                  className={`text-[15px] leading-[2] text-slate-700 sm:text-[16px] ${
+                    index === t.paragraphs.length - 1
+                      ? "font-bold text-[#0b2530]"
+                      : ""
+                  }`}
+                  style={{ fontFamily: "Literata, serif" }}
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <button
@@ -263,7 +264,11 @@ const AboutIntroSection = () => {
             </div>
           </div>
 
-          <div className={`img-entry relative flex items-center justify-center lg:justify-end ${visible ? "show" : ""}`}>
+          <div
+            className={`img-entry relative flex items-center justify-center lg:justify-end ${
+              visible ? "show" : ""
+            }`}
+          >
             <img
               src={unionVisual}
               alt={t.topVisualAlt}
@@ -272,7 +277,11 @@ const AboutIntroSection = () => {
           </div>
         </div>
 
-        <div className={`video-entry relative mt-14 min-h-[320px] sm:min-h-[430px] lg:mt-16 lg:min-h-[560px] ${visible ? "show" : ""}`}>
+        <div
+          className={`video-entry relative mt-14 min-h-[320px] sm:min-h-[430px] lg:mt-16 lg:min-h-[560px] ${
+            visible ? "show" : ""
+          }`}
+        >
           <img
             src={polygonShape}
             alt=""

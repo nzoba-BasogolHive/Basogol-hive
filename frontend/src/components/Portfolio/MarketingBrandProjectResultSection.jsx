@@ -24,7 +24,7 @@ const MarketingBrandServiceResultSection = ({
   mainMedia = "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80",
   gallery = [],
   isVideo = false,
-  videoSrc = "https://www.w3schools.com/html/mov_bbb.mp4",
+  videoSrc = "",
 }) => {
   const { lang } = useLanguage();
   const t = translations[lang] || translations.fr;
@@ -46,15 +46,20 @@ const MarketingBrandServiceResultSection = ({
     return () => observer.disconnect();
   }, []);
 
-  const handlePlay = () => {
+  const handlePlay = async () => {
     if (!videoRef.current) return;
 
-    if (playing) {
-      videoRef.current.pause();
-      setPlaying(false);
-    } else {
-      videoRef.current.play();
-      setPlaying(true);
+    try {
+      if (playing) {
+        videoRef.current.pause();
+        setPlaying(false);
+      } else {
+        videoRef.current.muted = false;
+        await videoRef.current.play();
+        setPlaying(true);
+      }
+    } catch (error) {
+      console.error("Erreur lecture vidéo :", error);
     }
   };
 
@@ -149,6 +154,7 @@ const MarketingBrandServiceResultSection = ({
 
         .rs-video-overlay.hidden-overlay {
           opacity: 0;
+          pointer-events: none;
         }
 
         .rs-gal-card {
@@ -240,10 +246,12 @@ const MarketingBrandServiceResultSection = ({
                     style={{ display: "block" }}
                     loop
                     playsInline
-                    muted
+                    controls
+                    preload="metadata"
                     poster={mainMedia}
                     onPlay={() => setPlaying(true)}
                     onPause={() => setPlaying(false)}
+                    onEnded={() => setPlaying(false)}
                     onTimeUpdate={(e) => {
                       const el = e.target;
                       const fill = el
@@ -256,6 +264,7 @@ const MarketingBrandServiceResultSection = ({
                     }}
                   >
                     <source src={videoSrc} type="video/mp4" />
+                    <source src={videoSrc} type="video/quicktime" />
                   </video>
 
                   <div
@@ -264,61 +273,16 @@ const MarketingBrandServiceResultSection = ({
                     }`}
                   />
 
-                  <div
-                    className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2"
-                    onClick={handlePlay}
-                  >
-                    <div className="rs-play-btn">
-                      {playing ? (
-                        <div className="flex gap-[5px]">
-                          <div
-                            style={{
-                              width: "4px",
-                              height: "18px",
-                              background: "#1f6c8c",
-                              borderRadius: "2px",
-                            }}
-                          />
-                          <div
-                            style={{
-                              width: "4px",
-                              height: "18px",
-                              background: "#1f6c8c",
-                              borderRadius: "2px",
-                            }}
-                          />
-                        </div>
-                      ) : (
+                  {!playing && (
+                    <div
+                      className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2"
+                      onClick={handlePlay}
+                    >
+                      <div className="rs-play-btn">
                         <div className="ml-1 h-0 w-0 border-b-[11px] border-l-[18px] border-t-[11px] border-b-transparent border-l-[#1f6c8c] border-t-transparent" />
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="rs-video-wrap absolute bottom-0 left-0 right-0 z-10 px-4 pb-4">
-                    <div className="rs-progress-bar">
-                      <div className="rs-progress-fill" />
-                    </div>
-
-                    <div className="mt-2 flex items-center justify-between">
-                      <span
-                        className="text-[10px] font-semibold text-white/70"
-                        style={{ fontFamily: "Literata, serif" }}
-                      >
-                        {playing ? t.playing : t.clickToPlay}
-                      </span>
-
-                      <div
-                        className="cursor-pointer rounded-full px-3 py-1 text-[10px] font-bold text-white/80"
-                        style={{
-                          background: "rgba(255,255,255,0.15)",
-                          border: "1px solid rgba(255,255,255,0.25)",
-                        }}
-                        onClick={handlePlay}
-                      >
-                        {playing ? "⏸" : "▶"}
                       </div>
                     </div>
-                  </div>
+                  )}
                 </>
               ) : (
                 <img

@@ -4,7 +4,8 @@ import  tech2 from "../assets/scene_04_shot_01-01.png";
 import  tech3 from "../assets/scene_05_shot_01.1-01.png";
 import  tech4 from "../assets/scene_01.shot_01-01.png";
 import  tech5 from "../assets/scene_02_shot_01.png";
-import  leb from "../assets/Logo_Mockup_2.jpg";
+import  leb from "../assets/Lengbeporfoliofinal.mov";
+import  leb8 from "../assets/Logo_Mockup_2.jpg";
 import  leb1 from "../assets/Business_Card_Mockup_3.jpg";
 import  leb2 from "../assets/catalogue_012.jpg";
 import  leb3 from "../assets/avant.jpg";
@@ -186,7 +187,7 @@ heroDescription: {
   en: "A project designed to build a strong visual identity, bridging African cultural heritage and contemporary expression.",
 },
 
-heroImage: leb,
+heroImage: leb8,
 
 projectCategory: {
   fr: "Charte graphique Lengbe Africa",
@@ -274,8 +275,9 @@ result: {
     en: "An elegant, strong, and recognizable visual identity that positions Lengbe Africa as a modern, authentic brand rooted in its cultural heritage.",
   },
 
-      mainMedia:
-        leb,
+mainMedia: leb1,
+isVideo: true,
+videoSrc: leb,
       gallery: [
         {
           alt: { fr: "Production de contenu", en: "Content production" },

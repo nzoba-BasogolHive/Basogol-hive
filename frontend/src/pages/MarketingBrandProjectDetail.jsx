@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, Navigate, useNavigate } from "react-router-dom";
+import { useParams, Navigate, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import MarketingBrandProjectDetailHero from "../components/Portfolio/MarketingBrandProjectDetailHero";
 import MarketingBrandProjectOverview from "../components/Portfolio/MarketingBrandProjectOverview";
@@ -24,6 +24,7 @@ const getLocalizedArray = (value, lang) => {
 const MarketingBrandProjectDetail = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { lang } = useLanguage();
 
   const project = marketingBrandProjects.find((item) => item.slug === slug);
@@ -52,6 +53,8 @@ const MarketingBrandProjectDetail = () => {
     title: getLocalizedValue(project.result?.title, lang),
     description: getLocalizedValue(project.result?.description, lang),
     mainMedia: project.result?.mainMedia,
+    isVideo: project.result?.isVideo || false,
+    videoSrc: project.result?.videoSrc || "",
     gallery: (project.result?.gallery || []).map((item) => ({
       ...item,
       alt: getLocalizedValue(item.alt, lang),
@@ -69,7 +72,18 @@ const MarketingBrandProjectDetail = () => {
         cards={localizedCards}
         category={localizedProject.projectCategory}
         serviceTitle={localizedProject.projectName}
-        onBack={() => navigate(-1)}
+        onBack={() => {
+          if (location.state?.portfolioTab) {
+            navigate("/portfolio", {
+              state: { portfolioTab: location.state.portfolioTab },
+            });
+            return;
+          }
+
+          navigate("/portfolio", {
+            state: { portfolioTab: "marketing" },
+          });
+        }}
       />
 
       <MarketingBrandProjectResultSection
@@ -78,6 +92,8 @@ const MarketingBrandProjectDetail = () => {
         title={localizedResult.title}
         description={localizedResult.description}
         mainMedia={localizedResult.mainMedia}
+        isVideo={localizedResult.isVideo}
+        videoSrc={localizedResult.videoSrc}
         gallery={localizedResult.gallery}
       />
 

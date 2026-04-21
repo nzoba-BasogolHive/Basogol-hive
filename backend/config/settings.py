@@ -78,6 +78,12 @@ DATABASES = {
     }
 }
 
+NEWSLETTER_NOTIFICATION_EMAIL = os.getenv(
+    "NEWSLETTER_NOTIFICATION_EMAIL",
+    "projects-global@basogolhive.com"
+)
+
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",

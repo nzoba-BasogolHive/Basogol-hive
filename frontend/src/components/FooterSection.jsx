@@ -6,6 +6,7 @@ import {
   Instagram,
   Linkedin,
   Youtube,
+  X as XIcon,
   Mail,
   Send,
   CheckCircle2,
@@ -47,7 +48,7 @@ const translations = {
       },
       {
         label: "Design produit & expérience (UI/UX)",
-        href: "/marketing-brand#service-product-experience-design-ui-ux",
+        href: "/marketing-brand#service-product-experience-design"
       },
       {
         label: "Web design & développement",
@@ -82,11 +83,11 @@ const translations = {
       },
       {
         label: "Développement full-stack & applications métier",
-        href: "/technology#service-full-stack-development-business-applications",
+        href: "/technology#service-fullstack-business-applications",
       },
       {
-        label: "Solutions transport, logistique & B2B",
-        href: "/technology#service-transport-logistics-b2b-solutions",
+        label: " Transport, logistique & B2B Solutions",
+        href: "/technology#service-transport-logistics-b2b",
       },
       {
         label: "Audit, optimisation & qualité",
@@ -109,15 +110,16 @@ const translations = {
     newsletterPopupInfoTitle: "Déjà abonné",
     newsletterPopupErrorTitle: "Une erreur est survenue",
     popupClose: "Fermer",
-    socialLinks: [
-      { label: "Facebook", href: "#" },
-      { label: "Instagram", href: "#" },
-      { label: "LinkedIn", href: "#" },
-    ],
+   socialLinks: [
+  { label: "Facebook", href: "https://www.facebook.com/social.media@basogolhive.com" },
+  { label: "Instagram",  href: "https://www.instagram.com/social.media@basogolhive.com" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/enterprise@basogolhive.com" },
+  { label: "X", href: "https://x.com/social.media@basogolhive.com" },
+],
     bottomLinks: [
        { label: "Email", href: "mailto:projects-global@basogolhive.com" },
-      { label: "WhatsApp", href: "692548739" },
-      { label: "YouTube", href: "#" },
+      { label: "WhatsApp",  href: "https://wa.me/692548739" },
+      { label: "YouTube", href: "https://www.youtube.com/social.media@basogolhive.com"},
     ],
     copyright: `© ${currentYear} Basogol-Hive. Conçu avec passion. Tous droits réservés.`,
   },
@@ -209,15 +211,16 @@ const translations = {
     newsletterPopupInfoTitle: "Already subscribed",
     newsletterPopupErrorTitle: "Something went wrong",
     popupClose: "Close",
-    socialLinks: [
-      { label: "Facebook", href: "#" },
-      { label: "Instagram", href: "#" },
-      { label: "LinkedIn", href: "#" },
-    ],
+     socialLinks: [
+  { label: "Facebook", href: "social.media@basogolhive.com" },
+  { label: "Instagram", href: "social.media@basogolhive.com" },
+  { label: "LinkedIn", href: "enterprise@basogolhive.com" },
+  { label: "X", href: "social.media@basogolhive.com" },
+],
     bottomLinks: [
-      { label: "Email", href: "mailto:projects-global@basogolhive.com" },
+       { label: "Email", href: "mailto:projects-global@basogolhive.com" },
       { label: "WhatsApp", href: "692548739" },
-      { label: "YouTube", href: "#" },
+      { label: "YouTube", href: "social.media@basogolhive.com"},
     ],
   copyright: `© ${new Date().getFullYear()} Basogol-Hive. Built with passion. All rights reserved.`,
   },
@@ -227,6 +230,7 @@ const socialIcons = {
   Facebook,
   Instagram,
   LinkedIn: Linkedin,
+  X: XIcon,
   Email: Mail,
   WhatsApp: Send,
   YouTube: Youtube,
@@ -694,23 +698,26 @@ const handleNewsletterSubmit = async (e) => {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[0.9fr_1.15fr_1.15fr_1fr] xl:gap-14">
           <div className={`footer-entry footer-col-1 ${visible ? "show" : ""}`}>
             <div className="flex items-center gap-4">
-              <div className="footer-logo-wrap flex h-16 w-16 items-center justify-center rounded-xl">
-                <img
-                  src={logo}
-                  alt="Basogol Hive"
-                  className="h-11 w-auto object-contain"
-                />
-              </div>
-              <div>
-                <h3
-                  className="text-xl font-semibold notranslate"
-                  translate="no"
-                  style={{ fontFamily: "Literata, serif" }}
-                >
-                  Basogol-Hive
-                </h3>
-                <p className="text-sm text-white/70">{t.brandSubtitle}</p>
-              </div>
+              <Link to="/" className="inline-flex items-center gap-4 text-white no-underline">
+                <div className="footer-logo-wrap flex h-16 w-16 items-center justify-center rounded-xl">
+                  <img
+                    src={logo}
+                    alt="Basogol Hive"
+                    className="h-11 w-auto object-contain"
+                  />
+                </div>
+
+                <div>
+                  <h3
+                    className="text-xl font-semibold notranslate"
+                    translate="no"
+                    style={{ fontFamily: "Literata, serif" }}
+                  >
+                    Basogol-Hive
+                  </h3>
+                  <p className="text-sm text-white/70">{t.brandSubtitle}</p>
+                </div>
+              </Link>
             </div>
 
             <ul
@@ -816,14 +823,16 @@ const handleNewsletterSubmit = async (e) => {
               {t.socialLinks.map((item) => {
                 const Icon = socialIcons[item.label];
                 return (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className="footer-social-icon flex h-11 w-11 items-center justify-center rounded-full text-white"
-                    aria-label={item.label}
-                  >
-                    <Icon className="h-[18px] w-[18px]" />
-                  </a>
+                 <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-social-icon flex h-11 w-11 items-center justify-center rounded-full text-white"
+                  aria-label={item.label}
+                >
+                  <Icon className="h-[18px] w-[18px]" />
+                </a>
                 );
               })}
             </div>

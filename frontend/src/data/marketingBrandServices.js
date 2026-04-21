@@ -80,7 +80,7 @@ export const marketingBrandServices = [
   {
     slug: "product-experience-design",
     title: {
-      fr: "PDesign produit & expérience UI/UX",
+      fr: "Design produit & expérience UI/UX",
       en: "Product & Experience Design UI/UX",
     },
     heroTitle: {
