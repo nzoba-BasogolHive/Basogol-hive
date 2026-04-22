@@ -240,32 +240,21 @@ const MarketingBrandServiceResultSection = ({
             <div className="relative" style={{ background: "#000" }}>
               {isVideo ? (
                 <>
-                  <video
-                    ref={videoRef}
-                    className="block h-[240px] w-full object-cover sm:h-[340px] lg:h-[440px]"
-                    style={{ display: "block" }}
-                    loop
-                    playsInline
-                    controls
-                    preload="metadata"
-                    poster={mainMedia}
-                    onPlay={() => setPlaying(true)}
-                    onPause={() => setPlaying(false)}
-                    onEnded={() => setPlaying(false)}
-                    onTimeUpdate={(e) => {
-                      const el = e.target;
-                      const fill = el
-                        .closest(".rs-video-wrap")
-                        ?.querySelector(".rs-progress-fill");
-
-                      if (fill && el.duration) {
-                        fill.style.width = `${(el.currentTime / el.duration) * 100}%`;
-                      }
-                    }}
-                  >
-                    <source src={videoSrc} type="video/mp4" />
-                    <source src={videoSrc} type="video/quicktime" />
-                  </video>
+                 <video
+  ref={videoRef}
+  className="block h-[240px] w-full object-cover sm:h-[340px] lg:h-[440px]"
+  style={{ display: "block" }}
+  playsInline
+  controls
+  preload="metadata"
+  poster={mainMedia}
+  onPlay={() => setPlaying(true)}
+  onPause={() => setPlaying(false)}
+  onEnded={() => setPlaying(false)}
+>
+  <source src={videoSrc} type="video/mp4" />
+  <source src={videoSrc} type="video/quicktime" />
+</video>
 
                   <div
                     className={`rs-video-overlay ${

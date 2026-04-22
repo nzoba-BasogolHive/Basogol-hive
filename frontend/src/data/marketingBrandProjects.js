@@ -1,4 +1,5 @@
 import  tech from "../assets/scene_04_shot_02.1-01.png";
+import  tech10 from "../assets/video.mp4";
 import  tech1 from "../assets/scene_03_shot_03-01.png";
 import  tech2 from "../assets/scene_04_shot_01-01.png";
 import  tech3 from "../assets/scene_05_shot_01.1-01.png";
@@ -11,6 +12,7 @@ import  leb2 from "../assets/catalogue_012.jpg";
 import  leb3 from "../assets/avant.jpg";
 import  leb4 from "../assets/arriere.jpg";
 import  leb5 from "../assets/packaging.jpg";
+import  vid0 from "../assets/TeaserNekang.mp4";
 import  vid from "../assets/A002C234.jpg";
 import  vid6 from "../assets/A002C2152.jpg";
 import  vid7 from "../assets/A002C0393.jpg";
@@ -121,9 +123,9 @@ result: {
     fr: "Le résultat est une vidéo motion design claire, structurée et mémorable, qui met en avant la fluidité et la simplicité de la plateforme, la clarté pédagogique pour les apprenants, l’accessibilité pour les parents et établissements, ainsi que la modernité et le professionnalisme de la marque.",
     en: "The result is a clear, structured, and memorable motion design video that highlights the platform’s fluidity and simplicity, its educational clarity for learners, its accessibility for parents and institutions, as well as the brand’s modernity and professionalism.",
   },
-mainMedia:
-       tech,
-   
+  mainMedia:  tech10,
+isVideo: true,
+videoSrc: tech10,
       gallery: [
         {
           alt: {
@@ -413,9 +415,9 @@ result: {
     fr: "Un reportage culturel qui devient un véritable outil de mémoire et de transmission, permettant aux jeunes générations de comprendre, apprécier et préserver le Nekang pe Mungoum, tout en valorisant le patrimoine Bamougoum.",
     en: "A cultural reportage that becomes a true tool for memory and transmission, allowing younger generations to understand, appreciate, and preserve the Nekang pe Mungoum while promoting Bamougoum heritage.",
   },
-
-      mainMedia:
-      vid3,
+mainMedia: vid0,
+isVideo: true,
+videoSrc: vid0,
       gallery: [
         {
           alt: { fr: "Présence sociale", en: "Social presence" },

@@ -1,18 +1,36 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import serviceVideo from "../assets/Service.webm";
+import serviceVideoHevc from "../assets/Service.webm";
 import unionShape from "../assets/Union.png";
 import BlueShape from "./BlueShape";
 import { useLanguage } from "./LanguageContext";
 import logoAnimation from "../assets/logoanimation.webm";
+import logoAnimationHevc from "../assets/logotransparent_01_11-1.mov";
 import { Link } from "react-router-dom";
 import { technologyServices } from "../data/technologyServices";
 import { marketingBrandServices } from "../data/marketingBrandServices";
+
 // ─────────────────────────────────────────────────────────────────────────────
-// Détection iOS
+// Détection Safari iOS
+// ─────────────────────────────────────────────────────────────────────────────
+const isIOSSafari = () => {
+  if (typeof window === "undefined") return false;
+  const ua = navigator.userAgent;
+  const isIOS =
+    /iPad|iPhone|iPod/.test(ua) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isSafari =
+    /Safari/.test(ua) && !/Chrome/.test(ua) && !/CriOS/.test(ua);
+  return isIOS && isSafari;
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Détection iOS (autres navigateurs iOS : Chrome iOS, Firefox iOS, etc.)
 // ─────────────────────────────────────────────────────────────────────────────
 const needsCanvasFallback = () => {
   if (typeof window === "undefined") return false;
-
+  // Si c'est Safari iOS, on gère avec HEVC — pas besoin du canvas
+  if (isIOSSafari()) return false;
   return (
     /iPad|iPhone|iPod/.test(navigator.userAgent) ||
     (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
@@ -21,6 +39,7 @@ const needsCanvasFallback = () => {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // VideoCanvas — lecture WebM dans une vidéo cachée puis dessin dans canvas
+// (utilisé pour Chrome iOS / Firefox iOS qui ne supportent pas WebM natif)
 // ─────────────────────────────────────────────────────────────────────────────
 const VideoCanvas = ({
   webmSrc,
@@ -103,7 +122,6 @@ const VideoCanvas = ({
       stopDrawing();
       video.pause();
       video.removeEventListener("canplay", handleCanPlay);
-
       if (document.body.contains(video)) {
         document.body.removeChild(video);
       }
@@ -140,21 +158,48 @@ const VideoCanvas = ({
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// TransparentVideo — WebM uniquement
-// iOS → canvas fallback
-// autres → video native
+// TransparentVideo
+//
+//   mode "hevc"   → Safari iOS   : <video> avec source HEVC/hvc1 (alpha natif)
+//   mode "canvas" → Chrome/FF iOS: WebM dessiné dans un <canvas>
+//   mode "native" → tous les autres : <video> WebM VP9 natif
 // ─────────────────────────────────────────────────────────────────────────────
 const TransparentVideo = ({
   webmSrc,
+  hevcSrc,
   className,
   style,
   videoRef: externalRef,
   paused = false,
   ...props
 }) => {
-  const [useCanvas] = useState(() => needsCanvasFallback());
+  const [mode] = useState(() => {
+    if (isIOSSafari()) return "hevc";
+    if (needsCanvasFallback()) return "canvas";
+    return "native";
+  });
 
-  if (useCanvas) {
+  // ── Safari iOS : HEVC avec canal alpha ────────────────────────────────────
+  if (mode === "hevc") {
+    return (
+      <video
+        ref={externalRef}
+        className={className}
+        style={{ background: "transparent", ...style }}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+      >
+        {/* hvc1 = tag HEVC reconnu par Safari iOS pour la transparence */}
+        <source src={hevcSrc} type='video/mp4; codecs="hvc1"' />
+      </video>
+    );
+  }
+
+  // ── Chrome / Firefox iOS : canvas fallback WebM ───────────────────────────
+  if (mode === "canvas") {
     return (
       <VideoCanvas
         webmSrc={webmSrc}
@@ -165,6 +210,7 @@ const TransparentVideo = ({
     );
   }
 
+  // ── Desktop & Android : WebM VP9 natif ────────────────────────────────────
   return (
     <video
       ref={externalRef}
@@ -182,6 +228,9 @@ const TransparentVideo = ({
   );
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Traductions
+// ─────────────────────────────────────────────────────────────────────────────
 const translations = {
   fr: {
     badge: "Nos services",
@@ -248,6 +297,9 @@ const translations = {
   },
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
+// ServicesSection
+// ─────────────────────────────────────────────────────────────────────────────
 const ServicesSection = () => {
   const { lang } = useLanguage();
   const t = translations[lang] || translations.fr;
@@ -255,19 +307,21 @@ const ServicesSection = () => {
   const videoRef = useRef(null);
   const [visible, setVisible] = useState(false);
   const [serviceVideoPaused, setServiceVideoPaused] = useState(true);
-const techService = technologyServices.find(
-  (service) => service.slug === "websites-platforms"
-);
 
-const marketingService = marketingBrandServices.find(
-  (service) => service.slug === "brand-strategy-positioning"
-);
+  const techService = technologyServices.find(
+    (service) => service.slug === "websites-platforms"
+  );
 
-const getLocalizedValue = (value) => {
-  if (typeof value === "string") return value;
-  if (value && typeof value === "object") return value[lang] || value.fr || "";
-  return "";
-};
+  const marketingService = marketingBrandServices.find(
+    (service) => service.slug === "brand-strategy-positioning"
+  );
+
+  const getLocalizedValue = (value) => {
+    if (typeof value === "string") return value;
+    if (value && typeof value === "object") return value[lang] || value.fr || "";
+    return "";
+  };
+
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
@@ -584,6 +638,7 @@ const getLocalizedValue = (value) => {
       <BlueShape />
 
       <div className="page-container relative z-10">
+        {/* ── En-tête ──────────────────────────────────────────────────────── */}
         <div className="mb-14 flex flex-col gap-8 lg:mb-18 lg:flex-row lg:items-start lg:justify-between">
           <div className={`sv-fade-up sv-d0 max-w-2xl ${visible ? "show" : ""}`}>
             <span
@@ -618,10 +673,12 @@ const getLocalizedValue = (value) => {
             </p>
           </div>
 
+          {/* ── Logo animé + stats + CTA ───────────────────────────────────── */}
           <div className={`sv-fade-up sv-d2 sv-logo-stage ${visible ? "show" : ""}`}>
             <div className="sv-logo-wrap" aria-hidden="true">
               <TransparentVideo
                 webmSrc={logoAnimation}
+                hevcSrc={logoAnimationHevc}
                 className={`sv-logo-video ${visible ? "show" : ""}`}
                 style={{ background: "transparent" }}
               />
@@ -660,7 +717,9 @@ const getLocalizedValue = (value) => {
           </div>
         </div>
 
+        {/* ── Grille de cartes ─────────────────────────────────────────────── */}
         <div className="relative grid grid-cols-1 gap-8 xl:grid-cols-[0.95fr_1.05fr] xl:gap-10">
+          {/* Vidéo service (mockup) */}
           <div
             className={`sv-fade-left sv-d1 relative z-10 flex items-center justify-center ${
               visible ? "show" : ""
@@ -669,6 +728,7 @@ const getLocalizedValue = (value) => {
             <div className="sv-video-wrap relative w-full max-w-3xl">
               <TransparentVideo
                 webmSrc={serviceVideo}
+                hevcSrc={serviceVideoHevc}
                 videoRef={videoRef}
                 className="relative z-10 w-full object-contain drop-shadow-[0_25px_60px_rgba(15,23,42,0.17)]"
                 style={{ background: "transparent" }}
@@ -685,7 +745,9 @@ const getLocalizedValue = (value) => {
             </div>
           </div>
 
+          {/* Colonne de droite : cartes */}
           <div className="relative z-10 flex flex-col gap-5 pl-0 xl:pl-8">
+            {/* Carte globale */}
             <div
               className={`sv-fade-right sv-d2 sv-card-global overflow-hidden rounded-[22px] ${
                 visible ? "show" : ""
@@ -721,88 +783,91 @@ const getLocalizedValue = (value) => {
               </div>
             </div>
 
+            {/* Petites cartes Tech + Studio */}
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+              {/* Tech */}
               <div
-  className={`sv-fade-up sv-d3 sv-card-small overflow-hidden rounded-[22px] ${
-    visible ? "show" : ""
-  }`}
->
-  <div className="sv-card-bar" />
-  <div className="sv-card-img h-52">
-    <img
-      src={techService?.image}
-      alt={getLocalizedValue(techService?.title)}
-      className="h-full w-full object-cover"
-    />
-  </div>
-  <div className="p-5">
-    <span
-      className="sv-badge-slate inline-flex rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider"
-      style={{ fontFamily: "Literata, serif" }}
-    >
-      {t.techBadge}
-    </span>
-    <h4
-      className="mt-3 text-lg font-bold leading-snug text-slate-900"
-      style={{ fontFamily: "Literata, serif" }}
-    >
-      {getLocalizedValue(techService?.title)}
-    </h4>
-    <p
-      className="mt-3 text-sm leading-6 text-slate-500"
-      style={{ fontFamily: "Literata, serif" }}
-    >
-      {getLocalizedValue(techService?.heroDescription)}
-    </p>
-    <Link
-      to={`/technology#service-${techService?.slug}`}
-      className="sv-learn-more mt-4 block"
-    >
-      {t.learnMore} <span>→</span>
-    </Link>
-  </div>
-</div>
+                className={`sv-fade-up sv-d3 sv-card-small overflow-hidden rounded-[22px] ${
+                  visible ? "show" : ""
+                }`}
+              >
+                <div className="sv-card-bar" />
+                <div className="sv-card-img h-52">
+                  <img
+                    src={techService?.image}
+                    alt={getLocalizedValue(techService?.title)}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="p-5">
+                  <span
+                    className="sv-badge-slate inline-flex rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider"
+                    style={{ fontFamily: "Literata, serif" }}
+                  >
+                    {t.techBadge}
+                  </span>
+                  <h4
+                    className="mt-3 text-lg font-bold leading-snug text-slate-900"
+                    style={{ fontFamily: "Literata, serif" }}
+                  >
+                    {getLocalizedValue(techService?.title)}
+                  </h4>
+                  <p
+                    className="mt-3 text-sm leading-6 text-slate-500"
+                    style={{ fontFamily: "Literata, serif" }}
+                  >
+                    {getLocalizedValue(techService?.heroDescription)}
+                  </p>
+                  <Link
+                    to={`/technology#service-${techService?.slug}`}
+                    className="sv-learn-more mt-4 block"
+                  >
+                    {t.learnMore} <span>→</span>
+                  </Link>
+                </div>
+              </div>
 
+              {/* Studio */}
               <div
-  className={`sv-fade-up sv-d4 sv-card-small overflow-hidden rounded-[22px] ${
-    visible ? "show" : ""
-  }`}
->
-  <div className="sv-card-bar" />
-  <div className="sv-card-img h-52">
-    <img
-      src={marketingService?.image}
-      alt={getLocalizedValue(marketingService?.title)}
-      className="h-full w-full object-cover"
-    />
-  </div>
-  <div className="p-5">
-    <span
-      className="sv-badge-slate inline-flex rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider"
-      style={{ fontFamily: "Literata, serif" }}
-    >
-      {t.studioBadge}
-    </span>
-    <h4
-      className="mt-3 text-lg font-bold leading-snug text-slate-900"
-      style={{ fontFamily: "Literata, serif" }}
-    >
-      {getLocalizedValue(marketingService?.title)}
-    </h4>
-    <p
-      className="mt-3 text-sm leading-6 text-slate-500"
-      style={{ fontFamily: "Literata, serif" }}
-    >
-      {getLocalizedValue(marketingService?.heroDescription)}
-    </p>
-    <Link
-      to={`/marketing-brand#service-${marketingService?.slug}`}
-      className="sv-learn-more mt-4 block"
-    >
-      {t.learnMore} <span>→</span>
-    </Link>
-  </div>
-</div>
+                className={`sv-fade-up sv-d4 sv-card-small overflow-hidden rounded-[22px] ${
+                  visible ? "show" : ""
+                }`}
+              >
+                <div className="sv-card-bar" />
+                <div className="sv-card-img h-52">
+                  <img
+                    src={marketingService?.image}
+                    alt={getLocalizedValue(marketingService?.title)}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="p-5">
+                  <span
+                    className="sv-badge-slate inline-flex rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider"
+                    style={{ fontFamily: "Literata, serif" }}
+                  >
+                    {t.studioBadge}
+                  </span>
+                  <h4
+                    className="mt-3 text-lg font-bold leading-snug text-slate-900"
+                    style={{ fontFamily: "Literata, serif" }}
+                  >
+                    {getLocalizedValue(marketingService?.title)}
+                  </h4>
+                  <p
+                    className="mt-3 text-sm leading-6 text-slate-500"
+                    style={{ fontFamily: "Literata, serif" }}
+                  >
+                    {getLocalizedValue(marketingService?.heroDescription)}
+                  </p>
+                  <Link
+                    to={`/marketing-brand#service-${marketingService?.slug}`}
+                    className="sv-learn-more mt-4 block"
+                  >
+                    {t.learnMore} <span>→</span>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
