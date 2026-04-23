@@ -4,6 +4,8 @@ import christlandLogo from "../assets/apple-touch-icon.png";
 import lengbeLogo from "../assets/LOGO1.png";
 import eyeleLogo from "../assets/logo12.png";
 import dibiyeLogo from "../assets/1 1.png";
+import tf from "../assets/tf.png";
+import va from "../assets/va.png";
 import leftTopOverflow from "../assets/Untitled_2.png";
 import { useLanguage } from "./LanguageContext";
 
@@ -16,6 +18,9 @@ const translations = {
   { id: 2, name: "Lengbe Africa", logo: lengbeLogo },
   { id: 3, name: "Eyélé", logo: eyeleLogo },
   { id: 4, name: "Dibiye", logo: dibiyeLogo },
+  { id: 5, name: "Dibiye", logo:va },
+  { id: 6, name: "Dibiye", logo:tf },
+
 ],
     trusted: "Ils nous font confiance",
   },
@@ -27,6 +32,8 @@ partners: [
   { id: 2, name: "Lengbe Africa", logo: lengbeLogo },
   { id: 3, name: "Eyélé", logo: eyeleLogo },
   { id: 4, name: "Dibiye", logo: dibiyeLogo },
+  { id: 5, name: "Dibiye", logo:va },
+  { id: 6, name: "Dibiye", logo:tf },
 ],
     trusted: "They trust us",
   },
