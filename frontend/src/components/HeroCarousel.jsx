@@ -185,12 +185,16 @@ useEffect(() => {
         <div className="absolute bottom-0 right-0 h-52 w-52 rounded-full bg-sky-500/15 blur-3xl sm:h-80 sm:w-80 sm:bg-sky-500/20" />
       </div>
 
-      <div className="absolute bottom-6 right-4 z-20 sm:bottom-8 sm:right-6 lg:bottom-10 lg:right-8">
+      <div className="absolute bottom-3 right-3 sm:bottom-8 sm:right-6 z-20 lg:bottom-10 lg:right-8">
         <button
           ref={soundButtonRef}
           type="button"
           onClick={handleToggleMute}
-          className="group relative overflow-hidden rounded-full border border-white/20 bg-white/10 px-4 py-2.5 text-white shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/16 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] sm:px-5 sm:py-3"
+         className="group relative overflow-hidden rounded-full border border-white/20 bg-white/10 
+              px-2 py-1.5 text-xs
+              sm:px-4 sm:py-2.5 sm:text-sm
+              lg:px-5 lg:py-3
+              text-white shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/16 hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
           style={{ fontFamily: "Literata, serif" }}
           aria-label={isMuted ? t.unmute : t.mute}
           aria-pressed={!isMuted}
@@ -199,7 +203,7 @@ useEffect(() => {
 
           <span className="relative flex items-center gap-3">
             <span
-              className={`flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-300 ${
+              className={`flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full border transition-all duration-300 ${
                 isMuted
                   ? "border-white/15 bg-white/10"
                   : "border-cyan-300/40 bg-cyan-400/20 shadow-[0_0_20px_rgba(34,211,238,0.25)]"
@@ -239,10 +243,10 @@ useEffect(() => {
             </span>
 
             <span className="flex flex-col items-start leading-none">
-              <span className="text-[10px] uppercase tracking-[0.2em] text-white/55">
+              <span className="text-[8px] sm:text-[10px] uppercase tracking-[0.2em] text-white/55">
                 Audio
               </span>
-              <span className="text-[12px] font-semibold sm:text-sm">
+              <span className="text-[10px] sm:text-sm font-semibold">
                 {isMuted ? t.unmute : t.mute}
               </span>
             </span>
