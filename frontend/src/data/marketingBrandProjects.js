@@ -21,7 +21,7 @@ import  vid3 from "../assets/A002C2358.jpg";
 
 const tech10 = "/videos/video.mp4";
 const vid0 = "/videos/TeaserNekang.mp4";
-const leb = "/videos/Lengbeporfoliofinal.mov";
+const leb = "/videos/Lengbeporfoliofinal.mp4";
 export const marketingBrandProjects = [
   {
     slug: "Motion-Design",

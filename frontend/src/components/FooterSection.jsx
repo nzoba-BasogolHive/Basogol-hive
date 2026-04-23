@@ -6,7 +6,6 @@ import {
   Instagram,
   Linkedin,
   Youtube,
-  X as XIcon,
   Mail,
   Send,
   CheckCircle2,
@@ -14,6 +13,7 @@ import {
   XCircle,
   X,
 } from "lucide-react";
+import { FaXTwitter } from "react-icons/fa6";
 
 import { Link } from "react-router-dom";
 import logo from "../assets/basogollogo.png";
@@ -232,7 +232,7 @@ const socialIcons = {
   Facebook,
   Instagram,
   LinkedIn: Linkedin,
-  X: XIcon,
+  X: FaXTwitter,
   Email: Mail,
   WhatsApp: Send,
   YouTube: Youtube,

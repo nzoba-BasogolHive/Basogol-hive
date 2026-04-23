@@ -35,9 +35,11 @@ class ContactMessageCreateView(APIView):
         if department == "marketing":
             recipient_email = settings.CONTACT_RECIPIENT_MARKETING
             service_label = "Marketing & Brand"
+            service_from_email = settings.CONTACT_RECIPIENT_MARKETING
         else:
             recipient_email = settings.CONTACT_RECIPIENT_TECH
             service_label = "Technologie" if language == "fr" else "Technology"
+            service_from_email = settings.CONTACT_RECIPIENT_TECH
 
         full_name = f"{contact.first_name} {contact.last_name}".strip()
 
@@ -171,19 +173,13 @@ class ContactMessageCreateView(APIView):
             confirmation_email = EmailMultiAlternatives(
                 subject=confirmation_subject,
                 body=confirmation_message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
+                from_email=service_from_email,
                 to=[contact.email],
+                reply_to=[service_from_email],
             )
             confirmation_email.attach_alternative(confirmation_html, "text/html")
 
             image_path = os.path.join(settings.BASE_DIR, "public", "bas.jpg")
-
-            with open(image_path, "rb") as img_file:
-                img = MIMEImage(img_file.read())
-                img.add_header("Content-ID", "<basogol_contact_banner>")
-                img.add_header("Content-Disposition", "inline", filename="bas.jpg")
-                confirmation_email.attach(img)
-
             confirmation_email.send()
             return Response(
                 {

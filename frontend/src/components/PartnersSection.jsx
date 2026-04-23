@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useMemo, useState } from "react";
 import partnerLogo from "../assets/basogollogo.png";
+import christlandLogo from "../assets/apple-touch-icon.png";
+import lengbeLogo from "../assets/LOGO1.png";
+import eyeleLogo from "../assets/logo12.png";
+import dibiyeLogo from "../assets/1 1.png";
 import leftTopOverflow from "../assets/Untitled_2.png";
 import { useLanguage } from "./LanguageContext";
 
@@ -8,30 +12,22 @@ const translations = {
     title: "Nos partenaires",
     description: "Nous collaborons avec des partenaires et des marques qui nous font confiance pour concevoir des expériences digitales, créatives et stratégiques de qualité.",
     partners: [
-      { id: 1, name: "Logo 1", logo: partnerLogo },
-      { id: 2, name: "Logo 2", logo: partnerLogo },
-      { id: 3, name: "Logo 3", logo: partnerLogo },
-      { id: 4, name: "Logo 4", logo: partnerLogo },
-      { id: 5, name: "Logo 5", logo: partnerLogo },
-      { id: 6, name: "Logo 6", logo: partnerLogo },
-      { id: 7, name: "Logo 7", logo: partnerLogo },
-      { id: 8, name: "Logo 8", logo: partnerLogo },
-    ],
+  { id: 1, name: "Christland Tech", logo: christlandLogo },
+  { id: 2, name: "Lengbe Africa", logo: lengbeLogo },
+  { id: 3, name: "Eyélé", logo: eyeleLogo },
+  { id: 4, name: "Dibiye", logo: dibiyeLogo },
+],
     trusted: "Ils nous font confiance",
   },
   en: {
     title: "Our partners",
     description: "We collaborate with partners and brands who trust us to design high-quality digital, creative and strategic experiences.",
-    partners: [
-      { id: 1, name: "Logo 1", logo: partnerLogo },
-      { id: 2, name: "Logo 2", logo: partnerLogo },
-      { id: 3, name: "Logo 3", logo: partnerLogo },
-      { id: 4, name: "Logo 4", logo: partnerLogo },
-      { id: 5, name: "Logo 5", logo: partnerLogo },
-      { id: 6, name: "Logo 6", logo: partnerLogo },
-      { id: 7, name: "Logo 7", logo: partnerLogo },
-      { id: 8, name: "Logo 8", logo: partnerLogo },
-    ],
+partners: [
+  { id: 1, name: "Christland Tech", logo: christlandLogo },
+  { id: 2, name: "Lengbe Africa", logo: lengbeLogo },
+  { id: 3, name: "Eyélé", logo: eyeleLogo },
+  { id: 4, name: "Dibiye", logo: dibiyeLogo },
+],
     trusted: "They trust us",
   },
 };
@@ -192,7 +188,7 @@ const PartnersSection = () => {
           </div>
 
           <div className="flex gap-8">
-            {[{ num: "8+", label: "Partenaires" }, { num: "100%", label: "Confiance" }].map((s, i) => (
+            {[{ num: "4+", label: "Partenaires" }, { num: "100%", label: "Confiance" }].map((s, i) => (
               <div key={i} className={`pt-stat text-right ${visible ? "show" : ""}`} style={{ transitionDelay: `${0.2 + i * 0.1}s` }}>
                 <div className="text-3xl font-bold text-[#1f6c8c]" style={{ fontFamily: "Literata, serif" }}>{s.num}</div>
                 <div className="mt-0.5 text-xs uppercase tracking-widest text-slate-400" style={{ fontFamily: "Literata, serif" }}>{s.label}</div>
