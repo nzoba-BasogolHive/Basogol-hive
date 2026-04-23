@@ -37,14 +37,14 @@ const translations = {
     emailValue: [
       {
         label: "Technologie",
-        email: "projects-studio@basogolhive.com",
+        email: "projects-tech@basogolhive.com",
       },
       {
         label: "Marketing & Brand",
         email: "projects-studio@basogolhive.com",
       },
     ],
-    locationValue: "Douala, Cameroun",
+    locationValue: " Makepe, Douala, Cameroun",
     phoneValue: "+237 692548739",
     bottomTitle: "Construisons quelque chose de fort ensemble",
     bottomDescription:
@@ -64,7 +64,7 @@ const translations = {
       "Tell us about your project, your needs or your goals. Our team supports you with a clear, creative approach tailored to your ambition.",
     formPlaceholderEmail: "Email",
     formPlaceholderSubject: "Subject",
-    departmentHelper: "Sélectionnez l’expertise la plus adaptée à votre besoin",
+    departmentHelper: "Select the expertise best suited to your request",
     formPlaceholderDepartment: "Expertise",
     formPlaceholderLastName: "Last name",
     formPlaceholderFirstName: "First name",
@@ -87,8 +87,8 @@ const translations = {
         email: "projects-studio@basogolhive.com",
       },
     ],
-    locationValue: "Kinshasa, DRC",
-    phoneValue: "+243 000 000 000",
+    locationValue: " Makepe, Douala, Cameroun",
+    phoneValue: "+237 692548739",
     bottomTitle: "Let's build something meaningful together",
     bottomDescription:
       "Every collaboration starts with a simple conversation. Share your need with us and let's shape a useful, elegant and lasting solution.",
