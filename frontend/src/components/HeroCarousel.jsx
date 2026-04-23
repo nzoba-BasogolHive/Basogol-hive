@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLanguage } from "./LanguageContext";
-import heroVideo from "../assets/HeroMov.mov";
 import { Link } from "react-router-dom";
-
+const heroVideo = "/videos/hero.mp4";
 const translations = {
   fr: {
     badge: "Tech & studio Créatif",
@@ -173,7 +172,7 @@ useEffect(() => {
         muted
         loop
         playsInline
-        preload="auto"
+        preload="none"
         aria-label={t.videoAriaLabel}
       >
         <source src={heroVideo} type="video/mp4" />

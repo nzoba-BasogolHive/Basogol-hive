@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLanguage } from "../LanguageContext";
 import unionVisual from "../../assets/Union1.png";
 import polygonShape from "../../assets/Polygon7.png";
-import introVideoFr from "../../assets/IntroBASOGOL-HIVEfrançais.mp4";
-import introVideoEn from "../../assets/IntroBASOGOL-HIVEPréviewanglaise.mp4";
 import { useNavigate } from "react-router-dom";
+
+const introVideoFr = "/videos/IntroBASOGOL-HIVEfrançais.mp4";
+const introVideoEn  = "/videos/IntroBASOGOL-HIVEPréviewanglaise.mp4";
 
 const translations = {
   fr: {

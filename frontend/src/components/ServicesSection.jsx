@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import serviceVideo from "../assets/Service.webm";
-import serviceVideoHevc from "../assets/Service.webm";
 import unionShape from "../assets/Union.png";
 import BlueShape from "./BlueShape";
 import { useLanguage } from "./LanguageContext";
-import logoAnimation from "../assets/logoanimation.webm";
-import logoAnimationHevc from "../assets/logotransparent_01_11-1.mov";
 import { Link } from "react-router-dom";
 import { technologyServices } from "../data/technologyServices";
 import { marketingBrandServices } from "../data/marketingBrandServices";
 
+const logoAnimationHevc  = "/videos/logotransparent_01_11-1.mov";
+const logoAnimation = "/videos/logoanimation.webm";
+const serviceVideo = "/videos/Service.webm";
+const serviceVideoHevc = "/videos/Service.webm";
 // ─────────────────────────────────────────────────────────────────────────────
 // Détection Safari iOS
 // ─────────────────────────────────────────────────────────────────────────────

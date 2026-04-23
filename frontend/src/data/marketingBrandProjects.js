@@ -1,18 +1,15 @@
 import  tech from "../assets/scene_04_shot_02.1-01.png";
-import  tech10 from "../assets/video.mp4";
 import  tech1 from "../assets/scene_03_shot_03-01.png";
 import  tech2 from "../assets/scene_04_shot_01-01.png";
 import  tech3 from "../assets/scene_05_shot_01.1-01.png";
 import  tech4 from "../assets/scene_01.shot_01-01.png";
 import  tech5 from "../assets/scene_02_shot_01.png";
-import  leb from "../assets/Lengbeporfoliofinal.mov";
 import  leb8 from "../assets/Logo_Mockup_2.jpg";
 import  leb1 from "../assets/Business_Card_Mockup_3.jpg";
 import  leb2 from "../assets/catalogue_012.jpg";
 import  leb3 from "../assets/avant.jpg";
 import  leb4 from "../assets/arriere.jpg";
 import  leb5 from "../assets/packaging.jpg";
-import  vid0 from "../assets/TeaserNekang.mp4";
 import  vid from "../assets/A002C234.jpg";
 import  vid6 from "../assets/A002C2152.jpg";
 import  vid7 from "../assets/A002C0393.jpg";
@@ -21,6 +18,10 @@ import  vid4 from "../assets/A002C017_22.jpg";
 import  vid5 from "../assets/A002C2151.jpg";
 import  vid3 from "../assets/A002C2358.jpg";
 
+
+const tech10 = "/videos/video.mp4";
+const vid0 = "/videos/TeaserNekang.mp4";
+const leb = "/videos/Lengbeporfoliofinal.mov";
 export const marketingBrandProjects = [
   {
     slug: "Motion-Design",
@@ -124,8 +125,8 @@ result: {
     en: "The result is a clear, structured, and memorable motion design video that highlights the platform’s fluidity and simplicity, its educational clarity for learners, its accessibility for parents and institutions, as well as the brand’s modernity and professionalism.",
   },
   mainMedia:  tech10,
-isVideo: true,
-videoSrc: tech10,
+ isVideo: true,
+ videoSrc: tech10,
       gallery: [
         {
           alt: {
@@ -277,7 +278,7 @@ result: {
     en: "An elegant, strong, and recognizable visual identity that positions Lengbe Africa as a modern, authentic brand rooted in its cultural heritage.",
   },
 
-mainMedia: leb1,
+mainMedia: leb,
 isVideo: true,
 videoSrc: leb,
       gallery: [
