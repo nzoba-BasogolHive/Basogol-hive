@@ -8,6 +8,9 @@ import tf from "../assets/tf.png";
 import va from "../assets/va.png";
 import leftTopOverflow from "../assets/Untitled_2.png";
 import { useLanguage } from "./LanguageContext";
+import TBG1 from "../assets/TBG1.png";
+import TBG2 from "../assets/Image36.webp";
+
 
 const translations = {
   fr: {
@@ -30,7 +33,7 @@ const translations = {
     id: 3,
     name: "Eyélé",
     logo: eyeleLogo,
-    url: "https://eyele.net/",
+    url: "#",
   },
   {
     id: 4,
@@ -42,17 +45,33 @@ const translations = {
     id: 5,
     name: "va",
     logo: va,
-    url: "https://va-studiio.de/impressum/",
+    url: "https://va-studiio.de/",
   },
   {
     id: 6,
     name: "tf",
     logo: tf,
     url: "https://tanka-fonta.com/",
+    
+  },
+    {
+    id: 7,
+    name: "tbg",
+    logo: TBG1,
+    url: "https://thebest-group.com/",
+    
+  },
+      {
+    id: 8,
+    name: "Chefferie Bamougoum",
+    logo: TBG2,
+    url: "https://www.youtube.com/watch?v=p94H1vpTDf8&t=21s",
+    
   },
 ],
     trusted: "Ils nous font confiance",
   },
+
   en: {
     title: "Our partners",
     description: "We collaborate with partners and brands who trust us to design high-quality digital, creative and strategic experiences.",
@@ -61,8 +80,11 @@ partners: [
   { id: 2, name: "Lengbe Africa", logo: lengbeLogo },
   { id: 3, name: "Eyélé", logo: eyeleLogo },
   { id: 4, name: "Dibiye", logo: dibiyeLogo },
-  { id: 5, name: "Dibiye", logo:va },
-  { id: 6, name: "Dibiye", logo:tf },
+  { id: 5, name: "va", logo:va },
+  { id: 6, name: "tf", logo:tf },
+  { id: 7, name: "TBG1", logo:TBG1},
+  { id: 8, name: "TBG2", logo:TBG2},
+  
 ],
     trusted: "They trust us",
   },
@@ -224,7 +246,7 @@ const PartnersSection = () => {
           </div>
 
           <div className="flex gap-8">
-            {[{ num: "6+", label: "Partenaires" }, { num: "100%", label: "Confiance" }].map((s, i) => (
+            {[{ num: "8+", label: "Partenaires" }, { num: "100%", label: "Confiance" }].map((s, i) => (
               <div key={i} className={`pt-stat text-right ${visible ? "show" : ""}`} style={{ transitionDelay: `${0.2 + i * 0.1}s` }}>
                 <div className="text-3xl font-bold text-[#1f6c8c]" style={{ fontFamily: "Literata, serif" }}>{s.num}</div>
                 <div className="mt-0.5 text-xs uppercase tracking-widest text-slate-400" style={{ fontFamily: "Literata, serif" }}>{s.label}</div>

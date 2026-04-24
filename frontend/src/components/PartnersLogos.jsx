@@ -9,6 +9,8 @@ const partners = [
   { name: "GitHub",   logo: "https://cdn.simpleicons.org/github/1f6c8c"   },
   { name: "LinkedIn", logo: "https://cdn.simpleicons.org/linkedin/1f6c8c" },
   { name: "Google",   logo: "https://cdn.simpleicons.org/google/1f6c8c"   },
+   { name: "Google",   logo: "https://cdn.simpleicons.org/google/1f6c8c"   },
+  
 ];
 
 const marqueeItems = [...partners, ...partners, ...partners];

@@ -111,18 +111,19 @@ const translations = {
     newsletterPopupInfoTitle: "Déjà abonné",
     newsletterPopupErrorTitle: "Une erreur est survenue",
     popupClose: "Fermer",
+
    socialLinks: [
-  { label: "Facebook", href: "https://www.facebook.com/social.media@basogolhive.com" },
-  { label: "Instagram",  href: "https://www.instagram.com/social.media@basogolhive.com" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/enterprise@basogolhive.com" },
-  { label: "X", href: "https://x.com/social.media@basogolhive.com" },
+  { label: "Facebook",href:"https://www.facebook.com/social.media@basogolhive.com" },
+  { label: "Instagram", href:"https://www.instagram.com/social.media@basogolhive.com" },
+  { label: "LinkedIn",href:"https://www.linkedin.com/enterprise@basogolhive.com" },
+  { label: "X",href: "https://x.com/social.media@basogolhive.com" },
 ],
     bottomLinks: [
-       { label: "Email", href: "mailto:projects-global@basogolhive.com" },
-      { label: "WhatsApp",  href: "https://wa.me/692548739" },
-      { label: "YouTube", href: "https://www.youtube.com/social.media@basogolhive.com"},
+       { label: "Email",href:"mailto:projects-global@basogolhive.com" },
+      { label: "WhatsApp", href:"https://wa.me/692548739" },
+      { label: "YouTube",href:"https://www.youtube.com/social.media@basogolhive.com"},
     ],
-    copyright: `© ${currentYear} Basogol-Hive. Conçu avec passion. Tous droits réservés.`,
+    copyright: `© Basogol-Hive 3027 (on en avait marre de mettre à jour chaque année, du coup on a vu large oui, on a sauté quelques années 😄).Tous droits réservés.`,
   },
 
   en: {
@@ -224,7 +225,7 @@ const translations = {
       { label: "WhatsApp", href: "692548739" },
       { label: "YouTube", href: "social.media@basogolhive.com"},
     ],
-  copyright: `© ${new Date().getFullYear()} Basogol-Hive. Built with passion. All rights reserved.`,
+ copyright: `© Basogol-Hive 3027 (we got tired of updating this every year, so we aimed far ahead—yes, we skipped a few years 😄). All rights reserved.`,
   },
 };
 
@@ -844,13 +845,12 @@ const handleNewsletterSubmit = async (e) => {
         <div className="mt-14">
           <div className="footer-divider" />
           <div className="mt-5 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-            <p
-              className="text-xs text-white/55"
-              style={{ fontFamily: "Literata, serif" }}
-            >
-              {t.copyright}
-            </p>
-
+  <p
+    className="text-center text-xs leading-6 text-white/55 sm:text-left"
+    style={{ fontFamily: "Literata, serif" }}
+  >
+    {t.copyright}
+  </p>
             <div className="flex items-center gap-1">
               {t.bottomLinks.map((item) => {
                 const Icon = socialIcons[item.label];
