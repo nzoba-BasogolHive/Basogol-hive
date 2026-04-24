@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import BlueShape from "./BlueShape";
-import whyUsPortraitCards from "../assets/why-us-portrait-cards.png";
+import whyUsPortraitCards from "../assets/200.png";
 import polygonShape from "../assets/Polygon 4.png";
 import { useLanguage } from "./LanguageContext";
 
