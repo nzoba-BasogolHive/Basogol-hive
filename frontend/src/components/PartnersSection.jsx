@@ -62,6 +62,7 @@ partners: [
   { id: 3, name: "Eyélé", logo: eyeleLogo },
   { id: 4, name: "Dibiye", logo: dibiyeLogo },
   { id: 5, name: "Dibiye", logo:va },
+  { id: 6, name: "Dibiye", logo:tf },
 ],
     trusted: "They trust us",
   },
