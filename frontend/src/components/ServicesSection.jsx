@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { technologyServices } from "../data/technologyServices";
 import { marketingBrandServices } from "../data/marketingBrandServices";
 
-const logoAnimationHevc  = "/videos/logotransparent_01_11-1.mov";
+const logoAnimationHevc  = "/videos/logoanimation-hevc.mov";
 const logoAnimation = "/videos/logoanimation.webm";
 const serviceVideo = "/videos/Service.webm";
 const serviceVideoHevc = "/videos/Service.webm";

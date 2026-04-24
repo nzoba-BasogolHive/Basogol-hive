@@ -8,7 +8,7 @@ const translations = {
     title: "Une intelligence collective au service de votre croissance ",
     intro:
       "Chez Basogol-Hive, stratégie, design, marketing et technologie avancent dans un même élan pour concevoir des solutions utiles, élégantes et performantes. Chaque projet est porté par une même exigence de justesse, de créativité et de cohérence, au service d’un développement durable et maîtrisé.À l’image d’une ruche, où les forces se conjuguent avec méthode et précision, cette dynamique collective prend forme sous l’impulsion de notre leadership.",
-    button: "Équipe",
+    button: "One Hive. Many skills.",
     members: [
       {
         name: "Sop",
@@ -41,7 +41,7 @@ const translations = {
     title: "Collective intelligence serving your growth",
     intro:
       "At Basogol-Hive, strategy, design, marketing, and technology move forward as one to create solutions that are useful, elegant, and high-performing. Each project is driven by the same commitment to precision, creativity, and consistency, supporting sustainable and well-controlled growth.Like a hive, where strengths come together with method and precision, this collective dynamic takes shape under the guidance of our leadership.",
-    button: "Team",
+    button: "One Hive. Many skills.",
     members: [
       {
         name: "Sop",
