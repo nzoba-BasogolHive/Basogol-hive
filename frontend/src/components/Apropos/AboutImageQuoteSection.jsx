@@ -7,7 +7,7 @@ const translations = {
     tag: "Notre vision",
     imageAlt: "Illustration architecturale en noir et blanc",
     quote:
-      "Nous croyons que chaque marque mérite une vision claire, une identité forte et des solutions à la hauteur de ses ambitions.",
+      "Nous croyons que chaque marque mérite une vision claire, une identité forte et des solutions à la hauteur de son image.",
     brand: "Basogol-Hive",
     stats: [
       { number: "02+", label: "Années d'expérience" },
@@ -18,7 +18,7 @@ const translations = {
     tag: "Our vision",
     imageAlt: "Black and white architectural illustration",
     quote:
-      "We believe that every brand deserves a clear vision, a strong identity, and solutions that match its ambitions.",
+      "We believe that every brand deserves a clear vision, a strong identity, and solutions that reflect its full potential.",
     brand: "Basogol-Hive",
     stats: [
       { number: "02+", label: "Years of experience" },

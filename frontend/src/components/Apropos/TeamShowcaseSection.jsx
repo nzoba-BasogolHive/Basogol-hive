@@ -5,9 +5,9 @@ import unionHex from "../../assets/Union3.png";
 
 const translations = {
   fr: {
-    title: "Une équipe créative au service de votre croissance",
+    title: "Une intelligence collective au service de votre croissance ",
     intro:
-      "Chez Basogol-Hive, nous réunissons des profils complémentaires en stratégie, design, marketing et technologie pour concevoir des solutions utiles, élégantes et performantes. Chaque projet est pensé avec méthode, créativité et exigence pour accompagner durablement votre développement.",
+      "Chez Basogol-Hive, stratégie, design, marketing et technologie avancent dans un même élan pour concevoir des solutions utiles, élégantes et performantes. Chaque projet est porté par une même exigence de justesse, de créativité et de cohérence, au service d’un développement durable et maîtrisé.À l’image d’une ruche, où les forces se conjuguent avec méthode et précision, cette dynamique collective prend forme sous l’impulsion de notre leadership.",
     button: "Équipe",
     members: [
       {
@@ -38,9 +38,9 @@ const translations = {
   },
 
   en: {
-    title: "A creative team dedicated to your growth",
+    title: "Collective intelligence serving your growth",
     intro:
-      "At Basogol-Hive, we bring together complementary talents in strategy, design, marketing and technology to create useful, elegant and high-performing solutions. Every project is approached with clarity, creativity and high standards to support your growth over time.",
+      "At Basogol-Hive, strategy, design, marketing, and technology move forward as one to create solutions that are useful, elegant, and high-performing. Each project is driven by the same commitment to precision, creativity, and consistency, supporting sustainable and well-controlled growth.Like a hive, where strengths come together with method and precision, this collective dynamic takes shape under the guidance of our leadership.",
     button: "Team",
     members: [
       {

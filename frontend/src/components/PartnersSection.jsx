@@ -13,14 +13,43 @@ const translations = {
   fr: {
     title: "Nos partenaires",
     description: "Nous collaborons avec des partenaires et des marques qui nous font confiance pour concevoir des expériences digitales, créatives et stratégiques de qualité.",
-    partners: [
-  { id: 1, name: "Christland Tech", logo: christlandLogo },
-  { id: 2, name: "Lengbe Africa", logo: lengbeLogo },
-  { id: 3, name: "Eyélé", logo: eyeleLogo },
-  { id: 4, name: "Dibiye", logo: dibiyeLogo },
-  { id: 5, name: "Dibiye", logo:va },
-  { id: 6, name: "Dibiye", logo:tf },
-
+  partners: [
+  {
+    id: 1,
+    name: "Christland Tech",
+    logo: christlandLogo,
+    url: "https://christland.tech/",
+  },
+  {
+    id: 2,
+    name: "Lengbe Africa",
+    logo: lengbeLogo,
+    url: "https://www.tiktok.com/@lengbe.africa/photo/7624463851299294482",
+  },
+  {
+    id: 3,
+    name: "Eyélé",
+    logo: eyeleLogo,
+    url: "https://eyele.net/",
+  },
+  {
+    id: 4,
+    name: "Dibiye",
+    logo: dibiyeLogo,
+    url: "https://dibiye.com/",
+  },
+  {
+    id: 5,
+    name: "va",
+    logo: va,
+    url: "https://va-studiio.de/impressum/",
+  },
+  {
+    id: 6,
+    name: "tf",
+    logo: tf,
+    url: "https://tanka-fonta.com/",
+  },
 ],
     trusted: "Ils nous font confiance",
   },
@@ -195,7 +224,7 @@ const PartnersSection = () => {
           </div>
 
           <div className="flex gap-8">
-            {[{ num: "4+", label: "Partenaires" }, { num: "100%", label: "Confiance" }].map((s, i) => (
+            {[{ num: "6+", label: "Partenaires" }, { num: "100%", label: "Confiance" }].map((s, i) => (
               <div key={i} className={`pt-stat text-right ${visible ? "show" : ""}`} style={{ transitionDelay: `${0.2 + i * 0.1}s` }}>
                 <div className="text-3xl font-bold text-[#1f6c8c]" style={{ fontFamily: "Literata, serif" }}>{s.num}</div>
                 <div className="mt-0.5 text-xs uppercase tracking-widest text-slate-400" style={{ fontFamily: "Literata, serif" }}>{s.label}</div>
@@ -210,13 +239,26 @@ const PartnersSection = () => {
           <div className="pt-band rounded-[14px] p-5 mt-0">
             <div className="pt-mobile-grid">
               {t.partners.map((partner) => (
-                <div key={partner.id} className="pt-mobile-card">
-                  <img
-                    src={partner.logo}
-                    alt={partner.name}
-                    style={{ height: "36px", width: "auto", maxWidth: "80px", objectFit: "contain", opacity: 0.70 }}
-                  />
-                </div>
+                <a
+                key={partner.id}
+                href={partner.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pt-mobile-card"
+                aria-label={partner.name}
+              >
+                <img
+                  src={partner.logo}
+                  alt={partner.name}
+                  style={{
+                    height: "36px",
+                    width: "auto",
+                    maxWidth: "80px",
+                    objectFit: "contain",
+                    opacity: 0.70,
+                  }}
+                />
+              </a>
               ))}
             </div>
           </div>
@@ -243,11 +285,25 @@ const PartnersSection = () => {
             <div className="pt-marquee-wrap">
               <div className="pt-marquee-track">
                 {marqueePartners.map((partner, i) => (
-                  <div key={i} className="pt-card flex h-[100px] w-[160px] items-center justify-center rounded-[16px] px-5">
-                    <img src={partner.logo} alt={partner.name}
-                      style={{ maxHeight: "42px", width: "auto", objectFit: "contain", opacity: 0.70 }}
+                  <a
+                    key={i}
+                    href={partner.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pt-card flex h-[100px] w-[160px] items-center justify-center rounded-[16px] px-5"
+                    aria-label={partner.name}
+                  >
+                    <img
+                      src={partner.logo}
+                      alt={partner.name}
+                      style={{
+                        maxHeight: "42px",
+                        width: "auto",
+                        objectFit: "contain",
+                        opacity: 0.70,
+                      }}
                     />
-                  </div>
+                  </a>
                 ))}
               </div>
             </div>
