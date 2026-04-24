@@ -33,7 +33,7 @@ const translations = {
     id: 3,
     name: "Eyélé",
     logo: eyeleLogo,
-    url: "#",
+    url: null,
   },
   {
     id: 4,
@@ -306,27 +306,41 @@ const PartnersSection = () => {
             </div>
             <div className="pt-marquee-wrap">
               <div className="pt-marquee-track">
-                {marqueePartners.map((partner, i) => (
-                  <a
-                    key={i}
-                    href={partner.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="pt-card flex h-[100px] w-[160px] items-center justify-center rounded-[16px] px-5"
-                    aria-label={partner.name}
-                  >
-                    <img
-                      src={partner.logo}
-                      alt={partner.name}
-                      style={{
-                        maxHeight: "42px",
-                        width: "auto",
-                        objectFit: "contain",
-                        opacity: 0.70,
-                      }}
-                    />
-                  </a>
-                ))}
+                {marqueePartners.map((partner, i) => {
+  const content = (
+    <img
+      src={partner.logo}
+      alt={partner.name}
+      style={{
+        maxHeight: "42px",
+        width: "auto",
+        objectFit: "contain",
+        opacity: 0.70,
+      }}
+    />
+  );
+
+  return partner.url ? (
+    <a
+      key={i}
+      href={partner.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="pt-card flex h-[100px] w-[160px] items-center justify-center rounded-[16px] px-5"
+      aria-label={partner.name}
+    >
+      {content}
+    </a>
+  ) : (
+    <div
+      key={i}
+      className="pt-card flex h-[100px] w-[160px] items-center justify-center rounded-[16px] px-5 cursor-default"
+      aria-label={partner.name}
+    >
+      {content}
+    </div>
+  );
+})}
               </div>
             </div>
           </div>
