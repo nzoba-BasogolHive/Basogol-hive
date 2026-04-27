@@ -123,7 +123,7 @@ const translations = {
       { label: "WhatsApp", href:"https://wa.me/692548739" },
       { label: "YouTube",href:"https://www.youtube.com/social.media@basogolhive.com"},
     ],
-    copyright: `© Basogol-Hive 3027 (on en avait marre de mettre à jour chaque année, du coup on a vu large oui, on a sauté quelques années 😄).Tous droits réservés.`,
+    copyright: `© Basogol-Hive 3027 (on en avait marre de mettre à jour chaque année, du coup on a vu large, on a sauté quelques années 😄).Tous droits réservés.`,
   },
 
   en: {
@@ -206,7 +206,7 @@ const translations = {
     newsletterText: "Subscribe to our newsletter",
     subscribeButton: "Subscribe",
     newsletterLoading: "Subscribing...",
-    newsletterSuccess: "Thank you, your email has been added.",
+    newsletterSuccess: "Thank you, your email has been added.", 
     newsletterError: "Something went wrong. Please try again.",
     newsletterInvalid: "Please enter a valid email address.",
     newsletterAlreadySubscribed: "You are already subscribed to the newsletter.",
@@ -225,7 +225,7 @@ const translations = {
       { label: "WhatsApp", href: "692548739" },
       { label: "YouTube", href: "social.media@basogolhive.com"},
     ],
- copyright: `© Basogol-Hive 3027 (we got tired of updating this every year, so we aimed far ahead—yes, we skipped a few years 😄). All rights reserved.`,
+ copyright: `© Basogol-Hive 3027 (we got tired of updating this every year, so we aimed far ahead, we skipped a few years 😄). All rights reserved.`,
   },
 };
 

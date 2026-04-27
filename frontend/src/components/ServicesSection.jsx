@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import { technologyServices } from "../data/technologyServices";
 import { marketingBrandServices } from "../data/marketingBrandServices";
 
-const logoAnimationHevc  = "/videos/logoanimation-hevc.mov";
+const logoAnimationHevc  = "/videos/logo.mov";
 const logoAnimation = "/videos/logoanimation.webm";
 const serviceVideo = "/videos/Service.webm";
-const serviceVideoHevc = "/videos/Service.webm";
+const serviceVideoHevc = "/videos/servicetessst.mov";
 // ─────────────────────────────────────────────────────────────────────────────
 // Détection Safari iOS
 // ─────────────────────────────────────────────────────────────────────────────
@@ -193,7 +193,7 @@ const TransparentVideo = ({
         preload="auto"
       >
         {/* hvc1 = tag HEVC reconnu par Safari iOS pour la transparence */}
-        <source src={hevcSrc} type='video/mp4; codecs="hvc1"' />
+        <source src={hevcSrc} type="video/quicktime" />
       </video>
     );
   }

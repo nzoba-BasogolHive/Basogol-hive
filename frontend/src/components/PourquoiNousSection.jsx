@@ -44,11 +44,21 @@ const translations = {
       },
     ],
     highlights: [
-      { value: "Tech", label: "Applications, logiciels, hébergement et solutions digitales" },
-      { value: "Studio", label: "Logo, design, montage vidéo et contenus de communication" },
-      { value: "360°", label: "Un accompagnement complet de l'idée jusqu'à la livraison" },
+      {
+        value: "Tech",
+        label: "Applications, logiciels, hébergement et solutions digitales",
+      },
+      {
+        value: "Studio",
+        label: "Logo, design, montage vidéo et contenus de communication",
+      },
+      {
+        value: "360°",
+        label: "Un accompagnement complet de l'idée jusqu'à la livraison",
+      },
     ],
   },
+
   en: {
     badge: "Our services",
     title: "Why choose our company?",
@@ -88,9 +98,18 @@ const translations = {
       },
     ],
     highlights: [
-      { value: "Tech", label: "Applications, software, hosting and digital solutions" },
-      { value: "Studio", label: "Logo, design, video editing and communication content" },
-      { value: "360°", label: "Complete support from idea to delivery" },
+      {
+        value: "Tech",
+        label: "Applications, software, hosting and digital solutions",
+      },
+      {
+        value: "Studio",
+        label: "Logo, design, video editing and communication content",
+      },
+      {
+        value: "360°",
+        label: "Complete support from idea to delivery",
+      },
     ],
   },
 };
@@ -104,10 +123,14 @@ const PourquoiNousSection = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
       { threshold: 0.08 }
     );
+
     if (sectionRef.current) observer.observe(sectionRef.current);
+
     return () => observer.disconnect();
   }, []);
 
@@ -118,40 +141,46 @@ const PourquoiNousSection = () => {
   return (
     <section ref={sectionRef} className="section-shell relative overflow-visible">
       <style>{`
-        /* ── Entrées scroll ── */
         .pn-fade-up {
           opacity: 0;
           transform: translateY(30px);
           transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22,1,0.36,1);
         }
-        .pn-fade-up.show { opacity: 1; transform: translateY(0); }
+
+        .pn-fade-up.show {
+          opacity: 1;
+          transform: translateY(0);
+        }
 
         .pn-fade-right {
           opacity: 0;
           transform: translateX(30px);
           transition: opacity 0.85s ease 0.2s, transform 0.85s cubic-bezier(0.22,1,0.36,1) 0.2s;
         }
-        .pn-fade-right.show { opacity: 1; transform: translateX(0); }
 
-        /* ── Portrait float ── */
+        .pn-fade-right.show {
+          opacity: 1;
+          transform: translateX(0);
+        }
+
         @keyframes portraitFloat {
           0%, 100% { transform: translateY(0px) scale(1); }
-          50%       { transform: translateY(-10px) scale(1.012); }
+          50% { transform: translateY(-10px) scale(1.012); }
         }
+
         .portrait-float {
           animation: portraitFloat 7s ease-in-out infinite;
         }
 
-        /* ── Polygon décoratif ── */
         @keyframes polygonDrift {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50%       { transform: translateY(-14px) rotate(3deg); }
+          50% { transform: translateY(-14px) rotate(3deg); }
         }
+
         .polygon-drift {
           animation: polygonDrift 9s ease-in-out infinite;
         }
 
-        /* ── Badge glassmorphisme ── */
         .pn-badge {
           background: rgba(255,255,255,0.18);
           backdrop-filter: blur(12px);
@@ -160,7 +189,6 @@ const PourquoiNousSection = () => {
           box-shadow: 0 2px 10px rgba(0,0,0,0.10), 0 1px 0 rgba(255,255,255,0.25) inset;
         }
 
-        /* ── Highlight cards glassmorphisme ── */
         .pn-highlight {
           background: rgba(255,255,255,0.12);
           backdrop-filter: blur(14px);
@@ -169,33 +197,36 @@ const PourquoiNousSection = () => {
           box-shadow: 0 4px 16px rgba(0,0,0,0.10), 0 1px 0 rgba(255,255,255,0.18) inset;
           transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
         }
+
         .pn-highlight:hover {
           background: rgba(255,255,255,0.20);
           transform: translateY(-4px);
           box-shadow: 0 10px 28px rgba(0,0,0,0.16), 0 1px 0 rgba(255,255,255,0.25) inset;
         }
 
-        /* ── Items FAQ fond blanc premium ── */
         .pn-faq-item {
           background: #ffffff;
           border: 1px solid rgba(31,108,140,0.08);
           box-shadow: 0 2px 14px rgba(31,108,140,0.07);
           transition: box-shadow 0.32s ease, border-color 0.32s ease, transform 0.32s cubic-bezier(0.22,1,0.36,1);
         }
+
         .pn-faq-item:hover {
           box-shadow: 0 8px 28px rgba(31,108,140,0.13);
           border-color: rgba(31,108,140,0.16);
           transform: translateX(3px);
         }
+
         .pn-faq-item.open {
-          box-shadow: 0 10px_32px rgba(31,108,140,0.15);
+          box-shadow: 0 10px 32px rgba(31,108,140,0.15);
           border-color: rgba(31,108,140,0.20);
         }
 
-        /* Barre colorée gauche à l'ouverture */
         .pn-faq-bar {
           position: absolute;
-          left: 0; top: 0; bottom: 0;
+          left: 0;
+          top: 0;
+          bottom: 0;
           width: 3px;
           border-radius: 0 2px 2px 0;
           background: linear-gradient(to bottom, #0e678f, #58b4da);
@@ -204,12 +235,12 @@ const PourquoiNousSection = () => {
           transform-origin: top;
           transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1);
         }
+
         .pn-faq-item.open .pn-faq-bar {
           opacity: 1;
           transform: scaleY(1);
         }
 
-        /* Numéro décoratif */
         .pn-faq-num {
           font-size: 11px;
           font-weight: 700;
@@ -218,12 +249,12 @@ const PourquoiNousSection = () => {
           min-width: 22px;
           font-family: Literata, serif;
         }
+
         .pn-faq-item.open .pn-faq-num {
           opacity: 1;
           color: #0e678f;
         }
 
-        /* Toggle button */
         .pn-toggle {
           width: 34px;
           height: 34px;
@@ -236,11 +267,13 @@ const PourquoiNousSection = () => {
           flex-shrink: 0;
           transition: all 0.32s cubic-bezier(0.22,1,0.36,1);
         }
+
         .pn-toggle.closed {
           background: rgba(31,108,140,0.07);
           color: #1f6c8c;
           border: 1px solid rgba(31,108,140,0.14);
         }
+
         .pn-toggle.open-btn {
           background: linear-gradient(135deg, #0e678f, #1c7ead);
           color: #fff;
@@ -248,19 +281,18 @@ const PourquoiNousSection = () => {
           border: 1px solid rgba(255,255,255,0.20);
         }
 
-        /* Séparateur contenu */
         .pn-faq-divider {
           height: 1px;
           background: linear-gradient(90deg, rgba(31,108,140,0.14), transparent);
           margin-bottom: 14px;
         }
 
-        /* Cascade FAQ */
         .pn-faq-list > div {
           opacity: 0;
           transform: translateY(16px);
           transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22,1,0.36,1);
         }
+
         .pn-faq-list.show > div:nth-child(1) { opacity:1; transform:translateY(0); transition-delay:0.30s; }
         .pn-faq-list.show > div:nth-child(2) { opacity:1; transform:translateY(0); transition-delay:0.38s; }
         .pn-faq-list.show > div:nth-child(3) { opacity:1; transform:translateY(0); transition-delay:0.46s; }
@@ -273,8 +305,6 @@ const PourquoiNousSection = () => {
 
       <div className="page-container">
         <div className="relative overflow-visible">
-
-          {/* Polygon décoratif animé */}
           <div className="pointer-events-none absolute inset-y-0 right-0 hidden xl:block">
             <img
               src={polygonShape}
@@ -284,27 +314,25 @@ const PourquoiNousSection = () => {
             />
           </div>
 
-          {/* Carte bleue principale */}
           <div
-            className={`pn-fade-up relative z-10 overflow-hidden rounded-[28px] shadow-[0_20px_70px_rgba(16,95,140,0.18)] ${visible ? "show" : ""}`}
+            className={`pn-fade-up relative z-10 overflow-hidden rounded-[28px] shadow-[0_20px_70px_rgba(16,95,140,0.18)] ${
+              visible ? "show" : ""
+            }`}
             style={{
-              background: "linear-gradient(135deg, #0e678f 0%, #1c7ead 50%, #58b4da 100%)",
+              background:
+                "linear-gradient(135deg, #0e678f 0%, #1c7ead 50%, #58b4da 100%)",
             }}
           >
-            {/* Halo intérieur */}
             <div
               className="pointer-events-none absolute inset-0 z-0"
               style={{
-                background: "radial-gradient(ellipse 70% 50% at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 60%)",
+                background:
+                  "radial-gradient(ellipse 70% 50% at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 60%)",
               }}
             />
 
             <div className="relative z-10 px-6 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12 xl:px-14">
-
-              {/* En-tête */}
               <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
-
-                {/* Texte */}
                 <div>
                   <span
                     className="pn-badge inline-flex rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white/90"
@@ -326,30 +354,27 @@ const PourquoiNousSection = () => {
                   >
                     {t.description}
                   </p>
+
+                  {/* Portrait mobile : juste après le texte */}
+                  <div
+                    className={`pn-fade-right mt-8 flex items-center justify-center lg:hidden ${
+                      visible ? "show" : ""
+                    }`}
+                  >
+                    <img
+                      src={whyUsPortraitCards}
+                      alt={t.portraitAlt}
+                      className="portrait-float w-full max-w-[300px] object-contain drop-shadow-[0_22px_40px_rgba(0,0,0,0.20)]"
+                    />
+                  </div>
                 </div>
 
-                {/* Highlights mobile */}
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:hidden">
-                  {t.highlights.map((item, index) => (
-                    <div key={index} className="pn-highlight rounded-2xl p-5">
-                      <div
-                        className="text-2xl font-bold text-white"
-                        style={{ fontFamily: "Literata, serif" }}
-                      >
-                        {item.value}
-                      </div>
-                      <p
-                        className="mt-2 text-sm leading-6 text-white/85"
-                        style={{ fontFamily: "Literata, serif" }}
-                      >
-                        {item.label}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Portrait grand écran */}
-                <div className={`pn-fade-right hidden lg:flex lg:items-center lg:justify-center ${visible ? "show" : ""}`}>
+                {/* Portrait desktop */}
+                <div
+                  className={`pn-fade-right hidden items-center justify-center lg:flex ${
+                    visible ? "show" : ""
+                  }`}
+                >
                   <img
                     src={whyUsPortraitCards}
                     alt={t.portraitAlt}
@@ -358,7 +383,27 @@ const PourquoiNousSection = () => {
                 </div>
               </div>
 
-              {/* Highlights grand écran */}
+              {/* Highlights mobile */}
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3 lg:hidden">
+                {t.highlights.map((item, index) => (
+                  <div key={index} className="pn-highlight rounded-2xl p-5">
+                    <div
+                      className="text-2xl font-bold text-white"
+                      style={{ fontFamily: "Literata, serif" }}
+                    >
+                      {item.value}
+                    </div>
+                    <p
+                      className="mt-2 text-sm leading-6 text-white/85"
+                      style={{ fontFamily: "Literata, serif" }}
+                    >
+                      {item.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Highlights desktop */}
               <div className="mt-8 hidden gap-4 lg:grid lg:grid-cols-3">
                 {t.highlights.map((item, index) => (
                   <div key={index} className="pn-highlight rounded-2xl p-5">
@@ -378,25 +423,27 @@ const PourquoiNousSection = () => {
                 ))}
               </div>
 
-              {/* Séparateur */}
               <div
                 className="my-8 h-[1px]"
-                style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.18), transparent)" }}
+                style={{
+                  background:
+                    "linear-gradient(90deg, rgba(255,255,255,0.18), transparent)",
+                }}
               />
 
-              {/* FAQ */}
               <div className={`pn-faq-list space-y-3 ${visible ? "show" : ""}`}>
                 {t.faqData.map((item, index) => {
                   const isOpen = openIndex === index;
+
                   return (
                     <div
                       key={index}
-                      className={`pn-faq-item relative overflow-hidden rounded-[14px] ${isOpen ? "open" : ""}`}
+                      className={`pn-faq-item relative overflow-hidden rounded-[14px] ${
+                        isOpen ? "open" : ""
+                      }`}
                     >
-                      {/* Barre gauche */}
                       <div className="pn-faq-bar" />
 
-                      {/* Question */}
                       <button
                         type="button"
                         onClick={() => toggleItem(index)}
@@ -406,6 +453,7 @@ const PourquoiNousSection = () => {
                           <span className="pn-faq-num">
                             {String(index + 1).padStart(2, "0")}
                           </span>
+
                           <span
                             className="text-sm font-semibold text-slate-800 sm:text-[15px] lg:text-base"
                             style={{ fontFamily: "Literata, serif" }}
@@ -413,20 +461,27 @@ const PourquoiNousSection = () => {
                             {item.title}
                           </span>
                         </div>
-                        <span className={`pn-toggle ${isOpen ? "open-btn" : "closed"}`}>
+
+                        <span
+                          className={`pn-toggle ${
+                            isOpen ? "open-btn" : "closed"
+                          }`}
+                        >
                           {isOpen ? "−" : "+"}
                         </span>
                       </button>
 
-                      {/* Réponse */}
                       <div
                         className={`grid transition-all duration-500 ${
-                          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                          isOpen
+                            ? "grid-rows-[1fr] opacity-100"
+                            : "grid-rows-[0fr] opacity-0"
                         }`}
                       >
                         <div className="overflow-hidden">
                           <div className="px-5 pb-5 sm:px-6 sm:pb-6">
                             <div className="pn-faq-divider" />
+
                             <p
                               className="text-sm leading-[1.85] text-slate-500 sm:text-[15px]"
                               style={{ fontFamily: "Literata, serif" }}
@@ -440,7 +495,6 @@ const PourquoiNousSection = () => {
                   );
                 })}
               </div>
-
             </div>
           </div>
         </div>
