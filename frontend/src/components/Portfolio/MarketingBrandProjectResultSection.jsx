@@ -288,7 +288,7 @@ const MarketingBrandServiceResultSection = ({
               <img
                 src={sideImage.image}
                 alt={sideImage.alt}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain bg-white"
                 style={{ minHeight: "300px" }}
               />
               <div className="rs-gal-overlay" />
@@ -308,7 +308,7 @@ const MarketingBrandServiceResultSection = ({
                 <img
                   src={sideImage.image}
                   alt={sideImage.alt}
-                  className="h-[140px] w-full object-cover"
+                  className="h-[220px] w-full object-cover"
                 />
                 <div className="rs-gal-overlay" />
               </div>
@@ -319,7 +319,7 @@ const MarketingBrandServiceResultSection = ({
                 <img
                   src={item.image}
                   alt={item.alt}
-                  className="h-[140px] w-full object-cover"
+                  className="h-[220px] w-full object-cover"
                 />
                 <div className="rs-gal-overlay" />
               </div>

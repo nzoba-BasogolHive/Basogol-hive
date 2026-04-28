@@ -5,17 +5,17 @@ import  tech3 from "../assets/scene_05_shot_01.1-01.png";
 import  tech4 from "../assets/scene_01.shot_01-01.png";
 import  tech5 from "../assets/scene_02_shot_01.png";
 import  leb8 from "../assets/Logo_Mockup_2.jpg";
-import  leb1 from "../assets/Business_Card_Mockup_3.jpg";
-import  leb2 from "../assets/catalogue_012.jpg";
-import  leb3 from "../assets/avant.jpg";
-import  leb4 from "../assets/arriere.jpg";
-import  leb5 from "../assets/packaging.jpg";
+import  leb1 from "../assets/Calque.png";
+import  leb2 from "../assets/mockup9.png";
+import  leb3 from "../assets/mockup2.jpg";
+import  leb4 from "../assets/mockup7.jpg";
+import  leb5 from "../assets/mockup8.jpg";
 import  vid from "../assets/A002C234.jpg";
-import  vid6 from "../assets/A002C2152.jpg";
-import  vid7 from "../assets/A002C0393.jpg";
+import  vid6 from "../assets/drone.png";
+import  vid7 from "../assets/A002C2071.jpg";
 import  vid8 from "../assets/A002C204.jpg";
-import  vid4 from "../assets/A002C017_22.jpg";
-import  vid5 from "../assets/A002C2151.jpg";
+import  vid4 from "../assets/A002C286_2.jpg";
+import  vid5 from "../assets/A002C2212.jpg";
 import  vid3 from "../assets/A002C2358.jpg";
 
 

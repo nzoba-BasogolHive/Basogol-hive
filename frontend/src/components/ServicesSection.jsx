@@ -9,7 +9,7 @@ import { marketingBrandServices } from "../data/marketingBrandServices";
 const logoAnimationHevc  = "/videos/logo.mov";
 const logoAnimation = "/videos/logoanimation.webm";
 const serviceVideo = "/videos/Service.webm";
-const serviceVideoHevc = "/videos/servicetessst.mov";
+const serviceVideoHevc = "/videos/Service_hvec.mov";
 // ─────────────────────────────────────────────────────────────────────────────
 // Détection Safari iOS
 // ─────────────────────────────────────────────────────────────────────────────
