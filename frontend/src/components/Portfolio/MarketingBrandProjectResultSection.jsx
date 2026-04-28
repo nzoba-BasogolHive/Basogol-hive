@@ -5,15 +5,11 @@ const translations = {
   fr: {
     badge: "Livrables",
     mainMediaAlt: "Visuel principal du résultat",
-    playing: "En lecture",
-    clickToPlay: "Appuyez pour lire",
     defaultTitle: "Résultat",
   },
   en: {
     badge: "Deliverables",
     mainMediaAlt: "Main result visual",
-    playing: "Playing",
-    clickToPlay: "Click to play",
     defaultTitle: "Result",
   },
 };
@@ -31,8 +27,10 @@ const MarketingBrandServiceResultSection = ({
 
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
+
   const [visible, setVisible] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -88,13 +86,11 @@ const MarketingBrandServiceResultSection = ({
           opacity: 1;
           transform: translateY(0);
         }
-
         .rs-badge {
           background: rgba(31,108,140,0.08);
           border: 1px solid rgba(31,108,140,0.16);
           color: #1f6c8c;
         }
-
         .rs-video-frame {
           background: rgba(255,255,255,0.72);
           backdrop-filter: blur(16px) saturate(145%);
@@ -102,12 +98,10 @@ const MarketingBrandServiceResultSection = ({
           border: 1px solid rgba(255,255,255,0.65);
           box-shadow: 0 12px 48px rgba(31,108,140,0.12), 0 1px 0 rgba(255,255,255,0.80) inset;
         }
-
         .rs-main-bar {
           height: 3px;
           background: linear-gradient(90deg, #1f6c8c, #58b4da, #a8d4e8);
         }
-
         .rs-play-btn {
           width: 60px;
           height: 60px;
@@ -123,40 +117,21 @@ const MarketingBrandServiceResultSection = ({
           cursor: pointer;
           transition: all 0.32s cubic-bezier(0.22,1,0.36,1);
         }
-
         .rs-play-btn:hover {
           background: #fff;
           transform: scale(1.10);
           box-shadow: 0 14px 38px rgba(0,0,0,0.28);
         }
-
-        .rs-progress-bar {
-          height: 3px;
-          background: rgba(255,255,255,0.25);
-          border-radius: 999px;
-          overflow: hidden;
-        }
-
-        .rs-progress-fill {
-          height: 100%;
-          border-radius: 999px;
-          background: linear-gradient(90deg, #fff, rgba(255,255,255,0.60));
-          width: 0%;
-          transition: width 0.1s linear;
-        }
-
         .rs-video-overlay {
           position: absolute;
           inset: 0;
           background: linear-gradient(to top, rgba(8,25,42,0.55) 0%, transparent 45%);
           transition: opacity 0.35s ease;
         }
-
         .rs-video-overlay.hidden-overlay {
           opacity: 0;
           pointer-events: none;
         }
-
         .rs-gal-card {
           overflow: hidden;
           border-radius: 14px;
@@ -165,29 +140,25 @@ const MarketingBrandServiceResultSection = ({
           box-shadow: 0 4px 16px rgba(31,108,140,0.08), 0 1px 0 rgba(255,255,255,0.80) inset;
           transition: all 0.38s cubic-bezier(0.22,1,0.36,1);
         }
-
         .rs-gal-card:hover {
           transform: translateY(-5px) scale(1.015);
           box-shadow: 0 14px 38px rgba(31,108,140,0.16);
           border-color: rgba(31,108,140,0.14);
         }
-
         .rs-gal-card img {
           transition: transform 0.65s cubic-bezier(0.22,1,0.36,1);
         }
-
         .rs-gal-card:hover img {
           transform: scale(1.07);
         }
-
         .rs-gal-overlay {
           position: absolute;
           inset: 0;
           background: linear-gradient(to top, rgba(31,108,140,0.18) 0%, transparent 50%);
           opacity: 0;
           transition: opacity 0.35s ease;
+          pointer-events: none;
         }
-
         .rs-gal-card:hover .rs-gal-overlay {
           opacity: 1;
         }
@@ -237,24 +208,25 @@ const MarketingBrandServiceResultSection = ({
         >
           <div className="rs-video-frame overflow-hidden rounded-[18px]">
             <div className="rs-main-bar" />
+
             <div className="relative" style={{ background: "#000" }}>
               {isVideo ? (
                 <>
-                 <video
-  ref={videoRef}
-  className="block h-[240px] w-full object-cover sm:h-[340px] lg:h-[440px]"
-  style={{ display: "block" }}
-  playsInline
-  controls
-  preload="metadata"
-  poster={mainMedia}
-  onPlay={() => setPlaying(true)}
-  onPause={() => setPlaying(false)}
-  onEnded={() => setPlaying(false)}
->
-  <source src={videoSrc} type="video/mp4" />
-  <source src={videoSrc} type="video/quicktime" />
-</video>
+                  <video
+                    ref={videoRef}
+                    className="block h-[240px] w-full object-cover sm:h-[340px] lg:h-[440px]"
+                    style={{ display: "block" }}
+                    playsInline
+                    controls
+                    preload="metadata"
+                    poster={mainMedia}
+                    onPlay={() => setPlaying(true)}
+                    onPause={() => setPlaying(false)}
+                    onEnded={() => setPlaying(false)}
+                  >
+                    <source src={videoSrc} type="video/mp4" />
+                    <source src={videoSrc} type="video/quicktime" />
+                  </video>
 
                   <div
                     className={`rs-video-overlay ${
@@ -277,7 +249,13 @@ const MarketingBrandServiceResultSection = ({
                 <img
                   src={mainMedia}
                   alt={t.mainMediaAlt}
-                  className="block h-[240px] w-full object-cover sm:h-[340px] lg:h-[440px]"
+                  onClick={() =>
+                    setSelectedImage({
+                      image: mainMedia,
+                      alt: t.mainMediaAlt,
+                    })
+                  }
+                  className="block h-[240px] w-full cursor-zoom-in object-cover sm:h-[340px] lg:h-[440px]"
                 />
               )}
             </div>
@@ -288,7 +266,8 @@ const MarketingBrandServiceResultSection = ({
               <img
                 src={sideImage.image}
                 alt={sideImage.alt}
-                className="h-full w-full object-contain bg-white"
+                onClick={() => setSelectedImage(sideImage)}
+                className="h-full w-full cursor-zoom-in object-contain bg-white"
                 style={{ minHeight: "300px" }}
               />
               <div className="rs-gal-overlay" />
@@ -308,7 +287,8 @@ const MarketingBrandServiceResultSection = ({
                 <img
                   src={sideImage.image}
                   alt={sideImage.alt}
-                  className="h-[220px] w-full object-cover"
+                  onClick={() => setSelectedImage(sideImage)}
+                  className="h-[220px] w-full cursor-zoom-in object-cover"
                 />
                 <div className="rs-gal-overlay" />
               </div>
@@ -319,7 +299,8 @@ const MarketingBrandServiceResultSection = ({
                 <img
                   src={item.image}
                   alt={item.alt}
-                  className="h-[220px] w-full object-cover"
+                  onClick={() => setSelectedImage(item)}
+                  className="h-[220px] w-full cursor-zoom-in object-cover"
                 />
                 <div className="rs-gal-overlay" />
               </div>
@@ -327,6 +308,27 @@ const MarketingBrandServiceResultSection = ({
           </div>
         )}
       </div>
+
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button
+            className="absolute right-5 top-5 text-4xl font-bold text-white"
+            onClick={() => setSelectedImage(null)}
+          >
+            ×
+          </button>
+
+          <img
+            src={selectedImage.image}
+            alt={selectedImage.alt}
+            className="max-h-[92vh] max-w-[96vw] rounded-2xl object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </section>
   );
 };

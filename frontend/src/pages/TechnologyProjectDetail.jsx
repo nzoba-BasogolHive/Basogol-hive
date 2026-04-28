@@ -84,14 +84,15 @@ const TechnologyProjectDetail = () => {
         }}
       />
 
-      <TechnologyProjectResultSection
-        key={`result-${project.slug}`}
-        badge={localizedResult.badge}
-        title={localizedResult.title}
-        description={localizedResult.description}
-        mainMedia={localizedResult.mainMedia}
-        gallery={localizedResult.gallery}
-      />
+<TechnologyProjectResultSection
+  key={`result-${project.slug}`}
+  badge={localizedResult.badge}
+  title={localizedResult.title}
+  description={localizedResult.description}
+  mainMedia={localizedResult.mainMedia}
+  gallery={localizedResult.gallery}
+  projectTags={localizedProject.projectTags}
+/>
 
       <FooterSection />
     </main>

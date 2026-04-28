@@ -116,7 +116,7 @@ const TechnologyProjectDetailHero = ({ project }) => {
             {heroDescription}
           </p>
 
-          {projectTags.length > 0 && (
+          {/* {projectTags.length > 0 && (
   <div className="mt-10 flex flex-wrap gap-3">
     {projectTags.map((tag, i) => (
       <a
@@ -131,7 +131,7 @@ const TechnologyProjectDetailHero = ({ project }) => {
       </a>
     ))}
   </div>
-)}
+)} */}
           {/* <div className="mt-9">
             <a
               href="#tech-project-detail-content"
