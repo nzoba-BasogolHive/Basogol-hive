@@ -1,3 +1,12 @@
+import  st from "../assets/Instagra.jpg";
+import  re from "../assets/Instagram2.png";
+import is from "../assets/Instagram22.jpg";
+import de from "../assets/Instagram6.webp";
+import ve from "../assets/Instagram33.webp";
+import he from "../assets/Instagram34.jpg";
+import pr from "../assets/Instagram55.jpg";
+import cr from "../assets/Instagram44.jpg";
+
 export const marketingBrandServices = [
   {
     slug: "brand-strategy-positioning",
@@ -14,7 +23,7 @@ export const marketingBrandServices = [
       en: "We define the strategic positioning of your brand to differentiate it durably in its market and create a strong connection with your audiences.",
     },
     image:
-      "https://images.unsplash.com/photo-1553484771-371a605b060b?auto=format&fit=crop&w=1800&q=80",
+      st,
     category: {
       fr: "Marketing & Branding",
       en: "Marketing & Branding",
@@ -40,7 +49,7 @@ export const marketingBrandServices = [
       en: "We conduct market, audience and user research to inform your strategic decisions with reliable and actionable data.",
     },
     image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1800&q=80",
+     re,
     category: {
       fr: "Marketing & Branding",
       en: "Marketing & Branding",
@@ -66,7 +75,7 @@ export const marketingBrandServices = [
       en: "We design cohesive and distinctive visual systems — logo, typography, colors, iconography — to give your brand a strong and recognizable presence.",
     },
     image:
-      "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1800&q=80",
+      is,
     category: {
       fr: "Marketing & Branding",
       en: "Marketing & Branding",
@@ -92,7 +101,7 @@ export const marketingBrandServices = [
       en: "We design intuitive, fluid and engaging user interfaces and experiences, centered on the real needs of your users.",
     },
     image:
-      "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1800&q=80",
+     ve,
     category: {
       fr: "Marketing & Branding",
       en: "Marketing & Branding",
@@ -118,7 +127,7 @@ export const marketingBrandServices = [
       en: "We design and develop high-performing, elegant and optimized websites, built to convert your visitors into clients and reflect the excellence of your brand.",
     },
     image:
-      "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=1800&q=80",
+     de,
     category: {
       fr: "Marketing & Branding",
       en: "Marketing & Branding",
@@ -144,7 +153,7 @@ export const marketingBrandServices = [
       en: "We define the creative direction and content strategy of your brand to ensure consistent, impactful and memorable communication across all your channels.",
     },
     image:
-      "https://images.unsplash.com/photo-1542744094-24638eff58bb?auto=format&fit=crop&w=1800&q=80",
+     he,
     category: {
       fr: "Marketing & Branding",
       en: "Marketing & Branding",
@@ -169,7 +178,7 @@ export const marketingBrandServices = [
       fr: "Nous produisons des contenus de qualité — vidéos, visuels, textes, motion — adaptés à chaque format et chaque plateforme pour maximiser votre impact.",
       en: "We produce high-quality content — videos, visuals, copy, motion — tailored to each format and platform to maximize your impact.",
     },
- image: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1800&q=80",
+ image:pr,
     category: {
       fr: "Marketing & Branding",
       en: "Marketing & Branding",
@@ -195,7 +204,7 @@ export const marketingBrandServices = [
       en: "We deploy growth strategies combining organic social media and paid advertising to accelerate your acquisition, awareness and conversions.",
     },
     image:
-      "https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=1800&q=80",
+    cr,
     category: {
       fr: "Marketing & Branding",
       en: "Marketing & Branding",
