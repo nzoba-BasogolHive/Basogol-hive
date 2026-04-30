@@ -49,7 +49,7 @@ export const marketingBrandServices = [
       en: "We conduct market, audience and user research to inform your strategic decisions with reliable and actionable data.",
     },
     image:
-     re,
+     is,
     category: {
       fr: "Marketing & Branding",
       en: "Marketing & Branding",
@@ -75,7 +75,7 @@ export const marketingBrandServices = [
       en: "We design cohesive and distinctive visual systems — logo, typography, colors, iconography — to give your brand a strong and recognizable presence.",
     },
     image:
-      is,
+      re,
     category: {
       fr: "Marketing & Branding",
       en: "Marketing & Branding",
