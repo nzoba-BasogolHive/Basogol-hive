@@ -1,4 +1,4 @@
-import  ui from "../assets/IMG_4433.jpg";
+import ui from "../assets/IMG_4433.JPG";
 import  ec from "../assets/Os6.jpg";
 import  hm from "../assets/HMSSUAE.jpg";
 import  wm from "../assets/What.jpg";
