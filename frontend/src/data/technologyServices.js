@@ -1,3 +1,8 @@
+import  ui from "../assets/IMG_4433.jpg";
+import  ec from "../assets/Os6.jpg";
+import  hm from "../assets/HMSSUAE.jpg";
+import  wm from "../assets/What.jpg";
+
 export const technologyServices = [
   {
     slug: "ux-ui-design-systems",
@@ -15,7 +20,7 @@ export const technologyServices = [
       en: "We design intuitive interfaces, smooth user experiences and consistent design systems that combine aesthetics and performance.",
     },
     image:
-      "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1800&q=80",
+     ui,
     category: {
       fr: "Technologie",
       en: "Technology",
@@ -69,7 +74,7 @@ export const technologyServices = [
       en: "We build high-performing, conversion-optimized online stores designed to deliver a seamless shopping experience and maximize your sales.",
     },
     image:
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1800&q=80",
+      ec,
     category: {
       fr: "Technologie",
       en: "Technology",
@@ -123,7 +128,7 @@ export const technologyServices = [
       en: "We build specialized digital solutions for transport, logistics and B2B players — fleet management, order tracking, partner interfaces and business portals.",
     },
     image:
-      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1800&q=80",
+     hm,
     category: {
       fr: "Technologie",
       en: "Technology",
@@ -177,7 +182,7 @@ export const technologyServices = [
       en: "We handle hosting, maintenance, backups and support for your digital tools to ensure stability, performance and continuity over time.",
     },
     image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=80",
+     wm,
     category: {
       fr: "Technologie",
       en: "Technology",

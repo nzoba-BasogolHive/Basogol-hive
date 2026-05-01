@@ -18,7 +18,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLanguage } from "../LanguageContext";
 import leftOutlineShape from "../../assets/Union0.png";
 import rightSoftShape from "../../assets/Group14.png";
-import topRightShape from "../../assets/Union_03.png";
+import topRightShape from "../../assets/Union36.png";
 
 const translations = {
   fr: {

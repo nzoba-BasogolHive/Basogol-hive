@@ -16,7 +16,12 @@ import { useLanguage } from "../LanguageContext";
 
 import leftOutlineShape from "../../assets/Union0.png";
 import rightSoftShape from "../../assets/Group14.png";
-import topRightShape from "../../assets/Union_03.png";
+import topRightShape from "../../assets/Union36.png";
+import Shape1 from "../../assets/IMG_4534.jpg";
+import Shape2 from "../../assets/IMG_4423.jpg";
+import Shape3 from "../../assets/IMG_4432.jpg";
+
+
 
 const translations = {
   fr: {
@@ -72,9 +77,9 @@ const translations = {
       stat2: "Positionnement",
       stat3: "Exécution",
       imageTop:
-        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80",
+        Shape2,
       imageBottom:
-        "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=1400&q=80",
+       Shape1,
       bottomTitle:
         "Un process pensé pour renforcer la valeur, la clarté et l’impact de votre marque",
       bottomText:
@@ -124,9 +129,9 @@ const translations = {
       stat2: "Développement",
       stat3: "Livraison",
       imageTop:
-        "https://images.unsplash.com/photo-1516321165247-4aa89a48be28?auto=format&fit=crop&w=1400&q=80",
+        Shape3,
       imageBottom:
-        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80",
+        Shape1,
       bottomTitle:
         "Un process technique pensé pour construire des solutions performantes et durables",
       bottomText:
