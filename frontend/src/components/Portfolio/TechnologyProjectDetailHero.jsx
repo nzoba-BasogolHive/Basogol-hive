@@ -18,7 +18,11 @@ const TechnologyProjectDetailHero = ({ project }) => {
   const imageAlt = project.projectName || heroTitle || "Technology project";
 
   return (
-    <section className="relative min-h-[88vh] overflow-hidden">
+    <section
+      id="technology-project-detail-hero"
+      data-page-hero
+      className="relative min-h-[88vh] overflow-hidden"
+    >
       <style>{`
         .tdh-bg { transition: transform 9s ease; }
         section:hover .tdh-bg { transform: scale(1.04); }
@@ -44,7 +48,11 @@ const TechnologyProjectDetailHero = ({ project }) => {
           transform: translateX(-28px);
           transition: opacity 0.92s ease, transform 0.92s cubic-bezier(0.22,1,0.36,1);
         }
-        .tdh-entry.show { opacity: 1; transform: translateX(0); }
+
+        .tdh-entry.show {
+          opacity: 1;
+          transform: translateX(0);
+        }
 
         .tdh-badge {
           background: rgba(31,108,140,0.22);
@@ -116,23 +124,27 @@ const TechnologyProjectDetailHero = ({ project }) => {
             {heroDescription}
           </p>
 
-          {/* {projectTags.length > 0 && (
-  <div className="mt-10 flex flex-wrap gap-3">
-    {projectTags.map((tag, i) => (
-      <a
-        key={i}
-        href={tag.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="tdh-cat-tag inline-flex rounded-full px-6 py-1 text-[14px] font-semibold text-white"
-        style={{ fontFamily: "Literata, serif" }}
-      >
-        {tag.label}
-      </a>
-    ))}
-  </div>
-)} */}
-          {/* <div className="mt-9">
+          {/* 
+          {projectTags.length > 0 && (
+            <div className="mt-10 flex flex-wrap gap-3">
+              {projectTags.map((tag, i) => (
+                <a
+                  key={i}
+                  href={tag.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="tdh-cat-tag inline-flex rounded-full px-6 py-1 text-[14px] font-semibold text-white"
+                  style={{ fontFamily: "Literata, serif" }}
+                >
+                  {tag.label}
+                </a>
+              ))}
+            </div>
+          )}
+          */}
+
+          {/* 
+          <div className="mt-9">
             <a
               href="#tech-project-detail-content"
               className="tdh-btn inline-flex items-center gap-2 rounded-[10px] px-7 py-3.5 text-sm"
@@ -141,7 +153,8 @@ const TechnologyProjectDetailHero = ({ project }) => {
               Découvrir le projet
               <span style={{ fontSize: "15px" }}>↓</span>
             </a>
-          </div> */}
+          </div>
+          */}
         </div>
       </div>
     </section>
