@@ -17,9 +17,9 @@ import { useLanguage } from "../LanguageContext";
 import leftOutlineShape from "../../assets/Union0.png";
 import rightSoftShape from "../../assets/Group14.png";
 import topRightShape from "../../assets/Union36.png";
-import Shape1 from "../../assets/IMG_4534.jpg";
-import Shape2 from "../../assets/IMG_4423.jpg";
-import Shape3 from "../../assets/IMG_4432.jpg";
+import Shape1 from "../../assets/IMG_4534.JPG";
+import Shape2 from "../../assets/IMG_4423.JPG";
+import Shape3 from "../../assets/IMG_4432.JPG";
 
 
 
