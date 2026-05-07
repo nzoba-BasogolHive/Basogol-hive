@@ -192,7 +192,7 @@ const selectedDepartment =
     setFormData({
       email: "",
       subject: "",
-      department: "tech",
+      department: "",
       lastName: "",
       firstName: "",
       message: "",
@@ -206,7 +206,41 @@ const selectedDepartment =
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+if (!formData.email.trim()) {
+  setPopup({
+    open: true,
+    type: "error",
+    message: lang === "fr" ? "Veuillez remplir l’email." : "Please fill in the email.",
+  });
+  return;
+}
 
+if (!formData.subject.trim()) {
+  setPopup({
+    open: true,
+    type: "error",
+    message: lang === "fr" ? "Veuillez remplir le sujet." : "Please fill in the subject.",
+  });
+  return;
+}
+
+if (!formData.message.trim()) {
+  setPopup({
+    open: true,
+    type: "error",
+    message: lang === "fr" ? "Veuillez remplir le message." : "Please fill in the message.",
+  });
+  return;
+}
+
+if (!formData.department.trim()) {
+  setPopup({
+    open: true,
+    type: "error",
+    message: lang === "fr" ? "Veuillez sélectionner une expertise." : "Please select an expertise.",
+  });
+  return;
+}
     setIsSubmitting(true);
     setPopup({ open: false, type: "", message: "" });
 
