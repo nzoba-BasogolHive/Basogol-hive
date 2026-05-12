@@ -104,14 +104,23 @@ const translations = {
 };
 
 const inputClass = `
-  w-full rounded-[10px] border border-[#d8eaf3]
-  bg-white/70 backdrop-blur-sm
-  px-4 py-3.5 text-sm text-slate-800
-  outline-none placeholder:text-slate-400
+  w-full rounded-2xl
+  border border-white/40
+  bg-white/60
+  backdrop-blur-xl
+  px-5 py-4
+  text-[15px] text-slate-800
+  shadow-[0_4px_20px_rgba(15,23,42,0.04)]
+  outline-none
   transition-all duration-300
-  focus:border-[#1f6c8c] focus:bg-white
-  focus:shadow-[0_0_0_3px_rgba(31,108,140,0.08)]
-  hover:border-[#a8d4e8]
+  placeholder:text-slate-400
+
+  hover:border-[#7dd3fc]
+  hover:bg-white/80
+
+  focus:border-[#0ea5e9]
+  focus:bg-white
+  focus:shadow-[0_0_0_4px_rgba(14,165,233,0.12)]
 `;
 
 const ContactSection = () => {
@@ -187,7 +196,7 @@ const selectedDepartment =
       [name]: value,
     }));
   };
-
+const [errors, setErrors] = useState({});
   const resetForm = () => {
     setFormData({
       email: "",
@@ -204,47 +213,35 @@ const selectedDepartment =
     setPopup({ open: false, type: "", message: "" });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-if (!formData.email.trim()) {
-  setPopup({
-    open: true,
-    type: "error",
-    message: lang === "fr" ? "Veuillez remplir l’email." : "Please fill in the email.",
-  });
-  return;
-}
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-if (!formData.subject.trim()) {
-  setPopup({
-    open: true,
-    type: "error",
-    message: lang === "fr" ? "Veuillez remplir le sujet." : "Please fill in the subject.",
-  });
-  return;
-}
+  const newErrors = {};
 
-if (!formData.message.trim()) {
-  setPopup({
-    open: true,
-    type: "error",
-    message: lang === "fr" ? "Veuillez remplir le message." : "Please fill in the message.",
-  });
-  return;
-}
+  if (!formData.email.trim()) {
+    newErrors.email = lang === "fr" ? "Veuillez entrer votre email" : "Please enter your email";
+  }
 
-if (!formData.department.trim()) {
-  setPopup({
-    open: true,
-    type: "error",
-    message: lang === "fr" ? "Veuillez sélectionner une expertise." : "Please select an expertise.",
-  });
-  return;
-}
-    setIsSubmitting(true);
-    setPopup({ open: false, type: "", message: "" });
+  if (!formData.subject.trim()) {
+    newErrors.subject = lang === "fr" ? "Veuillez entrer un sujet" : "Please enter a subject";
+  }
 
-    try {
+  if (!formData.message.trim()) {
+    newErrors.message = lang === "fr" ? "Veuillez entrer votre message" : "Please enter your message";
+  }
+
+  if (!formData.department.trim()) {
+    newErrors.department = lang === "fr" ? "Veuillez choisir une expertise" : "Please choose an expertise";
+  }
+
+  setErrors(newErrors);
+
+  if (Object.keys(newErrors).length > 0) return;
+
+  setIsSubmitting(true);
+  setPopup({ open: false, type: "", message: "" });
+
+  try {
       await sendContactMessage({
         email: formData.email,
         subject: formData.subject,
@@ -305,7 +302,13 @@ if (!formData.department.trim()) {
         .cs-fade-right.show { opacity: 1; transform: translateX(0); }
 
         .cs-form-card {
-          background: rgba(255,255,255,0.72);
+          background: rgba(255,255,255,0.55);
+          backdrop-filter: blur(28px);
+          border: 1px solid rgba(255,255,255,0.6);
+
+          box-shadow:
+            0 10px 40px rgba(15,23,42,0.06),
+            0 2px 12px rgba(31,108,140,0.08);
           backdrop-filter: blur(20px) saturate(155%);
           -webkit-backdrop-filter: blur(20px) saturate(155%);
           border: 1px solid rgba(255,255,255,0.70);
@@ -315,13 +318,15 @@ if (!formData.department.trim()) {
         }
 
         .cs-info-card {
-          background: linear-gradient(135deg, rgba(31,108,140,0.90) 0%, rgba(42,144,184,0.88) 100%);
+          background: linear-gradient(  145deg,#0f172a 0%,#164e63 45%, #0284c7 100%, rgba(31,108,140,0.90) 0%, rgba(42,144,184,0.88) 100%);
           backdrop-filter: blur(20px) saturate(160%);
           -webkit-backdrop-filter: blur(20px) saturate(160%);
           border: 1px solid rgba(255,255,255,0.22);
           box-shadow:
             0 16px 52px rgba(31,108,140,0.22),
             0 1px 0 rgba(255,255,255,0.18) inset;
+            position: relative;
+overflow: hidden;
         }
 
         .cs-info-card::before {
@@ -332,7 +337,17 @@ if (!formData.department.trim()) {
           background: radial-gradient(ellipse 70% 50% at 80% 20%, rgba(255,255,255,0.10) 0%, transparent 60%);
           pointer-events: none;
         }
-
+.cs-info-card::after {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  top: -80px;
+  right: -80px;
+  filter: blur(10px);
+}
         .cs-contact-item {
           background: rgba(255,255,255,0.12);
           backdrop-filter: blur(10px);
@@ -375,6 +390,25 @@ if (!formData.department.trim()) {
           cursor: not-allowed;
           transform: none;
         }
+background: linear-gradient(
+  135deg,
+  #0f172a 0%,
+  #1e293b 35%,
+  #0ea5e9 100%
+);
+
+border: 1px solid rgba(255,255,255,0.18);
+
+box-shadow:
+  0 10px 30px rgba(14,165,233,0.22);
+
+transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
+.cs-submit:hover {
+  transform: translateY(-3px) scale(1.01);
+
+  box-shadow:
+    0 20px 40px rgba(14,165,233,0.28);
+}
 
         .cs-bottom-card {
           background: rgba(255,255,255,0.55);
@@ -624,7 +658,7 @@ if (!formData.department.trim()) {
               visible ? "show" : ""
             }`}
           >
-            <form className="space-y-5" onSubmit={handleSubmit}>
+            <form className="space-y-5" onSubmit={handleSubmit} noValidate>
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <div>
                   <label className="cs-label">{t.formPlaceholderEmail}</label>
@@ -635,12 +669,15 @@ if (!formData.department.trim()) {
                     onChange={handleChange}
                     placeholder="vous@email.com"
                     className={inputClass}
-                    required
                   />
+                   {errors.email && (
+                    <p className="mt-2 text-sm text-red-500">{errors.email}</p>
+                  )}
                 </div>
 
                 <div>
                   <label className="cs-label">{t.formPlaceholderSubject}</label>
+                  
                   <input
                     type="text"
                     name="subject"
@@ -648,13 +685,14 @@ if (!formData.department.trim()) {
                     onChange={handleChange}
                     placeholder={t.formPlaceholderSubject}
                     className={inputClass}
-                    required
+                    
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <div>
+                  
                   <label className="cs-label">{t.formPlaceholderLastName}</label>
                   <input
                     type="text"
@@ -663,7 +701,7 @@ if (!formData.department.trim()) {
                     onChange={handleChange}
                     placeholder={t.formPlaceholderLastName}
                     className={inputClass}
-                    required
+                    
                   />
                 </div>
 
@@ -678,13 +716,14 @@ if (!formData.department.trim()) {
                     onChange={handleChange}
                     placeholder={t.formPlaceholderFirstName}
                     className={inputClass}
-                    required
+                   
                   />
                 </div>
               </div>
 
               <div>
                 <label className="cs-label">{t.formPlaceholderMessage}</label>
+              
                 <textarea
                   rows={5}
                   name="message"
@@ -693,10 +732,14 @@ if (!formData.department.trim()) {
                   placeholder={t.formPlaceholderMessage}
                   className={inputClass}
                   style={{ resize: "none" }}
-                  required
+                 
                 />
-              </div>
- <div>
+                  {errors.message && (
+                    <p className="mt-2 text-sm text-red-500">{errors.message}</p>
+                  )}
+                  </div>
+               <div>
+ 
                 <label className="cs-label">
                   {t.formPlaceholderDepartment}
                 </label>
@@ -759,6 +802,9 @@ if (!formData.department.trim()) {
                   )}
                 </div>
               </div>
+               {errors.department && (
+  <p className="mt-2 text-sm text-red-500">{errors.department}</p>
+)}
               <div className="cs-divider" />
 
               <div className="flex items-center justify-between">
