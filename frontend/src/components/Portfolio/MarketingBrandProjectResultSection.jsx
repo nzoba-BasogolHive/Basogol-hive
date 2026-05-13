@@ -300,7 +300,7 @@ const MarketingBrandServiceResultSection = ({
                   src={item.image}
                   alt={item.alt}
                   onClick={() => setSelectedImage(item)}
-                  className="h-[220px] w-full cursor-zoom-in object-cover"
+                  className="h-[320px] w-full cursor-zoom-in object-cover"
                 />
                 <div className="rs-gal-overlay" />
               </div>

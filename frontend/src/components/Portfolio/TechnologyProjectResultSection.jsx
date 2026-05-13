@@ -158,7 +158,7 @@ const TechnologyProjectResultSection = ({
                   src={item.image}
                   alt={item.alt}
                   onClick={() => setSelectedImage(item)}
-                  className="h-[240px] w-full cursor-zoom-in object-contain p-2"
+                  className="h-[320px] w-full cursor-zoom-in object-contain p-2"
                 />
               </div>
             ))}
