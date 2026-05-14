@@ -222,10 +222,6 @@ const handleSubmit = async (e) => {
     newErrors.email = lang === "fr" ? "Veuillez entrer votre email" : "Please enter your email";
   }
 
-  if (!formData.subject.trim()) {
-    newErrors.subject = lang === "fr" ? "Veuillez entrer un sujet" : "Please enter a subject";
-  }
-
   if (!formData.message.trim()) {
     newErrors.message = lang === "fr" ? "Veuillez entrer votre message" : "Please enter your message";
   }
