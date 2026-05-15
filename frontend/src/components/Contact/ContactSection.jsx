@@ -21,6 +21,7 @@ const translations = {
       "Parlez-nous de votre projet, de vos besoins ou de vos objectifs. Notre équipe vous accompagne avec une approche claire, créative et adaptée à votre ambition.",
     formPlaceholderEmail: "Email",
     formPlaceholderSubject: "Sujet",
+    formPlaceholderma: "votre@email.com",
     departmentHelper: "Sélectionnez l’expertise la plus adaptée à votre besoin",
     formPlaceholderDepartment: "Expertise",
     formPlaceholderLastName: "Nom",
@@ -63,7 +64,8 @@ const translations = {
     heroDescription:
       "Tell us about your project, your needs or your goals. Our team supports you with a clear, creative approach tailored to your ambition.",
     formPlaceholderEmail: "Email",
-    formPlaceholderSubject: "Subject",
+    formPlaceholderSubject:"Subject",
+    formPlaceholderma: "your@email.com",
     departmentHelper: "Select the expertise best suited to your request",
     formPlaceholderDepartment: "Expertise",
     formPlaceholderLastName: "Last name",
@@ -663,7 +665,7 @@ transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="vous@email.com"
+                    placeholder={t.formPlaceholderma}
                     className={inputClass}
                   />
                    {errors.email && (
@@ -716,10 +718,8 @@ transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
                   />
                 </div>
               </div>
-
               <div>
                 <label className="cs-label">{t.formPlaceholderMessage}</label>
-              
                 <textarea
                   rows={5}
                   name="message"
@@ -735,7 +735,6 @@ transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
                   )}
                   </div>
                <div>
- 
                 <label className="cs-label">
                   {t.formPlaceholderDepartment}
                 </label>
