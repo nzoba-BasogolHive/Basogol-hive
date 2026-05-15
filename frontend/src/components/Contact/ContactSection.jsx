@@ -948,7 +948,7 @@ transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
     },
     {
       Icon: MapPin,
-      href: "https://maps.app.goo.gl/HGRsCoAuqZnKiZxX8",
+      href: "https://maps.app.goo.gl/5J9ySPvBcJsiZKmw9",
       label: "Voir la localisation",
     },
   ].map(({ Icon, href, label }, i) => (
