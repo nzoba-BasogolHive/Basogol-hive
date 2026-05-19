@@ -258,18 +258,17 @@ const MarketingBrandServiceResultSection = ({
             </div>
           </div>
 
-          {sideImage && (
-            <div className="rs-gal-card relative hidden lg:block">
-              <img
-                src={sideImage.image}
-                alt={sideImage.alt}
-                onClick={() => setSelectedImage(sideImage)}
-                className="h-full w-full cursor-zoom-in object-cover"
-                style={{ minHeight: "520px" }}
-              />
-              <div className="rs-gal-overlay" />
-            </div>
-          )}
+        {sideImage && (
+  <div className="rs-gal-card relative hidden h-[520px] lg:block">
+    <img
+      src={sideImage.image}
+      alt={sideImage.alt}
+      onClick={() => setSelectedImage(sideImage)}
+      className="h-full w-full cursor-zoom-in object-cover"
+    />
+    <div className="rs-gal-overlay" />
+  </div>
+)}
         </div>
 
         {displayGallery.length > 0 && (
