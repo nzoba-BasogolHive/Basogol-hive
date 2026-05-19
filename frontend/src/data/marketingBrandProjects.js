@@ -4,7 +4,7 @@ import  tech2 from "../assets/scene_04_shot_01-01.png";
 import  tech3 from "../assets/scene_05_shot_01.1-01.png";
 import  tech4 from "../assets/scene_01.shot_01-01.png";
 import  tech5 from "../assets/scene_02_shot_01.png";
-import  leb8 from "../assets/hero_portfolio.png";
+import  leb8 from "../assets/affiche_pub.png";
 import  leb1 from "../assets/typographie.png";
 import  leb2 from "../assets/affiche_pub_1.jpg";
 import  leb3 from "../assets/lengbemodels.jpg";
