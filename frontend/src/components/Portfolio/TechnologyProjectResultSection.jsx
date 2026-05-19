@@ -35,6 +35,7 @@ const TechnologyProjectResultSection = ({
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
+
     return () => observer.disconnect();
   }, []);
 
@@ -94,6 +95,7 @@ const TechnologyProjectResultSection = ({
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
+          {/* MAIN IMAGE */}
           <div
             className="overflow-hidden rounded-[18px] bg-white"
             style={{
@@ -118,39 +120,66 @@ const TechnologyProjectResultSection = ({
                   alt: t.mainMediaAlt,
                 })
               }
-              className="block h-auto max-h-[70vh] w-full cursor-zoom-in object-contain p-2"
+              className="
+                block
+                w-full
+                cursor-zoom-in
+                p-2
+                h-auto
+                max-h-[70vh]
+                object-contain
+                sm:h-[360px]
+                sm:max-h-none
+                sm:object-cover
+                lg:h-[460px]
+              "
             />
           </div>
 
+          {/* SIDE IMAGE DESKTOP */}
           {sideImage && (
             <div className="relative hidden overflow-hidden rounded-[14px] bg-white lg:block">
               <img
                 src={sideImage.image}
                 alt={sideImage.alt}
                 onClick={() => setSelectedImage(sideImage)}
-                className="h-full min-h-[460px] w-full cursor-zoom-in object-contain p-2"
+                className="h-full w-full cursor-zoom-in object-cover p-2"
+                style={{ minHeight: "460px" }}
               />
             </div>
           )}
         </div>
 
+        {/* GALLERY */}
         {gallery.length > 0 && (
           <div
             className={`mt-4 grid w-full grid-cols-1 gap-4 transition-all duration-700 sm:grid-cols-2 md:grid-cols-4 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
+            {/* SIDE IMAGE MOBILE */}
             {sideImage && (
               <div className="relative overflow-hidden rounded-[14px] bg-white lg:hidden">
                 <img
                   src={sideImage.image}
                   alt={sideImage.alt}
                   onClick={() => setSelectedImage(sideImage)}
-                  className="h-auto max-h-[420px] w-full cursor-zoom-in object-contain p-2"
+                  className="
+                    w-full
+                    cursor-zoom-in
+                    p-2
+                    h-auto
+                    max-h-[420px]
+                    object-contain
+                    sm:h-[320px]
+                    sm:max-h-none
+                    sm:object-cover
+                  "
                 />
               </div>
             )}
 
+            {/* GRID IMAGES */}
             {gridGallery.map((item, index) => (
               <div
                 key={index}
@@ -160,13 +189,24 @@ const TechnologyProjectResultSection = ({
                   src={item.image}
                   alt={item.alt}
                   onClick={() => setSelectedImage(item)}
-                  className="h-auto max-h-[420px] w-full cursor-zoom-in object-contain p-2"
+                  className="
+                    w-full
+                    cursor-zoom-in
+                    p-2
+                    h-auto
+                    max-h-[420px]
+                    object-contain
+                    sm:h-[320px]
+                    sm:max-h-none
+                    sm:object-cover
+                  "
                 />
               </div>
             ))}
           </div>
         )}
 
+        {/* BUTTONS */}
         {projectTags.length > 0 && (
           <div className="mt-12 flex flex-wrap justify-center gap-3">
             {projectTags.map((tag, i) => (
@@ -182,7 +222,7 @@ const TechnologyProjectResultSection = ({
 
                 <span className="relative z-10">{tag.label}</span>
 
-                <span className="relative z-10 flex h-7 w-7 items-center justify-center rounded-full bg-[#1f6c8c]/10 text-[#1f6c8c] transition-all duration-300 group-hover:translate-x-1 group-hover:bg-white/20 group-hover:text-white">
+                <span className="relative z-10 flex h-7 w-7 items-center justify-center rounded-full bg-[#1f6c8c]/10 text-[#1f6c8c] transition-all duration-300 group-hover:bg-white/20 group-hover:text-white group-hover:translate-x-1">
                   →
                 </span>
               </a>
@@ -191,6 +231,7 @@ const TechnologyProjectResultSection = ({
         )}
       </div>
 
+      {/* MODAL */}
       {selectedImage && (
         <div
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 p-4"
