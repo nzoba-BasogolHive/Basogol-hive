@@ -143,7 +143,7 @@ const TechnologyProjectResultSection = ({
                 src={sideImage.image}
                 alt={sideImage.alt}
                 onClick={() => setSelectedImage(sideImage)}
-                className="h-full w-full cursor-zoom-in object-cover p-2"
+                className="h-[460px] w-full cursor-zoom-in object-cover p-2"
                 style={{ minHeight: "460px" }}
               />
             </div>
