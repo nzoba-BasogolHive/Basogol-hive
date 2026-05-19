@@ -118,7 +118,7 @@ const TechnologyProjectResultSection = ({
                   alt: t.mainMediaAlt,
                 })
               }
-              className="block h-[260px] w-full cursor-zoom-inobject-cover p-2 sm:h-[360px] lg:h-[460px]"
+              className="block h-auto max-h-[70vh] w-full cursor-zoom-in object-contain p-2"
             />
           </div>
 
@@ -128,8 +128,7 @@ const TechnologyProjectResultSection = ({
                 src={sideImage.image}
                 alt={sideImage.alt}
                 onClick={() => setSelectedImage(sideImage)}
-                className="h-full w-full cursor-zoom-in object-cover p-2"
-                style={{ minHeight: "460px" }}
+                className="h-full min-h-[460px] w-full cursor-zoom-in object-contain p-2"
               />
             </div>
           )}
@@ -137,7 +136,7 @@ const TechnologyProjectResultSection = ({
 
         {gallery.length > 0 && (
           <div
-            className={`mt-4 grid w-full grid-cols-2 gap-4 transition-all duration-700 md:grid-cols-4 ${
+            className={`mt-4 grid w-full grid-cols-1 gap-4 transition-all duration-700 sm:grid-cols-2 md:grid-cols-4 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
           >
@@ -147,46 +146,49 @@ const TechnologyProjectResultSection = ({
                   src={sideImage.image}
                   alt={sideImage.alt}
                   onClick={() => setSelectedImage(sideImage)}
-                  className="h-[240px] w-full cursor-zoom-inobject-cover p-2"
+                  className="h-auto max-h-[420px] w-full cursor-zoom-in object-contain p-2"
                 />
               </div>
             )}
 
             {gridGallery.map((item, index) => (
-              <div key={index} className="relative overflow-hidden rounded-[14px] bg-white">
+              <div
+                key={index}
+                className="relative overflow-hidden rounded-[14px] bg-white"
+              >
                 <img
                   src={item.image}
                   alt={item.alt}
                   onClick={() => setSelectedImage(item)}
-                  className="h-[320px] w-full cursor-zoom-in object-cover p-2"
+                  className="h-auto max-h-[420px] w-full cursor-zoom-in object-contain p-2"
                 />
               </div>
             ))}
           </div>
         )}
 
-       {projectTags.length > 0 && (
-  <div className="mt-12 flex justify-center">
-    {projectTags.map((tag, i) => (
-      <a
-        key={i}
-        href={tag.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-[#1f6c8c]/20 bg-white/80 px-7 py-3.5 text-sm font-bold text-[#1f6c8c] shadow-[0_14px_35px_rgba(31,108,140,0.16)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-[#1f6c8c] hover:text-white hover:shadow-[0_18px_45px_rgba(31,108,140,0.26)]"
-        style={{ fontFamily: "Literata, serif" }}
-      >
-        <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+        {projectTags.length > 0 && (
+          <div className="mt-12 flex flex-wrap justify-center gap-3">
+            {projectTags.map((tag, i) => (
+              <a
+                key={i}
+                href={tag.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-[#1f6c8c]/20 bg-white/80 px-7 py-3.5 text-sm font-bold text-[#1f6c8c] shadow-[0_14px_35px_rgba(31,108,140,0.16)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-[#1f6c8c] hover:text-white hover:shadow-[0_18px_45px_rgba(31,108,140,0.26)]"
+                style={{ fontFamily: "Literata, serif" }}
+              >
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
 
-        <span className="relative z-10">{tag.label}</span>
+                <span className="relative z-10">{tag.label}</span>
 
-        <span className="relative z-10 flex h-7 w-7 items-center justify-center rounded-full bg-[#1f6c8c]/10 text-[#1f6c8c] transition-all duration-300 group-hover:bg-white/20 group-hover:text-white group-hover:translate-x-1">
-          →
-        </span>
-      </a>
-    ))}
-  </div>
-)}
+                <span className="relative z-10 flex h-7 w-7 items-center justify-center rounded-full bg-[#1f6c8c]/10 text-[#1f6c8c] transition-all duration-300 group-hover:translate-x-1 group-hover:bg-white/20 group-hover:text-white">
+                  →
+                </span>
+              </a>
+            ))}
+          </div>
+        )}
       </div>
 
       {selectedImage && (
@@ -195,6 +197,7 @@ const TechnologyProjectResultSection = ({
           onClick={() => setSelectedImage(null)}
         >
           <button
+            type="button"
             className="absolute right-5 top-5 text-4xl font-bold text-white"
             onClick={() => setSelectedImage(null)}
           >
@@ -204,7 +207,7 @@ const TechnologyProjectResultSection = ({
           <img
             src={selectedImage.image}
             alt={selectedImage.alt}
-            className="max-h-[92vh] max-w-[96vw] rounded-2xl object-cover"
+            className="max-h-[92vh] max-w-[96vw] rounded-2xl object-contain"
             onClick={(e) => e.stopPropagation()}
           />
         </div>
