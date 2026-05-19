@@ -1,11 +1,11 @@
-import  st from "../assets/Instagra.jpg";
+import  st from "../assets/Stratégiedemarquepositionnement.png";
 import  re from "../assets/Instagram2.png";
 import is from "../assets/Instagram22.jpg";
 import de from "../assets/Instagram6.webp";
 import ve from "../assets/Instagram33.webp";
-import he from "../assets/Instagram34.jpg";
+import he from "../assets/Stratégiedecontenudirectioncréative.png";
 import pr from "../assets/Instagram55.jpg";
-import cr from "../assets/Instagram44.jpg";
+import cr from "../assets/Croissancesocialpublicité.png";
 
 export const marketingBrandServices = [
   {

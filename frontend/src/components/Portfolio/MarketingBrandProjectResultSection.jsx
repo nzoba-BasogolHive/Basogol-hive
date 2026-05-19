@@ -57,7 +57,9 @@ const MarketingBrandServiceResultSection = ({
         setPlaying(true);
       }
     } catch (error) {
-      console.error("Erreur lecture vidéo :", error);
+      if (error?.name !== "AbortError") {
+        console.error("Erreur lecture vidéo :", error);
+      }
     }
   };
 
@@ -127,6 +129,7 @@ const MarketingBrandServiceResultSection = ({
           inset: 0;
           background: linear-gradient(to top, rgba(8,25,42,0.55) 0%, transparent 45%);
           transition: opacity 0.35s ease;
+          pointer-events: none;
         }
         .rs-video-overlay.hidden-overlay {
           opacity: 0;
@@ -206,16 +209,15 @@ const MarketingBrandServiceResultSection = ({
           }`}
           style={{ transitionDelay: "0.12s" }}
         >
-          <div className="rs-video-frame overflow-hidden rounded-[18px]">
+          <div className="rs-video-frame self-start overflow-hidden rounded-[18px]">
             <div className="rs-main-bar" />
 
-            <div className="relative" style={{ background: "#000" }}>
+            <div className="relative h-[260px] w-full overflow-hidden bg-black sm:h-[380px] lg:h-[520px]">
               {isVideo ? (
                 <>
                   <video
                     ref={videoRef}
-                    className="block h-[240px] w-full object-cover sm:h-[340px] lg:h-[440px]"
-                    style={{ display: "block" }}
+                    className="absolute inset-0 h-full w-full object-cover"
                     playsInline
                     controls
                     preload="metadata"
@@ -225,14 +227,9 @@ const MarketingBrandServiceResultSection = ({
                     onEnded={() => setPlaying(false)}
                   >
                     <source src={videoSrc} type="video/mp4" />
-                    <source src={videoSrc} type="video/quicktime" />
                   </video>
 
-                  <div
-                    className={`rs-video-overlay ${
-                      playing ? "hidden-overlay" : ""
-                    }`}
-                  />
+                  <div className={`rs-video-overlay ${playing ? "hidden-overlay" : ""}`} />
 
                   {!playing && (
                     <div
@@ -255,7 +252,7 @@ const MarketingBrandServiceResultSection = ({
                       alt: t.mainMediaAlt,
                     })
                   }
-                  className="block h-[240px] w-full cursor-zoom-in object-cover sm:h-[340px] lg:h-[440px]"
+                  className="absolute inset-0 h-full w-full cursor-zoom-in object-cover"
                 />
               )}
             </div>
@@ -267,8 +264,8 @@ const MarketingBrandServiceResultSection = ({
                 src={sideImage.image}
                 alt={sideImage.alt}
                 onClick={() => setSelectedImage(sideImage)}
-                className="h-full w-full cursor-zoom-in object-contain bg-white"
-                style={{ minHeight: "300px" }}
+                className="h-full w-full cursor-zoom-in object-cover"
+                style={{ minHeight: "520px" }}
               />
               <div className="rs-gal-overlay" />
             </div>
@@ -277,7 +274,7 @@ const MarketingBrandServiceResultSection = ({
 
         {displayGallery.length > 0 && (
           <div
-            className={`rs-fade-up mt-4 grid w-full grid-cols-2 gap-4 md:grid-cols-4 ${
+            className={`rs-fade-up mt-4 grid w-full grid-cols-2 items-start gap-4 md:grid-cols-4 ${
               visible ? "show" : ""
             }`}
             style={{ transitionDelay: "0.24s" }}

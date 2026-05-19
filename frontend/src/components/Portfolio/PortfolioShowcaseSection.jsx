@@ -3,7 +3,7 @@ import christlandImg from "../../assets/ch.png";
 import dibi from "../../assets/dib1.png";
 import basogol from "../../assets/ba.png";
 import  tech from "../../assets/scene_04_shot_02.1-01.png";
-import  leb from "../../assets/Logo_Mockup_2.jpg";
+import  leb from "../../assets/affiche_pub_2.png";
 import  vid from "../../assets/A002C234.jpg";
 
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "../LanguageContext";
-import heroBg from "../../assets/rfYVzjHWWemqX.webp";
+import heroBg from "../../assets/hero_marketing_and_brand.png";
 import brandIcon from "../../assets/ColorSwatchOutline.png";
 import { Link } from "react-router-dom";
 

@@ -3,6 +3,8 @@ import { useLanguage } from "../LanguageContext";
 import techIcon from "../../assets/Union1.png";
 import sideCardTop from "../../assets/Group14.png";
 import sideCardBottom from "../../assets/Group9.png";
+import acc from "../../assets/hero_technology.png";
+
 import { Link } from "react-router-dom";
 const translations = {
   fr: {
@@ -230,7 +232,7 @@ const TechnologyHeroCarousel = () => {
 
       {/* Image de fond — photo tech circuit/code */}
       <img
-        src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=80"
+        src={acc}
         alt={t.imageAlt}
         className="th-bg absolute inset-0 h-full w-full object-cover object-center"
       />

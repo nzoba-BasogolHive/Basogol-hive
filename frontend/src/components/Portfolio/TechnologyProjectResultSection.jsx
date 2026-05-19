@@ -118,7 +118,7 @@ const TechnologyProjectResultSection = ({
                   alt: t.mainMediaAlt,
                 })
               }
-              className="block h-[260px] w-full cursor-zoom-in object-contain p-2 sm:h-[360px] lg:h-[460px]"
+              className="block h-[260px] w-full cursor-zoom-inobject-cover p-2 sm:h-[360px] lg:h-[460px]"
             />
           </div>
 
@@ -128,7 +128,7 @@ const TechnologyProjectResultSection = ({
                 src={sideImage.image}
                 alt={sideImage.alt}
                 onClick={() => setSelectedImage(sideImage)}
-                className="h-full w-full cursor-zoom-in object-contain p-2"
+                className="h-full w-full cursor-zoom-in object-cover p-2"
                 style={{ minHeight: "460px" }}
               />
             </div>
@@ -147,7 +147,7 @@ const TechnologyProjectResultSection = ({
                   src={sideImage.image}
                   alt={sideImage.alt}
                   onClick={() => setSelectedImage(sideImage)}
-                  className="h-[240px] w-full cursor-zoom-in object-contain p-2"
+                  className="h-[240px] w-full cursor-zoom-inobject-cover p-2"
                 />
               </div>
             )}
@@ -158,7 +158,7 @@ const TechnologyProjectResultSection = ({
                   src={item.image}
                   alt={item.alt}
                   onClick={() => setSelectedImage(item)}
-                  className="h-[320px] w-full cursor-zoom-in object-contain p-2"
+                  className="h-[320px] w-full cursor-zoom-in object-cover p-2"
                 />
               </div>
             ))}
@@ -204,7 +204,7 @@ const TechnologyProjectResultSection = ({
           <img
             src={selectedImage.image}
             alt={selectedImage.alt}
-            className="max-h-[92vh] max-w-[96vw] rounded-2xl object-contain"
+            className="max-h-[92vh] max-w-[96vw] rounded-2xl object-cover"
             onClick={(e) => e.stopPropagation()}
           />
         </div>

@@ -4,12 +4,12 @@ import  tech2 from "../assets/scene_04_shot_01-01.png";
 import  tech3 from "../assets/scene_05_shot_01.1-01.png";
 import  tech4 from "../assets/scene_01.shot_01-01.png";
 import  tech5 from "../assets/scene_02_shot_01.png";
-import  leb8 from "../assets/Logo_Mockup_2.jpg";
-import  leb1 from "../assets/charte.png";
-import  leb2 from "../assets/imagep.jfif";
-import  leb3 from "../assets/imageb.jfif";
-import  leb4 from "../assets/imaget.jfif";
-import  leb5 from "../assets/imagec.jfif";
+import  leb8 from "../assets/hero_portfolio.png";
+import  leb1 from "../assets/typographie.png";
+import  leb2 from "../assets/affiche_pub_1.jpg";
+import  leb3 from "../assets/lengbemodels.jpg";
+import  leb4 from "../assets/cataloguecomposition.jpg";
+import  leb5 from "../assets/mockupscomposition.jpg";
 import  vid from "../assets/A002C234.jpg";
 import  vid6 from "../assets/drone.png";
 import  vid7 from "../assets/A002C2071.jpg";
@@ -21,7 +21,7 @@ import  vid3 from "../assets/A002C2358.jpg";
 
 const tech10 = "/videos/video.mp4";
 const vid0 = "/videos/TeaserNekang.mp4";
-const leb = "/videos/Lengbeporfoliofinal.mp4";
+const leb = "/videos/LengbAfricaBrandv2.mp4";
 export const marketingBrandProjects = [
   {
     slug: "Motion-Design",
