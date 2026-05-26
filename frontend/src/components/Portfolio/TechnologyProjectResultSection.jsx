@@ -222,9 +222,6 @@ const TechnologyProjectResultSection = ({
 
                 <span className="relative z-10">{tag.label}</span>
 
-                <span className="relative z-10 flex h-7 w-7 items-center justify-center rounded-full bg-[#1f6c8c]/10 text-[#1f6c8c] transition-all duration-300 group-hover:bg-white/20 group-hover:text-white group-hover:translate-x-1">
-                  →
-                </span>
               </a>
             ))}
           </div>
